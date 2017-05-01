@@ -1,0 +1,905 @@
+swagger: '2.0'
+info:
+  title: CBG-FX Transacting API
+  description: 'BackEnd API'
+  version: '0.0.1'
+  termsOfService: 'http://seer-technologies.com/terms/'
+  contact:
+    name: 'FPTR API team'
+    email: 'omar.bernardino@seer-technologies.com'
+host: localhost:8080
+basePath: /cbgfx/transacting/api
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /bulletin-board/list:
+    get:
+      description: |
+        Returns list of special message (daily) from bulletin board based on Trader
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: "trdr_fi"
+        in: "query"
+        description: "Trader"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/specialmsg"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /cash-flow/details:
+    get:
+      description: "Returns cashflow details"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: cashflowdetailsinput
+        in: body
+        required: true
+        schema:
+            $ref: '#/definitions/cashflowdetailsinput'
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/cashflowdetails"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /cash-flow/details-summary:
+    get:
+      description: "Returns cashflow details summary"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: cashflowsummaryinput
+        in: body
+        required: true
+        schema:
+            $ref: '#/definitions/cashflowsummaryinput'
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/cashflowsummary"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /cash-flow/list-summary:
+    get:
+      description: "Returns list summary of cash flow"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: cashflowlistsummaryinput
+        in: body
+        required: true
+        schema:
+            $ref: '#/definitions/cashflowlistsummaryinput'
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/cashflowsummary"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /client-historical-record/list:
+    get:
+      description: "Returns list summary of Client Historical Records"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: historicalrecordslistinput
+        in: body
+        required: true
+        schema:
+            $ref: '#/definitions/historicalrecordslistinput'
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/historicalrecordslist"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /client-historical-record/list-summary:
+    get:
+      description: "Returns list summary of Client Historical Records"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: historicalrecordssummaryinput
+        in: body
+        required: true
+        schema:
+            $ref: '#/definitions/historicalrecordssummaryinput'
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/historicalrecordssummary"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /client-history/get:
+    get:
+      description: "Get client history"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: clienthistoryinput
+        in: body
+        required: true
+        schema:
+            $ref: '#/definitions/clienthistoryinput'
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/clienthistory"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /income/get:
+    get:
+      description: "Returns income based on Trader"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: "trdr_fi"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/incomes"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /rate-type/list:
+    get:
+      description: "Returns list of rate types based on Trader"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: "trdr_fi"
+        in: "query"
+        description: "Traders"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            title: "List Rate Type"
+            items:
+              $ref: "#/definitions/ratelist"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /rate/inquiry:
+    get:
+      description: "Returns inquired rate based on Trader and Rate type"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: ratesinput
+        in: body
+        required: true
+        schema:
+            $ref: '#/definitions/ratesinput'
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/rates"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /rate/otc/get:
+    get:
+      description: "Get/Inquire OTC"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: otclistinput
+        in: body
+        required: true
+        schema:
+            $ref: '#/definitions/otclistinput'
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/otclist"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /rate/otc/list:
+    get:
+      description: "List of OTC"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/otclist"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /rate/tier/get:
+    get:
+      description: "Get/Inquire Thirds Buying and Selling Rates"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: tierratesinput
+        in: body
+        required: true
+        schema:
+            $ref: '#/definitions/tierratesinput'
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/tierrates"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /rate/tier/list:
+    get:
+      description: "List of Thirds Buying and Selling Rates"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/tierrates"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /transaction/accepted-tc/list:
+    get:
+      description: "Returns list of accepted TCs based on Trader"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: acceptedtclistinput
+        in: body
+        required: true
+        schema:
+            $ref: '#/definitions/acceptedtclistinput'
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/acceptedtclist"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /transaction/accepted-tc/list/print:
+    get:
+      description: "Returns list of invisible codes"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: tclistprintinput
+        in: body
+        required: true
+        schema:
+            $ref: '#/definitions/tclistprintinput'
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/tclistprint"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /transaction/daily/list-summary:
+    get:
+      description: "Returns list summary of daily transactions based on trader, transaction\
+        \ indicator, and request type\n"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: tclistprintinput
+        in: body
+        required: true
+        schema:
+            $ref: '#/definitions/transactionlistsummaryinput'
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/transactionlistsummary"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /transaction/issued-mc/list:
+    get:
+      description: "Returns list of Issued MCs based on Trader"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: issuedmclistinput
+        in: body
+        required: true
+        schema:
+            $ref: '#/definitions/issuedmclistinput'
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/issuedmclist"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+definitions:
+  failed:
+    type: "object"
+    properties:
+      meta:
+        $ref: "#/definitions/failed_meta"
+  ratelist:
+    type: "object"
+    properties:
+      trdr_fi:
+        type: "string"
+      tran_fi:
+        type: "string"
+      rate_type:
+        type: "integer"
+      rate_desc:
+        type: "string"
+  cashflowdetailsinput:
+    type: object
+    properties:
+      tran_fi:
+        type: string
+      tran_unit:
+        type: "string"
+      flow_indc:
+        type: "string"
+      curr_code:
+        type: "string"
+      seq_no:
+        type: "integer"
+      proctag:
+        type: "string"
+  cashflowsummaryinput:
+    type: object
+    properties:
+      tran_fi:
+        type: "string"
+      tran_unit:
+        type: "string"
+      curr_code:
+        type: "string"
+  cashflowlistsummaryinput:
+    type: object
+    properties:
+      tran_fi:
+        type: "string"
+      tran_unit:
+        type: "string"
+      curr_code:
+        type: "string"
+      proctag:
+        type: string
+  historicalrecordslistinput:
+    type: object
+    properties:
+      tran_indc:
+        type: "string"
+      c_lname:
+        type: "string"
+      c_fname:
+        type: "string"
+      c_mname:
+        type: "string"
+      tran_date:
+        type: "string"
+        format: date
+      tran_time:
+        type: "string"
+      proctag:
+        type: "string"
+  historicalrecordssummaryinput:
+    type: object
+    properties:
+      tran_indc:
+        type: "string"
+      search_tag:
+        type: string
+      c_lname:
+        type: "string"
+      c_fname:
+        type: "string"
+      c_mname:
+        type: "string"
+      tran_date:
+        type: "string"
+        format: date
+      tran_time:
+        type: "string"
+      proctag:
+        type: "string"
+  clienthistoryinput:
+    type: object
+    properties:
+      tran_indc:
+        type: "string"
+      c_lname:
+        type: "string"
+      c_fname:
+        type: "string"
+      c_mname:
+        type: "string"
+  acceptedtclistinput:
+    type: object
+    properties:
+      list_indc:
+        type: "integer"
+      trdr_fi:
+        type: "string"
+      tran_unit:
+        type: "string"
+      ref_nmbr:
+        type: "string"
+      proctag:
+        type: "string"
+  ratesinput:
+    type: object
+    properties:
+      trdr_fi:
+        type: "string"
+      rate_type:
+        type: "integer"
+  otclistinput:
+    type: object
+    properties:
+      trdr_fi:
+        type: "string"
+      tran_fi:
+        type: "integer"
+      curr_code:
+        type: string
+  tierratesinput:
+    type: object
+    properties:
+      trdr_fi:
+        type: "string"
+      tran_fi:
+        type: "integer"
+      curr_code:
+        type: string
+      tier_nmbr:
+        type: integer
+      proctag:
+        type: string
+  tclistprintinput:
+    type: object
+    properties:
+      trdr_fi:
+        type: "string"
+      invi_code:
+        type: "integer"
+      proctag:
+        type: string
+  transactionlistsummaryinput:
+    type: object
+    properties:
+      trdr_fi:
+        type: "string"
+      tran_indc:
+        type: string
+      ref_nmbr:
+        type: "integer"
+      rqst_type:
+        type: integer
+      proctag:
+        type: string
+  issuedmclistinput:
+    type: object
+    properties:
+      tran_unit:
+        type: "string"
+      trdr_fi:
+        type: string
+      mc_serno:
+        type: "string"
+      proctag:
+        type: string
+  rates:
+    type: "object"
+    properties:
+      prch_rate:
+        type: "integer"
+      sale_rate:
+        type: "integer"
+      trdr_fi:
+        type: "string"
+      tran_fi:
+        type: "string"
+      curr_code:
+        type: "string"
+      tier_nmbr:
+        type: "integer"
+      amnt_from:
+        type: "integer"
+      amnt_to:
+        type: "integer"
+      usd_amnt:
+        type: "integer"
+      exch_rate:
+        type: "integer"
+      php_equiv:
+        type: "integer"
+  otclist:
+    type: "object"
+    properties:
+      trdr_fi:
+        type: "string"
+      tran_fi:
+        type: "string"
+      curr_code:
+        type: "string"
+      prch_rate:
+        type: "integer"
+      sale_rate:
+        type: "integer"
+  tierrates:
+    type: "object"
+    properties:
+      trdr_fi:
+        type: "string"
+      tran_fi:
+        type: "string"
+      curr_code:
+        type: "string"
+      tier_nmbr:
+        type: "integer"
+      amnt_from:
+        type: "integer"
+      amnt_to:
+        type: "integer"
+      prch_rate:
+        type: "integer"
+      sale_rate:
+        type: "integer"
+  incomes:
+    type: "object"
+    properties:
+      reg_amnt:
+        type: "integer"
+      fcd_amnt:
+        type: "integer"
+  cashflowsummary:
+    type: "object"
+    properties:
+      tran_fi:
+        type: "string"
+      tran_unit:
+        type: "string"
+      curr_code:
+        type: "string"
+      m_iflow:
+        type: "integer"
+      t_iflow:
+        type: "integer"
+      m_oflow:
+        type: "integer"
+      t_oflow:
+        type: "integer"
+      runn_baln:
+        type: "integer"
+  cashflowdetails:
+    type: "object"
+    properties:
+      tran_fi:
+        type: "string"
+      tran_unit:
+        type: "string"
+      curr_code:
+        type: "string"
+      seq_no:
+        type: "integer"
+      amount:
+        type: "integer"
+      user_id:
+        type: "string"
+      term_id:
+        type: "string"
+      time_stmp:
+        type: "integer"
+  acceptedtclist:
+    type: "object"
+    properties:
+      ref_nmbr:
+        type: "string"
+      totl_amt:
+        type: "integer"
+      tran_unit:
+        type: "string"
+      curr_code:
+        type: "string"
+      tc_serno:
+        type: "integer"
+      tc_amt:
+        type: "integer"
+  tclistprint:
+    type: "object"
+    properties:
+      trdr_fi:
+        type: "string"
+      invi_code:
+        type: "string"
+      tran_code:
+        type: "string"
+      form_nmbr:
+        type: "string"
+      invi_desc:
+        type: "string"
+  historicalrecordssummary:
+    type: "object"
+    properties:
+      tran_indc:
+        type: "string"
+      c_lname:
+        type: "string"
+      c_fname:
+        type: "string"
+      c_mname:
+        type: "string"
+      accm_amnt:
+        type: "integer"
+      accm_amnt2:
+        type: "integer"
+  historicalrecordslist:
+    type: "object"
+    properties:
+      tran_indc:
+        type: "string"
+      c_lname:
+        type: "string"
+      c_fname:
+        type: "string"
+      c_mname:
+        type: "string"
+      bday:
+        type: "string"
+        format: date
+      tin:
+        type: "string"
+      c_addr1:
+        type: "string"
+      c_addr2:
+        type: "string"
+      telno:
+        type: "string"
+      tran_date:
+        type: "string"
+        format: date
+      tran_unit:
+        type: "string"
+      ref_nmbr:
+        type: "string"
+      curr_fr:
+        type: "string"
+      curr_to:
+        type: "string"
+      tran_amnt:
+        type: "integer"
+      usd_amnt:
+        type: "integer"
+      tran_time:
+        type: "string"
+  issuedmclist:
+    type: "object"
+    properties:
+      trdr_fi:
+        type: "string"
+      run_bal:
+        type: "integer"
+      ref_nmbr:
+        type: "string"
+      mc_serno:
+        type: "string"
+      c_lname:
+        type: "string"
+      c_fname:
+        type: "string"
+      c_mname:
+        type: "string"
+      php_amt:
+        type: "integer"
+  specialmsg:
+    type: "object"
+    properties:
+      trdr_fi:
+        type: "string"
+      spcl_msg1:
+        type: "string"
+  transactionlistsummary:
+    type: "object"
+    properties:
+      trdr_fi:
+        type: "string"
+      tran_indc:
+        type: "string"
+      ref_nmbr:
+        type: "string"
+      c_lname:
+        type: "string"
+      c_fname:
+        type: "string"
+      c_mname:
+        type: "string"
+      c_addr1:
+        type: "string"
+      c_addr2:
+        type: "string"
+      acpt_mode:
+        type: "integer"
+      curr_fr:
+        type: "string"
+      tran_amnt:
+        type: "integer"
+      setl_mode:
+        type: "integer"
+      curr_to:
+        type: "string"
+      equi_amnt:
+        type: "integer"
+      grnt_rate:
+        type: "integer"
+      net_amnt:
+        type: "integer"
+      acpt_comm:
+        type: "integer"
+      acpt_docs:
+        type: "integer"
+      acpt_post:
+        type: "integer"
+      setl_comm:
+        type: "integer"
+      setl_docs:
+        type: "integer"
+      setl_post:
+        type: "integer"
+      pref_nmbr:
+        type: "string"
+      trdr_id:
+        type: "string"
+  clienthistory:
+    type: "object"
+    properties:
+      c_lname:
+        type: "string"
+      c_fname:
+        type: "string"
+      c_mname:
+        type: "string"
+      c_addr1:
+        type: "string"
+      c_addr2:
+        type: "string"
+      bday:
+        type: "string"
+        format: date
+      tel:
+        type: "string"
+      tin:
+        type: "string"
+  failed_meta:
+    properties:
+      error_type:
+        type: "string"
+      code:
+        type: "integer"
+      error_message:
+        type: "string"

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="ph.com.bpi.model.hibernate.T0305" table="T0305">
+
+		<id name="id" type="int" column="ID">
+			<generator class="increment" />
+		</id>
+		<property name="tranIndc" column="TRAN_INDC" type="string" />
+		<property name="acptStat" column="ACPT_STAT" type="big_decimal" />
+		<property name="setlStat" column="SETL_STAT" type="big_decimal" />
+		<property name="acptName" column="ACPT_NAME" type="string" />
+		<property name="setlName" column="SETL_NAME" type="string" />
+		<property name="acptClean" column="ACPT_CLEAN" type="big_decimal" />
+		<property name="setlClean" column="SETL_CLEAN" type="big_decimal" />
+
+	</class>
+</hibernate-mapping>

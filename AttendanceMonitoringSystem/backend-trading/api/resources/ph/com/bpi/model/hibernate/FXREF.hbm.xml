@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="ph.com.bpi.model.hibernate.FXREF" table="FXREF">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="rTable" column="R_TABLE" type="string"/>
+<property name="rFile" column="R_FILE" type="string"/>
+<property name="rDummy" column="R_DUMMY" type="string"/>
+<property name="rGet" column="R_GET" type="string"/>
+<property name="rSuccess" column="R_SUCCESS" type="string"/>
+<property name="rUsers" column="R_USERS" type="string"/>
+<property name="rUpdate" column="R_UPDATE" type="string"/>
+<property name="rStat" column="R_STAT" type="string"/>
+<property name="rIxfld1" column="R_IXFLD1" type="string"/>
+<property name="rIxnme1" column="R_IXNME1" type="string"/>
+<property name="rIxfld2" column="R_IXFLD2" type="string"/>
+<property name="rIxnme2" column="R_IXNME2" type="string"/>
+<property name="rDelefld" column="R_DELEFLD" type="string"/>
+<property name="rDelelen" column="R_DELELEN" type="big_decimal"/>
+<property name="lUpdate" column="L_UPDATE" type="string"/>
+<property name="lTime" column="L_TIME" type="string"/>
+<property name="lReason" column="L_REASON" type="string"/>
+</class></hibernate-mapping>

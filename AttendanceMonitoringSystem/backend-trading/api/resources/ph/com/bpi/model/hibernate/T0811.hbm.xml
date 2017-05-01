@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="ph.com.bpi.model.hibernate.T0811" table="T0811">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="refNmbr" column="REF_NMBR" type="string"/>
+<property name="cntrPrty" column="CNTR_PRTY" type="string"/>
+<property name="cntcPrsn" column="CNTC_PRSN" type="string"/>
+<property name="tranAmnt" column="TRAN_AMNT" type="big_decimal"/>
+<property name="exchRate" column="EXCH_RATE" type="big_decimal"/>
+<property name="eqvlAmnt" column="EQVL_AMNT" type="big_decimal"/>
+<property name="tranTime" column="TRAN_TIME" type="string"/>
+
+</class></hibernate-mapping>

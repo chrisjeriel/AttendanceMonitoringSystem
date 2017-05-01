@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="ph.com.bpi.model.hibernate.FXPARAM" table="FXPARAM">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="sysname" column="SYSNAME" type="string"/>
+<property name="version" column="VERSION" type="string"/>
+<property name="mfregion" column="MFREGION" type="string"/>
+<property name="mfapplid" column="MFAPPLID" type="string"/>
+<property name="tranid" column="TRANID" type="string"/>
+<property name="prevdate" column="PREVDATE" type="string"/>
+<property name="traderfi" column="TRADERFI" type="string"/>
+<property name="rateOvrd" column="RATE_OVRD" type="string"/>
+<property name="tranOvrd" column="TRAN_OVRD" type="string"/>
+<property name="lockRate" column="LOCK_RATE" type="string"/>
+<property name="systest" column="SYSTEST" type="string"/>
+<property name="sysoffc" column="SYSOFFC" type="string"/>
+<property name="valdUser" column="VALD_USER" type="string"/>
+<property name="retdays" column="RETDAYS" type="string"/>
+<property name="systimer" column="SYSTIMER" type="string"/>
+<property name="sysalarm01" column="SYSALARM01" type="string"/>
+<property name="sysalarm02" column="SYSALARM02" type="string"/>
+</class></hibernate-mapping>

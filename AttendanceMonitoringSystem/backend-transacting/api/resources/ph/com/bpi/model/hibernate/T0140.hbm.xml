@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="com.bpi.model.T0140" table="T0140">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="userType" column="USER_TYPE" type="big_decimal"/>
+<property name="userDesc" column="USER_DESC" type="string"/>
+<property name="ovrdPt" column="OVRD_PT" type="big_decimal"/>
+
+</class></hibernate-mapping>

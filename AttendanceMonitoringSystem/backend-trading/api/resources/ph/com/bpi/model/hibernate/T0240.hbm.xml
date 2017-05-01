@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="ph.com.bpi.model.hibernate.T0240" table="T0240">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="trdrFi" column="TRDR_FI" type="string"/>
+<property name="origCurr" column="ORIG_CURR" type="string"/>
+<property name="cntrCurr" column="CNTR_CURR" type="string"/>
+<property name="drecTag" column="DREC_TAG" type="string"/>
+<property name="sprdPrch" column="SPRD_PRCH" type="big_decimal"/>
+<property name="sprdSale" column="SPRD_SALE" type="big_decimal"/>
+<property name="rateRefr" column="RATE_REFR" type="big_decimal"/>
+<property name="ratePrch" column="RATE_PRCH" type="big_decimal"/>
+<property name="rateSale" column="RATE_SALE" type="big_decimal"/>
+
+</class></hibernate-mapping>

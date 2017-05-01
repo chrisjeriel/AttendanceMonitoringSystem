@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="ph.com.bpi.model.hibernate.T0115" table="T0115">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="modeCode" column="MODE_CODE" type="big_decimal"/>
+<property name="modeDesc" column="MODE_DESC" type="string"/>
+<property name="mcroTag" column="MCRO_TAG" type="big_decimal"/>
+<property name="actvTag" column="ACTV_TAG" type="string"/>
+<property name="phpTag" column="PHP_TAG" type="string"/>
+
+</class></hibernate-mapping>

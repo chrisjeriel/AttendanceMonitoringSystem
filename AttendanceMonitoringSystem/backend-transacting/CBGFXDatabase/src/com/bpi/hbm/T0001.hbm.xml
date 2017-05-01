@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="com.bpi.model.T0001" table="T0001">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="gUserId" column="GUSERID" type="string"/>
+<property name="gUserType" column="GUSERTYPE" type="big_decimal"/>
+<property name="brchName" column="BRCH_NAME" type="string"/>
+<property name="procDate" column="PROC_DATE" type="string"/>
+<property name="userAccs" column="USER_ACCS" type="string"/>
+<property name="gTranFi" column="GTRAN_FI" type="string"/>
+
+</class></hibernate-mapping>

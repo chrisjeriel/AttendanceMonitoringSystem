@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+						http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<context:annotation-config />
+
+	<!-- Tell Spring where to scan for components -->
+	<context:component-scan base-package="ph.com.bpi" />
+
+	<!-- Specify the Hibernate properties setting file -->
+	<context:property-placeholder
+		location="classpath:META-INF/spring/hibernate.properties" />
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mappingResources">
+			<list>
+				<value>ph/com/bpi/model/hibernate/Person.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/HeaderData.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0001.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0300.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0301.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0302.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0303.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0304.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0305.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0306.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0307.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0309_A.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0309_B.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0310.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0311.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0312.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0314.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0315.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0316.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0317.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0318.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0319.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0320.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0323.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0324.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0325.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0326.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0327.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0333.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0334.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0400.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0500.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0501.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0502.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0600_01.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0600_2.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0600_3.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0600_4.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0604.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0803.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0804.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0811.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0812.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0814.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0815.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0816.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0817.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0900.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0901.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0902.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0903.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0904.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0905.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0906.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0907.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0908.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0909.hbm.xml</value>
+				<value>ph/com/bpi/model/hibernate/T0910.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="daoFactory" class="ph.com.bpi.dao.DaoFactory">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+</beans>

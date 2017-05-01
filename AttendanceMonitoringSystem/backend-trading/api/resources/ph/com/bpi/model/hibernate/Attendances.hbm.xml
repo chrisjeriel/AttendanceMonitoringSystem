@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="ph.com.bpi.model.hibernate.Attendances" table="Attendances">
+
+<id name="attendanceId" type="int" column="ATTENDANCE_ID">
+<generator class="increment"/>
+</id>
+<property name="sessionId" column="SESSION_ID" type="int"/>
+<property name="idNumber" column="ID_NUMBER" type="string"/>
+<property name="timeIn" column="TIME_IN" type="string"/>
+<property name="timeOut" column="TIME_OUT" type="string"/>
+<property name="fullName" column="FULL_NAME" type="string"/>
+</class></hibernate-mapping>

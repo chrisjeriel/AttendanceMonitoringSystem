@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="ph.com.bpi.model.hibernate.T0302" table="T0302">
+
+		<id name="id" type="int" column="ID">
+			<generator class="increment" />
+		</id>
+		<property name="cLName" column="C_LNAME" type="string" />
+		<property name="cFName" column="C_FNAME" type="string" />
+		<property name="cMName" column="C_MNAME" type="string" />
+		<property name="cAddr1" column="C_ADDR1" type="string" />
+		<property name="cAddr2" column="C_ADDR2" type="string" />
+		<property name="bday" column="BDAY" type="string" />
+		<property name="tel" column="TEL" type="string" />
+		<property name="tin" column="TIN" type="string" />
+
+	</class>
+</hibernate-mapping>

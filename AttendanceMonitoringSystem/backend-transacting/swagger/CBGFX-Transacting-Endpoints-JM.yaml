@@ -1,0 +1,1715 @@
+swagger: '2.0'
+info:
+  title: CBG-FX Transacting API
+  description: 'Test description'
+  version: '0.0.0'
+  termsOfService: 'http://seer-technologies.com/terms/'
+  contact:
+    name: 'FPTR API team'
+    email: 'jm.santos@seer-technologies.com'
+    url: 'http://swagger.io'
+host: localhost:8080
+basePath: /cbgfx/transacting/api
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /transaction/data_entry:
+    post:
+      summary: 'Transaction Data Entry'
+      description: 'Data entry for all transaction indicators and trading modes combination'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: DataEntryBody
+          in: body
+          description: 'The transaction entry for a particular client'
+          schema:
+            $ref: '#/definitions/DataEntryBody'
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/client-account-number/is-php:
+    get:
+      summary: 'Account number is PHP'
+      description: 'Checks if client account number is PHP'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: clnt_acct
+          in: query
+          description: 'Client account number'
+          type: integer
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/client-account-number/validate:
+    get:
+      summary: 'Account number is valid'
+      description: 'Validates account number - Checks if account number is a BPI/BFB client and returns BPI client short details'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: clnt_acct
+          in: query
+          description: 'Client account number'
+          type: integer
+          required: true
+        - name: curr_acct
+          in: query
+          description: 'Client amount currency'
+          type: integer
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/cbgfx-client/search:
+    get:
+      summary: 'Account number is valid'
+      description: 'Returns list of client with at least one processed transaction using the CBGFX system within 21 calendar days and uses the last name, first name, and middle name (though partial) as search queries'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: CBGFXClientBody
+          in: body
+          description: 'The client to be searched'
+          schema:
+            $ref: '#/definitions/CBGFXClientBody'
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/currency-combinations:
+    get:
+      summary: 'Currency Combinations'
+      description: 'Returns list of currency combination'
+      produces:
+        - application/json
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /currency-pair-modes/list:
+    get:
+      summary: 'Currency Pair Modes'
+      description: 'List of currency pair and acceptance/settlement modes and filters valid acceptance/settle mode combination for selected currency pair'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: CurrencyPairModesBody
+          in: body
+          description: 'The currency'
+          schema:
+            $ref: '#/definitions/CurrencyPairModesBody'
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /acceptance-settlement-mode/list:
+    get:
+      summary: 'Acceptance Settlement Modes'
+      description: 'List of acceptance/settlement modes'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: mode_code
+          in: query
+          description: 'Mode code'
+          type: integer
+          required: true
+        - name: proctag
+          in: query
+          description: 'Procedure tag'
+          type: integer
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'  
+  /currency-code/list:
+    get:
+      summary: 'Currency code list'
+      description: 'List of Currency Code'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: curr_code
+          in: query
+          description: 'Currency code'
+          type: string
+          required: true
+        - name: proctag
+          in: query
+          description: 'Procedure tag'
+          type: integer
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'  
+  /mts-code/get:
+    get:
+      summary: 'MTS Code'
+      description: 'Get MTS Code'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: MTSCodeGetBody
+          in: body
+          description: 'MTS Code'
+          schema:
+            $ref: '#/definitions/MTSCodeGetBody'
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /mts-code/list:
+    get:
+      summary: 'MTS Code List'
+      description: 'List of MTS Codes'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: MTSCodeListBody
+          in: body
+          description: 'MTS Code'
+          schema:
+            $ref: '#/definitions/MTSCodeListBody'
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/deal-rate:
+    get:
+      summary: 'Transaction Deal Rate'
+      description: 'Returns deal rate'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: DealRateBody
+          in: body
+          description: 'Deal rate'
+          schema:
+            $ref: '#/definitions/DealRateBody'
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse' 
+  /transaction/computed-amounts:
+    get:
+      summary: 'Transaction Computed Amounts'
+      description: 'Returns the computed amounts based on requested rate: equivalent amounts, docs stamps, commission and net amount'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: ComputedAmountsBody
+          in: body
+          description: 'Computed Amounts'
+          schema:
+            $ref: '#/definitions/ComputedAmountsBody'
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse' 
+  /transaction/invisible-code/list:
+    get:
+      summary: 'Trasaction Invisible code list'
+      description: 'List of invisible codes'
+      produces:
+        - application/json
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/local-override:
+    post:
+      summary: 'Trasaction local override'
+      description: 'Performs transacting local override'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: local_override
+          in: body
+          description: 'Local Override'
+          schema:
+            $ref: '#/definitions/LocalOverrideBody'
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse' 
+  /transaction/check-deposit-account:
+    get:
+      summary: 'Check deposit account'
+      description: 'Check deposit account'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: check_deposit_account
+          in: body
+          description: 'Check Deposit Account'
+          schema:
+            $ref: '#/definitions/CheckDepositAccountBody'
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse' 
+  /transaction/or/details:
+    get:
+      summary: 'Transaction OR details'
+      description: 'Get OR/Transaction Advice details'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: ref_nmbr
+          in: query
+          description: 'Reference Number'
+          type: string
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/special-request/details:
+    get:
+      summary: 'Transaction Special Request details'
+      description: 'Special Request Transaction Details/Inquiry'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: SpecialRequestDetailsBody
+          in: body
+          description: 'Special Request Details'
+          schema:
+            $ref: '#/definitions/SpecialRequestDetailsBody'
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/special-request/list:
+    get:
+      summary: 'Transaction Special Request list'
+      description: 'Special Request Transaction List'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: SpecialRequestDetailsBody
+          in: body
+          description: 'Special Request'
+          schema:
+            $ref: '#/definitions/SpecialRequestDetailsBody'
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/special-request/update:
+    post:
+      summary: 'Special request update'
+      description: 'Final update on Special request'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: SpecialRequestUpdateBody
+          in: body
+          description: 'Special Request update'
+          schema:
+            $ref: '#/definitions/SpecialRequestUpdateBody'
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/override/details:
+    get:
+      summary: 'Override details'
+      description: 'Override Transaction Details/Inquiry'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: OverrideBody
+          in: body
+          description: 'Override details'
+          schema:
+            $ref: '#/definitions/OverrideBody'
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/override/list:
+    get:
+      summary: 'Override list'
+      description: 'Override Transaction List'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: OverrideBody
+          in: body
+          description: 'Override details'
+          schema:
+            $ref: '#/definitions/OverrideBody'
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/override/update:
+    post:
+      summary: 'Override update'
+      description: 'Final update on Override'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: ref_nmbr
+          in: query
+          description: 'Reference number'
+          type: string
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/daily/list:
+    get:
+      summary: 'Daily transaction list'
+      description: 'Returns list/summary of daily transactions'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: DailyListBody
+          in: body
+          description: 'Daily list'
+          schema:
+            $ref: '#/definitions/DailyListBody'
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/daily/details:
+    post:
+      summary: 'Daily transaction details'
+      description: 'Returns details of a daily transaction'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: DailyDetailsBody
+          in: body
+          description: 'Daily details'
+          schema:
+            $ref: '#/definitions/DailyDetailsBody'
+          required: true
+      responses:
+        default:
+          description: 'Error occured'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+definitions:
+  DataEntryBody:
+    type: object
+    properties:
+      tran_indc:
+        type: string
+      trdr_fi:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      c_addr1:
+        type: string
+      c_addr2:
+        type: string
+      telno:
+        type: string
+      tin:
+        type: string
+      bday:
+        type: string
+        format: date
+      cust_ind:
+        type: string
+      corp_tag:
+        type: string
+      docu_tag:
+        type: string
+      gOffCode:
+        type: string
+      book_unit:
+        type: string
+      mang_unit:
+        type: string
+      deal_rate:
+        type: integer
+      rqst_rate:
+        type: integer
+      grnt_rate:
+        type: integer
+      net_amnt:
+        type: integer
+      acpt_amnt:
+        type: integer
+      curr_fr:
+        type: string
+      acpt_mode:
+        type: integer
+      acpt_check_indc:
+        type: string
+      chkdtl1:
+        type: boolean
+      acpt_refno:
+        type: string
+      achrg_ded:
+        type: string
+      acpt_docs:
+        type: integer
+      acpt_comm:
+        type: integer
+      acpt_post:
+        type: integer
+      r_lname:
+        type: string
+      r_fname:
+        type: string
+      r_mname:
+        type: string
+      setl_amnt:
+        type: integer
+      curr_to:
+        type: string
+      setl_mode:
+        type: integer
+      setl_chck_indc:
+        type: string
+      chkdtl2:
+        type: boolean
+      setl_refno:
+        type: string
+      schrg_ded:
+        type: string
+      setl_docs:
+        type: integer
+      setl_comm:
+        type: integer
+      setl_post:
+        type: integer
+      b_lname:
+        type: string
+      b_fname:
+        type: string
+      b_mname:
+        type: string
+      b_bday:
+        type: string
+        format: date
+      b_addr1:
+        type: string
+      b_addr2:
+        type: string
+      b_tin:
+        type: string
+      invi_code:
+        type: string
+      guserid:
+        type: string
+      rmrk_brch:
+        type: string
+      overd_id1:
+        type: integer
+      overd_id2:
+        type: integer
+      overd_ptt:
+        type: integer
+      bene_tag:
+        type: integer
+      tran_tag:
+        type: integer
+      fvec_tag:
+        type: integer
+  ObjectResponse:
+    type: object
+    properties:
+      data:
+        type: object
+      meta:
+        $ref: '#/definitions/ResponseMeta'
+  ResponseMeta:
+    type: object
+    properties:
+      code:
+        type: integer
+      errorType:
+        type: string
+      errorMessage:
+        type: string
+  CBGFXClientBody:
+    type: object
+    properties:
+      tran_indc:
+        type: string
+      rqst_code:
+        type: integer
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      proctag:
+        type: string
+  CBGFXClientResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/CBGFXClientResponseData'
+  CBGFXClientResponseData:
+    type: object
+    properties:
+      tran_indc:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      accm_amnt:
+        type: integer
+      accm_amnt2:
+        type: integer
+  CurrencyPairModesBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      list_indc:
+        type: integer
+      list_optn:
+        type: integer
+      tran_fi:
+        type: string
+      curr_from:
+        type: string
+      acpt_mode:
+        type: integer
+      setl_mode:
+        type: integer
+      proc_tag:
+        type: string
+  CurrencyPairModesResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/CurrencyPairModesResponseData'
+  CurrencyPairModesResponseData:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      tran_fi:
+        type: string
+      list_indc:
+        type: integer
+      list_optn:
+        type: integer
+      curr_from:
+        type: string
+      acpt_mode:
+        type: integer
+      achrg_ind:
+        type: string
+      arect_stat:
+        type: string
+      setl_mode:
+        type: integer
+      schrg_ind:
+        type: string
+      srect_stat:
+        type: integer
+      proc_tag:
+        type: string
+  AcceptanceSettlementModesResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/AcceptanceSettlementModesResponseData'
+  AcceptanceSettlementModesResponseData:
+    type: object
+    properties:
+      mode_code:
+        type: integer
+      mode_desc:
+        type: string
+      mcro_tag:
+        type: integer
+      actv_tag:
+        type: string
+      php_tag:
+        type: string
+  CurrencyCodesResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/CurrencyCodesResponseData'
+  CurrencyCodesResponseData:
+    type: object
+    properties:
+      curr_code:
+        type: string
+      curr_bpi:
+        type: string
+      curr_casa:
+        type: string
+      curr_desc:
+        type: string
+  MTSCodeGetBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      mode_indc:
+        type: string
+      mode_code:
+        type: integer
+      mts_code:
+        type: string
+      proctag:
+        type: string
+  MTSCodeGetResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/MTSCodeGetResponseData'
+  MTSCodeGetResponseData:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      mode_indc:
+        type: string
+      mode_code:
+        type: integer
+      mts_code:
+        type: string
+      mts_desc:
+        type: string
+  MTSCodeListBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      mode_indc:
+        type: string
+      mode_code:
+        type: integer
+      proctag:
+        type: string
+  MTSCodeListResponse:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      mode_indc:
+        type: string
+      mode_code:
+        type: integer
+      proctag:
+        type: string
+  DealRateBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      tran_fi:
+        type: string
+      cust_indc:
+        type: string
+      tran_indc:
+        type: string
+      curr_fr:
+        type: string
+      curr_to:
+        type: string
+      acpt_mode:
+        type: integer
+      setl_mode:
+        type: integer
+      tran_amnt:
+        type: integer
+      fvec_tag:
+        type: integer
+  ComputedAmountsBody:
+    type: object
+    properties:
+      chkdtl1:
+        type: string
+      chkdtl2:
+        type: string
+      trdr_fi:
+        type: string
+      tran_fi:
+        type: string
+      tran_indc:
+        type: string
+      cust_indc:
+        type: string
+      acpt_amnt:
+        type: integer
+      curr_fr:
+        type: string
+      acpt_mode:
+        type: integer
+      acpt_chck_indc:
+        type: string
+      achrg_ded:
+        type: string
+      setl_amnt:
+        type: integer
+      curr_to:
+        type: string
+      setl_mode:
+        type: integer
+      setl_check_indc:
+        type: string
+      schrg_ded:
+        type: string
+      rate_indc:
+        type: string
+      deal_rate:
+        type: integer
+      rqst_rate:
+        type: integer
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      docu_tag:
+        type: string
+      fvec_tag:
+        type: integer
+  ComputedAmountsResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            $ref: '#/definitions/ComputedAmountsResponseData'
+  ComputedAmountsResponseData:
+    type: object
+    properties:
+      equi_amnt:
+        type: integer
+      acpt_docs:
+        type: integer
+      acpt_comm:
+        type: integer
+      setl_docs:
+        type: integer
+      setl_comm:
+        type: integer
+      acpt_post:
+        type: integer
+      setl_post:
+        type: integer
+      net_amnt:
+        type: integer
+      tran_tag:
+        type: integer
+  InvisibleCodeResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/InvisibleCodeResponseData'
+  InvisibleCodeResponseData:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      invi_code:
+        type: string
+      tran_code:
+        type: string
+      form_nmbr:
+        type: string
+      invi_desc:
+        type: string
+  LocalOverrideBody:
+    type: object
+    properties:
+      userid_o1:
+        type: string
+      pword_o1:
+        type: string
+      userid_o2:
+        type: string  
+      pword_o2:
+        type: string
+      gOffCode:
+        type: string
+      gPassword:
+        type: string
+      procTag:
+        type: string
+  CheckDepositAccountBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      tran_indc:
+        type: string
+      curr_fr:
+        type: string
+      acpt_acct:
+        type: integer
+      acpt_mode:
+        type: integer
+      setl_acct:
+        type: integer
+      net_amnt:
+        type: integer
+      setl_mode:
+        type: integer
+  CheckDepositAccountResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/CheckDepositAccountResponseData'
+  CheckDepositAccountResponseData:
+    type: object
+    properties:
+      tran_indc:
+        type: string
+      acpt_stat:
+        type: integer
+      setl_stat:
+        type: integer
+      acpt_name:
+        type: string
+      setl_name:
+        type: string
+      acpt_clen:
+        type: integer
+  TransactionORDetailsResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/TransactionORDetailsResponseData'
+  TransactionORDetailsResponseData:
+    type: object
+    properties:
+      tran_indc:
+        type: string
+      ref_nmbr:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      c_addr1:
+        type: string
+      c_addr2:
+        type: string
+      tel:
+        type: string
+      tin:
+        type: string
+      curr_fr:
+        type: string
+      tran_amnt:
+        type: integer
+      grnt_rate:
+        type: integer
+      curr_to:
+        type: string
+      equi_amnt:
+        type: integer
+      net_amnt:
+        type: integer
+      acpt_mode:
+        type: integer
+      check_indc:
+        type: string
+      acpt_refno:
+        type: string
+      acpt_docs:
+        type: integer
+      acpt_comm:
+        type: integer
+      r_lname:
+        type: string
+      r_fname:
+        type: string
+      r_mname:
+        type: string
+      atelr_vald:
+        type: string
+      serl_nmbr:
+        type: integer
+      chck_amnt:
+        type: integer
+      setl_mode:
+        type: integer
+      setl_refno:
+        type: string
+      setl_docs:
+        type: integer
+      setl_comm:
+        type: integer
+      b_lname:
+        type: string
+      b_fname:
+        type: string
+      b_mname:
+        type: string
+      b_bday:
+        type: string
+        format: date
+      b_addr1:
+        type: string
+      b_addr2:
+        type: string
+      stelr_vald:
+        type: string
+      acpt_post:
+        type: integer
+      setl_post:
+        type: integer
+      b_tin:
+        type: string
+  SpecialRequestDetailsBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      tran_indc:
+        type: string
+      brch_code:
+        type: integer
+      curr_code:
+        type: string
+      ref_number:
+        type: integer
+      inqy_type:
+        type: integer
+  SpecialRequestDetailsResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/SpecialRequestDetailsResponseData'
+  SpecialRequestDetailsResponseData:
+    type: object
+    properties:
+      tran_date:
+        type: string
+      tran_unit:
+        type: string
+      tran_indc:
+        type: string
+      ref_nmbr:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      addr1:
+        type: string
+      addr2:
+        type: string
+      telno:
+        type: string
+      tin:
+        type: string
+      bday:
+        type: string
+        format: date
+      clnt_tag:
+        type: string
+      corp_tag:
+        type: string
+      docu_tag:
+        type: string
+      mang_unit:
+        type: string
+      book_unit:
+        type: string
+      curr_fr:
+        type: string
+      tran_amnt:
+        type: integer
+      deal_rate:
+        type: integer
+      rqst_rate:
+        type: integer
+      grnt_rate:
+        type: integer
+      curr_to:
+        type: string
+      equi_amnt:
+        type: integer
+      net_amnt:
+        type: integer
+      acpt_mode:
+        type: integer
+      acpt_refno:
+        type: string
+      achrg_ded:
+        type: string
+      acpt_docs:
+        type: integer
+      acpt_comm:
+        type: integer
+      r_lname:
+        type: string
+      r_fname:
+        type: string
+      r_mname:
+        type: string
+      atel_valid:
+        type: string
+      setl_mode:
+        type: integer
+      setl_refno:
+        type: string
+      schrg_ded:
+        type: string
+      setl_docs:
+        type: integer
+      b_lname:
+        type: string
+      b_fname:
+        type: string
+      b_mname:
+        type: string
+      b_bday:
+        type: string
+        format: date
+      b_addr1:
+        type: string
+      b_addr2:
+        type: string
+      stel_valid:
+        type: string
+      invi_code:
+        type: string
+      userid:
+        type: string
+      termid:
+        type: string
+      stat_rqst:
+        type: string
+      rmrk_brch:
+        type: string
+      rmrk_trdr:
+        type: string
+      acpt_post:
+        type: integer
+      setl_post:
+        type: integer
+      ovrd_ptt:
+        type: integer
+      b_tin:
+        type: string
+  SpecialRequestListResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/SpecialRequestListResponseData'
+  SpecialRequestListResponseData:
+    type: object
+    properties:
+      tran_trdr:
+        type: string
+      tran_indc:
+        type: string
+      ref_nmbr:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      addr1:
+        type: string
+      addr2:
+        type: string
+      acpt_mode:
+        type: integer
+      curr_fr:
+        type: string
+      tran_amnt:
+        type: integer
+      setl_mode:
+        type: integer
+      curr_to:
+        type: string
+      equi_amnt:
+        type: integer
+      grnt_rate:
+        type: integer
+      stat_rqst:
+        type: string
+      brch_code:
+        type: string
+      rqst_rate:
+        type: integer
+  SpecialRequestUpdateBody:
+    type: object
+    properties:
+      ref_nmbr:
+        type: string
+      ovrd_id1:
+        type: integer
+      ovr_id2:
+        type: integer
+  OverrideBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      tran_indc:
+        type: string
+      brch_code:
+        type: integer
+      curr_code:
+        type: string
+      ref_nmber:
+        type: integer
+      inqy_type:
+        type: integer
+  OverrideDetailsResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/OverrideDetailsResponseData'
+  OverrideDetailsResponseData:
+    type: object
+    properties:
+      tran_date:
+        type: string
+      tran_unit:
+        type: string
+      tran_indc:
+        type: string
+      ref_nmbr:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      addr1:
+        type: string
+      addr2:
+        type: string
+      telno:
+        type: string
+      tin:
+        type: string
+      bday:
+        type: string
+        format: date
+      clnt_tag:
+        type: string
+      corp_tag:
+        type: string
+      docu_tag:
+        type: string
+      mang_unit:
+        type: string
+      book_unit:
+        type: string
+      curr_fr:
+        type: string
+      tran_amnt:
+        type: integer
+      deal_rate:
+        type: integer
+      rqst_rate:
+        type: integer
+      grnt_rate:
+        type: integer
+      curr_to:
+        type: string
+      equi_amnt:
+        type: integer
+      net_amnt:
+        type: integer
+      acpt_mode:
+        type: integer
+      acpt_refno:
+        type: string
+      achrg_ded:
+        type: string
+      acpt_docs:
+        type: integer
+      acpt_comm:
+        type: integer
+      r_lname:
+        type: string
+      r_fname:
+        type: string
+      r_mname:
+        type: string
+      atel_valid:
+        type: string
+      setl_mode:
+        type: integer
+      setl_refno:
+        type: string
+      schrg_ded:
+        type: string
+      setl_docs:
+        type: integer
+      b_lname:
+        type: string
+      b_fname:
+        type: string
+      b_mname:
+        type: string
+      b_bday:
+        type: string
+        format: date
+      b_addr1:
+        type: string
+      b_addr2:
+        type: string
+      stel_valid:
+        type: string
+      invi_code:
+        type: string
+      userid:
+        type: string
+      termid:
+        type: string
+      stat_rqst:
+        type: string
+      rmrk_brch:
+        type: string
+      rmrk_trdr:
+        type: string
+      acpt_post:
+        type: integer
+      setl_post:
+        type: integer
+      ovrd_ptt:
+        type: integer
+      b_tin:
+        type: string
+  OverrideResponse:
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/OverrideResponseData'
+  OverrideResponseData:
+    type: object
+    properties:
+      tran_trdr:
+        type: string
+      tran_indc:
+        type: string
+      ref_nmbr:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      addr1:
+        type: string
+      addr2:
+        type: string
+      acpt_mode:
+        type: integer
+      curr_fr:
+        type: string
+      tran_amnt:
+        type: integer
+      setl_mode:
+        type: integer
+      curr_to:
+        type: string
+      equi_amnt:
+        type: integer
+      grnt_rate:
+        type: integer
+      stat_rqst:
+        type: string
+      brch_code:
+        type: integer
+      rqst_rate:
+        type: integer
+  DailyListBody:
+    type: object
+    properties:
+      goffcode:
+        type: string
+      trdr_fi:
+        type: string
+      rqst_type:
+        type: string
+      ref_number:
+        type: string
+      curr_fr:
+        type: string
+      curr_to:
+        type: string
+      proc_tag:
+        type: string
+  DailyListResponse:
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/DailyListResponseData'
+  DailyListResponseData:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      tran_indc:
+        type: string
+      ref_nmbr:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      acpt_mode:
+        type: integer
+      curr_fr:
+        type: string
+      tran_amnt:
+        type: integer
+      setl_mode:
+        type: integer
+      curr_to:
+        type: string
+      equi_amnt:
+        type: integer
+      net_amnt:
+        type: integer
+      totl_chrg:
+        type: integer
+      trdr_id:
+        type: string
+  DailyDetailsBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      tran_indc:
+        type: string
+      rqst_type:
+        type: string
+      ref_nmber:
+        type: string
+  DailyDetailsResponse:
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/DailyDetailsResponseData'
+  DailyDetailsResponseData:
+    type: object
+    properties:
+      tran_date:
+        type: string
+      tran_unit:
+        type: string
+      trdr_fi:
+        type: string
+      tran_indc:
+        type: string
+      ref_nmber:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      c_addr1:
+        type: string
+      c_addr2:
+        type: string
+      telno:
+        type: string
+      tin:
+        type: string
+      bday:
+        type: string
+        format: date
+      clnt_tag:
+        type: string
+      corp_tag:
+        type: string
+      docu_tag:
+        type: string
+      mang_unit:
+        type: string
+      book_unit:
+        type: string
+      curr_fr:
+        type: string
+      tran_amnt:
+        type: integer
+      deal_rate:
+        type: integer
+      rqst_rate:
+        type: integer
+      grnt_rate:
+        type: integer
+      curr_to:
+        type: string
+      equi_amnt:
+        type: integer
+      net_amnt:
+        type: integer
+      acpt_mode:
+        type: string
+      acpt_refno:
+        type: string
+      achrg_ded:
+        type: string
+      acpt_docs:
+        type: integer
+      acpt_comm:
+        type: integer
+      r_lname:
+        type: string
+      r_fname:
+        type: string
+      r_mname:
+        type: string
+      atel_valid:
+        type: string
+      setl_mode:
+        type: integer
+      setl_refno:
+        type: string
+      schrg_ded:
+        type: string
+      setl_docs:
+        type: integer
+      setl_comm:
+        type: integer
+      b_lname:
+        type: string
+      b_fname:
+        type: string
+      b_mname:
+        type: string
+      b_bday:
+        type: string
+        format: date
+      b_addr1:
+        type: string
+      b_addr2:
+        type: string
+      stel_vald:
+        type: string
+      invi_code:
+        type: string
+      userid:
+        type: string
+      term_id:
+        type: string
+      stat_rqst:
+        type: string
+      rmrk_brch:
+        type: string
+      rmrk_trdr:
+        type: string
+      acpt_post:
+        type: integer
+      setl_post:
+        type: integer
+      b_tin:
+        type: string

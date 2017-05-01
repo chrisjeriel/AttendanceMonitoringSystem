@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="ph.com.bpi.model.hibernate.T0144" table="T0144">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="ptrckIndc" column="PTRCK_INDC" type="string"/>
+<property name="ptrckDays" column="PTRCK_DAYS" type="big_decimal"/>
+<property name="ptrckAmnt" column="PTRCK_AMNT" type="big_decimal"/>
+<property name="strckIndc" column="STRCK_INDC" type="string"/>
+<property name="strckDays" column="STRCK_DAYS" type="big_decimal"/>
+<property name="strckAmnt" column="STRCK_AMNT" type="big_decimal"/>
+
+</class></hibernate-mapping>

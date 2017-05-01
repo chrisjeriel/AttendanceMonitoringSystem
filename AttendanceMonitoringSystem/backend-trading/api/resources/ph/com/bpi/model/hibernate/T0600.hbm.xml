@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="ph.com.bpi.model.hibernate.T0600" table="T0600">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="trdrFi" column="TRDR_FI" type="string"/>
+<property name="bank" column="BANK" type="string"/>
+<property name="book" column="BOOK" type="string"/>
+<property name="appl" column="APPL" type="string"/>
+<property name="tranFi" column="TRAN_FI" type="string"/>
+<property name="tranUnit" column="TRAN_UNIT" type="string"/>
+<property name="curr" column="CURR" type="string"/>
+<property name="prchFxcy" column="PRCH_FXCY" type="big_decimal"/>
+<property name="prchCntr" column="PRCH_CNTR" type="big_decimal"/>
+<property name="prchAvec" column="PRCH_AVEC" type="big_decimal"/>
+<property name="prchUsd" column="PRCH_USD" type="big_decimal"/>
+<property name="saleFxcy" column="SALE_FXCY" type="big_decimal"/>
+<property name="saleCntr" column="SALE_CNTR" type="big_decimal"/>
+<property name="saleAvec" column="SALE_AVEC" type="big_decimal"/>
+<property name="saleUsd" column="SALE_USD" type="big_decimal"/>
+<property name="uncoFxcy" column="UNCO_FXCY" type="big_decimal"/>
+<property name="uncoUsd" column="UNCO_USD" type="big_decimal"/>
+<property name="consFxcy" column="CONS_FXCY" type="big_decimal"/>
+<property name="consUsd" column="CONS_USD" type="big_decimal"/>
+<property name="pendUnld" column="PEND_UNLD" type="big_decimal"/>
+<property name="unld" column="UNLD" type="big_decimal"/>
+<property name="totl" column="TOTL" type="big_decimal"/>
+
+</class></hibernate-mapping>

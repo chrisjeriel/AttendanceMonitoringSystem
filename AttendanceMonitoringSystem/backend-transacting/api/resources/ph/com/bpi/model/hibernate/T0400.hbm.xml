@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="ph.com.bpi.model.hibernate.T0400" table="T0400">
+
+		<id name="id" type="int" column="ID">
+			<generator class="increment" />
+		</id>
+		<property name="trdrFi" column="TRDR_FI" type="string" />
+		<property name="book" column="BOOK" type="big_decimal" />
+		<property name="tranIndc" column="TRAN_INDC" type="string" />
+		<property name="refNmbr" column="REF_NMBR" type="string" />
+		<property name="currFrom" column="CURR_FROM" type="string" />
+		<property name="currTo" column="CURR_TO" type="string" />
+		<property name="acptMode" column="ACPT_MODE" type="big_decimal" />
+		<property name="setlMode" column="SETL_MODE" type="big_decimal" />
+		<property name="tranAmnt" column="TRAN_AMNT" type="big_decimal" />
+		<property name="eqvlAmnt" column="EQVL_AMNT" type="big_decimal" />
+		<property name="rqstRate" column="RQST_RATE" type="big_decimal" />
+		<property name="grntRate" column="GRNT_RATE" type="big_decimal" />
+		<property name="btsuRmrk" column="BTSU_RMRK" type="string" />
+		<property name="trsyRmrk" column="TRSY_RMRK" type="string" />
+		<property name="inviCode" column="INVI_CODE" type="string" />
+		<property name="grntStat" column="GRNT_STAT" type="string" />
+
+	</class>
+</hibernate-mapping>

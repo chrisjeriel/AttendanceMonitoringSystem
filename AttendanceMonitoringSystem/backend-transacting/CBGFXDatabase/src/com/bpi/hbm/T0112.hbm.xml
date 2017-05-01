@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="com.bpi.model.T0112" table="T0112">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="trdrFi" column="TRDR_FI" type="string"/>
+<property name="tranFi" column="TRAN_FI" type="string"/>
+<property name="currFrom" column="CURR_FROM" type="string"/>
+<property name="currTo" column="CURR_TO" type="string"/>
+<property name="acptMode" column="ACPT_MODE" type="big_decimal"/>
+<property name="achrgInd" column="ACHRG_IND" type="string"/>
+<property name="arecStat" column="AREC_STAT" type="big_decimal"/>
+<property name="setlMode" column="SETL_MODE" type="big_decimal"/>
+<property name="schrgInd" column="SCHRG_IND" type="string"/>
+<property name="srecStat" column="SREC_STAT" type="big_decimal"/>
+<property name="tranType" column="TRAN_TYPE" type="string"/>
+
+</class></hibernate-mapping>

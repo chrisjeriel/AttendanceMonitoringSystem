@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.bpi.model.T0011" table="T0011">
+
+		<id name="id" type="int" column="ID">
+			<generator class="increment" />
+		</id>
+		<property name="brchName" column="BRCH_NAME" type="string" />
+		<property name="fiDesc" column="FI_DESC" type="string" />
+		<property name="userId" column="USER_ID" type="string" />
+		<property name="lName" column="LNAME" type="string" />
+		<property name="fName" column="FNAME" type="string" />
+		<property name="mName" column="MNAME" type="string" />
+		<property name="userType" column="USER_TYPE" type="big_decimal" />
+		<property name="userDesc" column="USER_DESC" type="string" />
+		<property name="userStat" column="USER_STAT" type="string" />
+		<property name="ovrdPt" column="OVRD_PT" type="big_decimal" />
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="com.bpi.model.T0104" table="T0104">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="trdrFi" column="TRDR_FI" type="string"/>
+<property name="currCode" column="CURR_CODE" type="string"/>
+<property name="minAmnt" column="MIN_AMNT" type="big_decimal"/>
+<property name="pabvLim" column="PABV_LIM" type="big_decimal"/>
+<property name="sabvLim" column="SABV_LIM" type="big_decimal"/>
+
+</class></hibernate-mapping>

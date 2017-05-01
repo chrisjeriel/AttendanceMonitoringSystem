@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="ph.com.bpi.model.hibernate.HeaderData" table="HEADER_DATA">
+		<id name="id" type="int" column="ID">
+			<generator class="increment" />
+		</id>
+		<property name="luid" column="G_LUID" type="string" />
+		<property name="officeCode" column="G_OFFICE_CODE" type="string" />
+		<property name="userId" column="G_USER_ID" type="string" />
+		<property name="logDate" column="C_LOG_DATE" type="string" />
+		<property name="logTime" column="G_LOG_TIME" type="string" />
+		<property name="tranFi" column="G_TRAN_FI" type="string" />
+	</class>
+</hibernate-mapping>

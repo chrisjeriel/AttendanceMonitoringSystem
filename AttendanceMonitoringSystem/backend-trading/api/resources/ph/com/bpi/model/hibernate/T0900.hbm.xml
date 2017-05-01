@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="ph.com.bpi.model.hibernate.T0900" table="T0900">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="trdrFi" column="TRDR_FI" type="string"/>
+<property name="refNmbr" column="REF_NMBR" type="string"/>
+<property name="mcSerNo" column="MC_SERNO" type="string"/>
+<property name="cLName" column="C_LNAME" type="string"/>
+<property name="cFName" column="C_FNAME" type="string"/>
+<property name="cMName" column="C_MNAME" type="string"/>
+<property name="phpAmt" column="PHP_AMT" type="big_decimal"/>
+
+</class></hibernate-mapping>

@@ -1,0 +1,5534 @@
+swagger: '2.0'
+info:
+  title: CBG-FX Transacting API
+  description: 'Test description'
+  version: '0.0.0'
+  termsOfService: 'http://seer-technologies.com/terms/'
+  contact:
+    name: 'FPTR API team'
+    email: 'jm.santos@seer-technologies.com'
+    url: 'http://swagger.io'
+host: localhost:8080
+basePath: /cbgfx/transacting/api
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /appDetails:
+    get:
+      description: Get application details
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Login response
+          schema:
+            $ref: '#/definitions/appDetails'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /account/login:
+    post:
+      description: User login stuff
+      operationId: userLogin
+      produces:
+        - application/json
+      parameters:
+        # - name: transactionDate
+        #   in: query
+        #   description: Date of Transaction in MM/DD/YYYY format
+        #   required: true
+        #   type: string
+        #   format: date
+        - name: loginBody
+          description: 'Login form'
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/dataEntry'
+      
+      responses:
+        '200':
+          description: Login response
+          schema:
+            $ref: '#/definitions/loginResult'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /account/logout:
+    post:
+      description: User signout
+      produces:
+        - application/json
+      parameters:
+        - name: userId
+          in: body
+          description: User ID to be logged out
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Logout response
+          schema:
+            $ref: '#/definitions/errorModel'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /account/{userId}:
+    put:
+      description: Change password
+      produces:
+        - application/json
+      parameters:
+        - name: transactionDate
+          in: query
+          description: Date of Transaction in MM/DD/YYYY format
+          required: true
+          type: string
+          format: date
+        - name: officeCode
+          in: query
+          description: Office Code
+          required: true
+          type: string
+        - name: userId
+          in: path
+          description: User ID to be logged in
+          required: true
+          type: string
+        - name: oldPassword
+          in: query
+          description: User's old password
+          required: true
+          type: string
+        - name: newPassword
+          in: query
+          description: Proposed new password
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Change password response
+          schema:
+            $ref: '#/definitions/cpResponse'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /account/firstOfficerOverride:
+    post:
+      description: "First Officer override facility"
+      produces:
+        - application/json
+      parameters:
+        - name: firstOfficerOverrideBody
+          description: 'firstOfficerOverrideBody'
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/OfficerOverrideBody'
+      responses:
+        '200':
+          description: First Officer override response
+          schema:
+            $ref: '#/definitions/errorModel'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /account/secondOfficerOverride:
+    post:
+      description: "Second Officer override facility"
+      produces:
+        - application/json
+      parameters:
+        - name: secondOfficerOverride
+          description: 'secondOfficerOverride'
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/OfficerOverrideBody'
+      responses:
+        '200':
+          description: Second Officer override response
+          schema:
+            $ref: '#/definitions/errorModel'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /tables/download:
+    get:
+      description: |
+        Triggers download of table specified in table_id in the background.
+        To get table names and their IDs, use /tables/getInfo
+      produces:
+        - application/json
+      parameters:
+        - name: table_id
+          in: query
+          description: Table ID
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: the result of downloading tables
+          schema:
+            $ref: '#/definitions/errorModel'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /tables/info:
+    get:
+      description: Returns the list of tables with their respective ids.
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: List of reference files / tables
+          schema:
+            $ref: '#/definitions/referenceTable'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /printer/list:
+    get:
+      description: |
+        Returns the list of printers. Saved printers will have a printerId while printers not yet saved won't.
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: 'List of printers'
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/printer'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /printer/add:
+    post:
+      description: |
+        Adds new printer, and sets it to default if specified.
+      produces:
+        - application/json
+      parameters:
+        - name: printerAddBody
+          description: 'add printer body'
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/PrinterAddBody'
+
+      responses:
+        '200':
+          description: Add printer result
+          schema:
+            $ref: '#/definitions/errorModel'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /printer/delete/{printerId}:
+    delete:
+      description: |
+        Deletes printer specified by printerId
+      produces:
+        - application/json
+      parameters:
+        - name: printerId
+          in: path
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Delete printer result
+          schema:
+            $ref: '#/definitions/errorModel'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/forex/purchase/dataEntry:
+    post:
+      description: |
+        Saves new Purchase Data Entry
+        Deal Rate and Request Rate is the same, and will also be re-calculated in the backend for verification.
+      produces:
+        - application/json
+      parameters:
+        - name: dataEntryForm
+          description: 'Data entry form'
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/dataEntry'
+      responses:
+        '200':
+          description: "Data entry form save success"
+          schema:
+            $ref: '#/definitions/referenceNumberSet'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/forex/purchase/finalUpdate:
+    post:
+      description: |
+        Final Update for Forex
+      produces:
+        - application/json
+      parameters:
+        - name: dataEntryForm
+          description: 'Data entry form'
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/dataEntry'
+      responses:
+        '200':
+          description: "Data entry form save success"
+          schema:
+            $ref: '#/definitions/referenceNumberSet'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/forex/sale/dataEntry:
+    post:
+      description: |
+        Saves new Sale Data Entry
+        Deal Rate and Request Rate is the same, and will also be re-calculated in the backend for verification.
+      produces:
+        - application/json
+      parameters:
+        - name: dataEntryForm
+          description: 'Data entry form'
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/dataEntry'
+      responses:
+        '200':
+          description: "Data entry form save success"
+          schema:
+            $ref: '#/definitions/referenceNumberSet'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/forex/sale/override:
+    post:
+      description: |
+        Forex Sale Final Update on Override.
+      produces:
+        - application/json
+      parameters:
+        - name: dataEntryForm
+          description: 'Data entry form'
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/dataEntry'
+      responses:
+        '200':
+          description: "Data entry form save success"
+          schema:
+            $ref: '#/definitions/referenceNumberSet'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/forex/sale/cashAcceptance:
+    post:
+      description: |
+        Forex Sale Final Update on Cash Acceptance/Settlement.
+        Requires Teller Validation and Officer Overrides
+      produces:
+        - application/json
+      parameters:
+        - name: dataEntryForm
+          description: 'Data entry form'
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/dataEntry'
+      responses:
+        '200':
+          description: "Data entry form save success"
+          schema:
+            $ref: '#/definitions/referenceNumberSet'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/currencyCombinations:
+    get:
+      description: "Returns a list of currency combinations (ex, from USD to PHP, AUD to USD)."
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/currencyCombination"
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/settlementCodes:
+    get:
+      description: "Returns a list of Acceptance-Settlement Mode pairs."
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/acceptanceSettlementMode"
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/printAdvice/{referenceNo}:
+    post:
+      description: "Prints transaction advice specified by reference number"
+      produces:
+        - application/json
+      parameters:
+        - name: referenceNo
+          in: body
+          required: true
+          description: "Transaction reference number. (Temporary and Final)"
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "Print transaction advice result"
+          schema:
+            $ref: "#/definitions/errorModel"
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/mtsCodes/{mtsType}:
+    get:
+      description: "Returns a list of MTS/Reference codes."
+      produces:
+        - application/json
+      parameters:
+        - name: mtsType
+          type: string
+          required: true
+          in: path
+          enum:
+            - acceptance
+            - settlement
+      responses:
+        '200':
+          description: "List of MTS/Reference Codes"
+          schema:
+            $ref: "#/definitions/mtsCode"
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/invisibleCodes/list:
+    get:
+      description: 'Returns a list of invisible codes, specified by transaction type (FOREX, BTSU, MTU). If no transaction type specified, all invisible codes will be returned.'
+      produces:
+        - application/json
+      parameters:
+        - name: transactionType
+          type: string
+          enum:
+            - forex
+            - btsu
+            - mtu
+          in: query
+      responses:
+        '200':
+          description: 'List of Invisible codes'
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/invisibleCode'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/list:
+    get:
+      description: |
+        Returns a list of transactions by reference number (temporary or final, for verification), specified by transaction type.
+        Returns all transactions if referenceNo is empty.
+        If isCorrected is specified, list will be filtered according to value
+      produces:
+        - application/json
+      parameters:
+        - name: referenceNo
+          type: string
+          required: false
+          in: query
+        - name: transactionType
+          type: string
+          required: true
+          in: query
+          enum:
+            - forex_purchase
+            - forex_sale
+            - btsu_purchase
+            - btsu_sale
+            - tmu_purchase
+            - tmu_sale
+        - name: isCorrected
+          type: boolean
+          required: false
+          in: query
+          description: Checks if the transaction details are corrected/changed
+      responses:
+        '200':
+          description: "List of transactions."
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/transactionSummary"
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/{referenceNo}:
+    get:
+      description: "Returns complete transaction details specified by reference number"
+      produces:
+        - application/json
+      parameters:
+        - name: referenceNo
+          type: string
+          required: true
+          in: path
+      responses:
+        '200':
+          description: "Transaction details"
+          schema:
+            $ref: "#/definitions/dataEntry"
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/tellerValidation/{referenceNo}:
+    post:
+      description: "Submits teller's acceptance and settlement validation codes. First officer override should be called first"
+      produces:
+        - application/json
+      parameters:
+        - name: dataEntryForm
+          description: 'Data entry form'
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/dataEntry'    
+      responses:
+        '200':
+          description: "Teller validation result"
+          schema:
+            $ref: '#/definitions/errorModel'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/cbgfxClient/search:
+    post:
+      description: |
+        Returns a list of CBG-FX clients. Client will be deleted on the list if there is no transaction made within 21 calendar days.
+        Passing the client's surname (or a part of it) will narrow the search results.
+      produces:
+        - application/json
+      parameters:
+        - name: surname
+          schema:
+            type: string
+          in: body
+          description: "Client's surname"
+          required: false
+      responses:
+        '200':
+          description: "List of CBG-FX Clients"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/cbgfxClientDetails'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/dealRate:
+    get:
+      description: Requests for the Deal Rate. Requires source and destination currency.
+      produces:
+        - application/json
+      parameters:
+        - name: fromCurrency
+          type: string
+          in: query
+          description: |
+            Source currency abbreviation (ex: PHP, USD)
+          required: true
+        - name: toCurrency
+          type: string
+          in: query
+          description: |
+            Destination currency abbreviation (ex: PHP, USD)
+          required: true
+        - name: mode
+          type: string
+          in: query
+          description: "Transaction Mode (FOREX,BTSU, TMU)"
+          enum:
+            - FOREX
+            - BTSU
+            - TMU
+      responses:
+        '200':
+          description: Deal Rate
+          schema:
+            $ref: '#/definitions/dealRate'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/btsu/purchase/dataEntry:
+    post:
+      description: "Purchase Data Entry (Deal with BTSU). First Officer override facility should be entered first."
+      produces:
+        - application/json
+      parameters:
+        - name: dataEntry
+          description: "Data Entry Form"
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/dataEntry'
+      responses:
+        '200':
+          description: "Final Reference Number"
+          schema:
+            $ref: '#/definitions/referenceNumberSet'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/btsu/sale/dataEntry:
+    post:
+      description: "Sale Data Entry (Deal with BTSU). First Officer override facility should be entered first."
+      produces:
+        - application/json
+      parameters:
+        - name: dataEntry
+          description: "Data Entry Form"
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/dataEntry'
+      responses:
+        '200':
+          description: "Temporary Reference Number"
+          schema:
+            $ref: '#/definitions/referenceNumberSet'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/btsu/sale/override:
+    post:
+      description: "BTSU Sale Final Update on Override"
+      produces:
+        - application/json
+      parameters:
+        - name: dataEntry
+          description: "Data Entry Form"
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/dataEntry'
+      responses:
+        '200':
+          description: "Final Reference Number"
+          schema:
+            $ref: '#/definitions/referenceNumberSet'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/btsu/getEquivalentAmt:
+    get:
+      description: "Calculates equivalent amount based on request rate"
+      produces:
+        - application/json
+      parameters:
+        - name: requestRate
+          description: Request Rate
+          type: number
+          format: float
+          in: query
+      responses:
+        '200':
+          description: "Returns gross equivalent amount, plus charges"
+          schema:
+            $ref: '#/definitions/equivalentAmtResult'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/tmu/purchase/dataEntry:
+    post:
+      description: "Purchase Data Entry (Deal with TMU)"
+      produces:
+        - application/json
+      parameters:
+        - name: tmuForm
+          description: "Data Entry Form"
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/dataEntry'
+      responses:
+        '200':
+          description: "Temporary Reference Number"
+          schema:
+            $ref: '#/definitions/referenceNumberSet'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/tmu/sale/dataEntry:
+    post:
+      description: "Sale Data Entry (Deal with TMU). First Office Override is required"
+      produces:
+        - application/json
+      parameters:
+        - name: tmuForm
+          description: "Data Entry Form"
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/dataEntry'
+      responses:
+        '200':
+          description: "Temporary Reference Number"
+          schema:
+            $ref: '#/definitions/referenceNumberSet'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/tmu/sale/specialRequest:
+    post:
+      description: "Sale Data Entry (Deal with TMU). First Office Override is required"
+      produces:
+        - application/json
+      parameters:
+        - name: tmuForm
+          description: "Data Entry Form"
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/dataEntry'
+      responses:
+        '200':
+          description: "Final Reference Number"
+          schema:
+            $ref: '#/definitions/referenceNumberSet'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/mcSettlement:
+    post:
+      description: "MC Settlement for TMU Purchase transactions"
+      produces:
+        - application/json
+      parameters:
+        - name: mcSettlementBody
+          description: "Data Entry Form"
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/mcSettlementBody'
+      
+      responses:
+        '200':
+          description: "MC Settlement Result"
+          schema:
+            $ref: '#/definitions/referenceNumberSet'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/bpiClient/{accountNumber}:
+    get:
+      description: "Returns BPI Client short details. Account number as parameter."
+      produces:
+        - application/json
+      parameters:
+        - name: accountNumber
+          type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          description: "BPI Client short details"
+          schema:
+            $ref: '#/definitions/bpiClient'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /inquiry/rates:
+    get:
+      description: "Rate Inquiry for FOREX and BTSU trading"
+      produces:
+        - application/json
+      parameters:
+        - name: rateType
+          type: string
+          in: path
+          required: true
+        - name: transactionUnit
+          type: string
+          in: path
+          required: true
+        - name: accoucurrencyntNumber
+          type: string
+          in: path
+          required: true 
+      responses:
+        '200':
+          description: "Buying and Selling rates at the time of inquiry, the bases for purchase and sale transactions."
+          schema:
+            type: object
+            properties:
+              buyingRate:
+                type: number
+                format: float
+              sellingRate:
+                type: number
+                format: float
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /inquiry/income:
+    get:
+      description: "Income inquiry for BTSU Trading Unit only"
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: "The income for the day. The income will be computed as the difference in Reference Rate against the Grant Rate"
+          schema:
+            type: object
+            properties:
+              regularAmount:
+                type: number
+                format: float
+              fcdAmount:
+                type: number
+                format: float
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /inquiry/acceptedTravelersChecks:
+    get:
+      description: "Returns a list of accepted traveler's checks"
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: "A list of traveler's checks and their details"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/travelersCheck'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /inquiry/clientHistoricalRecord:
+    get:
+      description: 'Returns a list of transactions done by specified client.'
+      produces:
+        - application/json
+      parameters:
+        - name: transactionCategory
+          description: 'Either Purchase or Sale'
+          type: string
+          in: query
+          enum:
+            - purchase
+            - sale
+          required: true
+        - name: lastName
+          type: string
+          in: query
+        - name: firstName
+          type: string
+          in: query
+        - name: middleName
+          type: string
+          in: query
+        - name: fullName
+          type: string
+          in: query
+      responses:
+        '200':
+          description: "A list of client's record for the past 20 days"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/transactionSummary'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /inquiry/managersChecks/{transactionType}:
+    get:
+      description: "Returns a list of issued Manager's Checks (MC)"
+      produces:
+        - application/json
+      parameters:
+        - name: transactionType
+          type: string
+          in: path
+          required: true
+          enum:
+            - forex
+            - btsu
+            - tmu
+      responses:
+        '200':
+          description: "A list of issued Manager's Checks (MC)"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/managersCheck'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /inquiry/bulletinBoard/{transactionType}:
+    get:
+      description: "Returns a list of special/important messages"
+      produces:
+        - application/json
+      parameters:
+        - name: transactionType
+          type: string
+          in: path
+          required: true
+          enum:
+            - forex
+            - btsu
+            - tmu
+      responses:
+        '200':
+          description: "List of messages sorted by date, descending"
+          schema:
+            type: array
+            items:
+              type: string
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /reports/dailySummary/{transactionType}/{category}:
+    get:
+      description: "Displays transactions for the day, filtered by transaction type and category"
+      produces:
+        - application/json
+      parameters:
+        - name: transactionType
+          type: string
+          in: path
+          required: true
+          enum:
+            - forex
+            - btsu
+            - tmu
+        - name: category
+          type: string
+          in: path
+          required: true
+          enum:
+            - purchase
+            - sale
+      responses:
+        '200':
+          description: "A list of lines to be displayed. This is originally a large string of what the report will look like, but was split to an array for easier display."
+          schema:
+            type: array
+            items:
+              type: string
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /reports/printdailySummary/{transactionType}/{category}:
+    get:
+      description: "Displays transactions for the day, filtered by transaction type and category"
+      produces:
+        - application/json
+      parameters:
+        - name: transactionType
+          type: string
+          in: path
+          required: true
+          enum:
+            - forex
+            - btsu
+            - tmu
+        - name: category
+          type: string
+          in: path
+          required: true
+          enum:
+            - purchase
+            - sale
+      responses:
+        '200':
+          description: "Print operation result"
+          schema:
+            $ref: '#/definitions/errorModel'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /reports/errorCorrected/{transactionType}/{category}:
+    get:
+      description: "Displays error-corrected transactions for the day, filtered by transaction type and category"
+      produces:
+        - application/json
+      parameters:
+        - name: transactionType
+          type: string
+          in: path
+          required: true
+          enum:
+            - forex
+            - btsu
+            - tmu
+        - name: category
+          type: string
+          in: path
+          required: true
+          enum:
+            - purchase
+            - sale
+      responses:
+        '200':
+          description: "A list of lines to be displayed. This is originally a large string of what the report will look like, but was split to an array for easier display."
+          schema:
+            type: array
+            items:
+              type: string
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /reports/printErrorCorrected/{transactionType}/{category}:
+    get:
+      description: "Displays error-corrected transactions for the day, filtered by transaction type and category"
+      produces:
+        - application/json
+      parameters:
+        - name: transactionType
+          type: string
+          in: path
+          required: true
+          enum:
+            - forex
+            - btsu
+            - tmu
+        - name: category
+          type: string
+          in: path
+          required: true
+          enum:
+            - purchase
+            - sale
+      responses:
+        '200':
+          description: "Print operation result"
+          schema:
+            $ref: '#/definitions/errorModel'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /reports/acceptedTCs/{transactionType}:
+    get:
+      description: "Displays accepted traveler's checks for the day, filtered by transaction type"
+      produces:
+        - application/json
+      parameters:
+        - name: transactionType
+          type: string
+          in: path
+          required: true
+          enum:
+            - forex
+            - btsu
+            - tmu
+      responses:
+        '200':
+          description: "A list of lines to be displayed. This is originally a large string of what the report will look like, but was split to an array for easier display."
+          schema:
+            type: array
+            items:
+              type: string
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /reports/printacceptedTCs/{transactionType}:
+    get:
+      description: "Displays accepted traveler's checks for the day, filtered by transaction type"
+      produces:
+        - application/json
+      parameters:
+        - name: transactionType
+          type: string
+          in: path
+          required: true
+          enum:
+            - forex
+            - btsu
+            - tmu
+      responses:
+        '200':
+          description: "Print operation result"
+          schema:
+            $ref: '#/definitions/errorModel'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /bulletin-board/list:
+    get:
+      description: |
+        Returns list of special message (daily) from bulletin board based on Trader
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: "trdr_fi"
+        in: "query"
+        description: "Trader"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/specialmsg"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /cash-flow/details:
+    get:
+      description: "Returns cashflow details"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: tran_fi
+        in: query
+        required: true
+        type: string
+      - name: tran_unit
+        in: query
+        required: true
+        type: string
+      - name: flow_indc
+        in: query
+        required: true
+        type: string
+      - name: curr_code
+        in: query
+        required: true
+        type: string
+      - name: seq_no
+        in: query
+        required: true
+        type: string
+      - name: proctag
+        in: query
+        required: true
+        type: string
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/cashflowdetails"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /cash-flow/details-summary:
+    get:
+      description: "Returns cashflow details summary"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: tran_fi
+        in: query
+        required: true
+        type: string
+      - name: tran_unit
+        in: query
+        required: true
+        type: string
+      - name: curr_code
+        in: query
+        required: true
+        type: string
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/cashflowsummary"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /cash-flow/list-summary:
+    get:
+      description: "Returns list summary of cash flow"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: tran_fi
+        in: query
+        required: true
+        type: string
+      - name: tran_unit
+        in: query
+        required: true
+        type: string
+      - name: curr_code
+        in: query
+        required: true
+        type: string
+      - name: proctag
+        in: query
+        required: true
+        type: string
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/cashflowsummary"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /client-historical-record/list:
+    get:
+      description: "Returns list summary of Client Historical Records"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: tran_indc
+        in: query
+        required: true
+        type: string
+        enum:
+          - P
+          - S
+      - name: tran_date
+        in: query
+        required: true
+        type: string
+        format: date
+      - name: tran_time
+        in: query
+        required: true
+        type: string
+      - name: c_lname
+        in: query
+        required: true
+        type: string
+      - name: c_fname
+        in: query
+        required: true
+        type: string
+      - name: c_mname
+        in: query
+        required: true
+        type: string
+      - name: proctag
+        in: query
+        required: true
+        type: string
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/historicalrecordslist"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /client-historical-record/list-summary:
+    get:
+      description: "Returns list summary of Client Historical Records"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: tran_indc
+        in: query
+        required: true
+        type: string
+        enum:
+          - P
+          - S
+      - name: search_tag
+        in: query
+        required: true
+        type: string
+      - name: c_lname
+        in: query
+        required: true
+        type: string
+      - name: c_fname
+        in: query
+        required: true
+        type: string
+      - name: c_mname
+        in: query
+        required: true
+        type: string
+      - name: proctag
+        in: query
+        required: true
+        type: string
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/historicalrecordssummary"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /client-history/get:
+    get:
+      description: "Get client history"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: tran_indc
+        in: query
+        required: true
+        type: string
+      - name: c_lname
+        in: query
+        required: true
+        type: string
+      - name: c_fname
+        in: query
+        required: true
+        type: string
+      - name: c_mname
+        in: query
+        required: true
+        type: string
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/clienthistory"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /income/get:
+    get:
+      description: "Returns income based on Trader"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: "trdr_fi"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/incomes"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /rate-type/list:
+    get:
+      description: "Returns list of rate types based on Trader"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: "trdr_fi"
+        in: "query"
+        description: "Traders"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            title: "List Rate Type"
+            items:
+              $ref: "#/definitions/ratelist"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /rate/inquiry:
+    get:
+      description: "Returns inquired rate based on Trader and Rate type"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: "trdr_fi"
+        in: "query"
+        required: true
+        type: "integer"
+        enum:
+          - 1
+          - 2
+          - 3
+      - name: rate_type
+        in: "query"
+        required: true
+        type: "integer"
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/rates"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /rate/otc/get:
+    get:
+      description: "Get/Inquire OTC"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: trdr_fi
+        in: query
+        required: true
+        type: string
+      - name: tran_fi
+        in: query
+        required: true
+        type: string
+      - name: curr_code
+        in: query
+        required: true
+        type: string
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/otclist"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /rate/otc/list:
+    get:
+      description: "List of OTC"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/otclist"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /rate/tier/get:
+    get:
+      description: "Get/Inquire Thirds Buying and Selling Rates"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: trdr_fi
+        in: query
+        required: true
+        type: string
+      - name: tran_fi
+        in: query
+        required: true
+        type: string
+      - name: curr_code
+        in: query
+        required: true
+        type: string
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/tierrates"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /rate/tier/list:
+    get:
+      description: "List of Thirds Buying and Selling Rates"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/tierrates"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /transaction/accepted-tc/list:
+    get:
+      description: "Returns list of accepted TCs based on Trader"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: list_indc
+        in: query
+        required: true
+        type: string
+      - name: trdr_fi
+        in: query
+        required: true
+        type: integer
+        enum:
+          - 1
+          - 2
+          - 3
+      - name: tran_unit
+        in: query
+        required: true
+        type: string
+      - name: ref_nmbr
+        in: query
+        required: true
+        type: string
+      - name: proctag
+        in: query
+        required: true
+        type: string
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/acceptedtclist"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /transaction/accepted-tc/list/print:
+    get:
+      description: "Returns list of invisible codes"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: trdr_fi
+        in: path
+        required: true
+        type: string
+      - name: invi_code
+        in: path
+        required: true
+        type: string
+      - name: proctag
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/tclistprint"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /transaction/daily/list-summary:
+    get:
+      description: Returns list summary of daily transactions based on trader, transaction\
+        \ indicator, and request type\n
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: tran_indc
+        in: query
+        required: true
+        type: string
+        enum:
+          - P
+          - S
+      - name: trdr_fi
+        in: query
+        required: true
+        type: integer
+        enum:
+          - 1
+          - 2
+          - 3
+      - name: ref_nmbr
+        in: query
+        required: true
+        type: string
+      - name: rqst_type
+        in: query
+        required: true
+        type: integer
+        enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          - 8
+          - 9
+      - name: proctag
+        in: query
+        required: true
+        type: string
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/transactionlistsummary"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /transaction/issued-mc/list:
+    get:
+      description: "Returns list of Issued MCs based on Trader"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: trdr_fi
+        in: query
+        required: true
+        type: integer
+        enum:
+          - 1
+          - 2
+          - 3
+      - name: tran_unit
+        in: query
+        required: true
+        type: string
+      - name: mc_serno
+        in: query
+        required: true
+        type: string
+      - name: proctag
+        in: query
+        required: true
+        type: string
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/issuedmclist"
+        default:
+          description: "error"
+          schema:
+            $ref: "#/definitions/failed"
+  /reports/issuedMCs/{transactionType}:
+    get:
+      description: "Displays issued manager's checks for the day, filtered by transaction type"
+      produces:
+        - application/json
+      parameters:
+        - name: transactionType
+          type: string
+          in: path
+          required: true
+          enum:
+            - forex
+            - btsu
+            - tmu
+      responses:
+        '200':
+          description: "A list of lines to be displayed. This is originally a large string of what the report will look like, but was split to an array for easier display."
+          schema:
+            type: array
+            items:
+              type: string
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /reports/printIssuedMCs/{transactionType}:
+    get:
+      description: "Displays issued manager's checks for the day, filtered by transaction type"
+      produces:
+        - application/json
+      parameters:
+        - name: transactionType
+          type: string
+          in: path
+          required: true
+          enum:
+            - forex
+            - btsu
+            - tmu
+      responses:
+        '200':
+          description: "Print operation result"
+          schema:
+            $ref: '#/definitions/errorModel'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /reference-files/list:
+    get:
+      description: Returns list of all reference files
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: An array of reference files
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/referenceFile'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /reference-files/download:
+    get:
+      description: Downloads all reference files data and populates corresponding reference tables
+      produces:
+        - application/octet-stream
+      parameters:
+        - name: transactionCodes
+          description: "List Transaction codes of reference files to be downloaded in Utility > Download Reference Files"
+          type: array
+          in: query
+          required: true
+          items:
+            type: string
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /reference-files/download/all:
+    get:
+      description: Downloads all reference files data and populates corresponding reference tables
+      produces:
+        - application/octet-stream
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /check-cutoff:
+    get:
+      description: Checks if exceeds cutoff
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          type: string
+          in: query
+          required: true
+        - name: bank
+          type: string
+          in: query
+          required: true
+      responses:
+        '200':
+          description: "if the trdr_fi and bank is in cutoff"
+          schema:
+            $ref: '#/definitions/cutOff'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /primary-controls:
+    get:
+      description: "Inquire primary controls. General > GetCutOff"
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          type: string
+          in: query
+          required: true
+          enum:
+            - "1"
+            - "2"
+            - "3"
+      responses:
+        '200':
+          description: "Print operation result"
+          schema:
+            $ref: '#/definitions/primaryControl'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transacting-unit/list:
+    get:
+      description: List of Transacting Unit
+      produces:
+        - application/json
+      parameters:
+        - name: tran_fi
+          type: string
+          in: query
+          required: true
+        - name: proctag
+          type: string
+          in: query
+          required: true
+      responses:
+        '200':
+          description: "Print operation result"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/transactingUnit'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/cash-acceptance-or-settlement/details:
+    get:
+      description: Cash Acceptance/Settlement Transaction Details/Inquiry
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          type: string
+          in: query
+          required: true
+          enum:
+            - "1"
+            - "2"
+            - "3"
+        - name: tran_indc
+          type: string
+          in: query
+          required: true
+          enum:
+            - P
+            - S
+        - name: brch_code
+          description: Equivalent to office code
+          type: string
+          in: query
+          required: true
+        - name: curr_code
+          description: Currency code
+          type: string
+          in: query
+          required: true
+        - name: ref_nmbr
+          type: string
+          in: query
+          required: true
+        - name: inqy_type
+          type: string
+          in: query
+          required: true
+          enum:
+            - "5"
+      responses:
+        '200':
+          description: "Print operation result"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/transactionCashAcceptanceSettlementDetails'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/cash-acceptance-or-settlement/list:
+    get:
+      description: Cash Acceptance/Settlement Transaction Details/Inquiry
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          description: Trading ___
+          type: string
+          in: query
+          required: true
+          enum:
+            - "1"
+            - "2"
+            - "3"
+        - name: tran_indc
+          type: string
+          in: query
+          required: true
+          enum:
+            - P
+            - S
+        - name: brch_code
+          description: Equivalent to office code
+          type: string
+          in: query
+          required: true
+        - name: curr_code
+          description: Currency code
+          type: string
+          in: query
+          required: true
+        - name: ref_nmbr
+          type: string
+          in: query
+          required: true
+        - name: list_type
+          type: string
+          in: query
+          required: true
+          enum:
+            - "3"
+        - name: proctag
+          type: string
+          in: query
+          required: true
+      responses:
+        '200':
+          description: "Print operation result"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/transactionCashAcceptanceSettlementListItems'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/cash-acceptance-or-settlement/update:
+    post:
+      description: Final update on Cash Acceptance/Settlement
+      produces:
+        - application/json
+      parameters:
+        - name: cashAcceptanceOrSettlementBody
+          description: "Cash acceptance or settlement body"
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/CashAcceptanceOrSettlementBody'
+      responses:
+        '200':
+          description: "Print operation result"
+          schema:
+            type: object
+            properties:
+              ref_nmbr:
+                type: string
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/mc-settlement/details:
+    get:
+      description: MC Settlment Transaction Details/Inquiry
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          type: string
+          in: query
+          required: true
+          enum:
+            - "1"
+            - "2"
+            - "3"
+        - name: tran_indc
+          type: string
+          in: query
+          required: true
+          enum:
+            - P
+            - S
+        - name: brch_code
+          description: Equivalent to office code
+          type: string
+          in: query
+          required: true
+        - name: curr_code
+          description: Currency code
+          type: string
+          in: query
+          required: true
+        - name: ref_nmbr
+          type: string
+          in: query
+          required: true
+        - name: inqy_type
+          type: string
+          in: query
+          required: true
+          enum:
+            - "6"
+      responses:
+        '200':
+          description: "Print operation result"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/transactionCashAcceptanceSettlementDetails'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/mc-settlement/list:
+    get:
+      description: MC Settlement Transaction List
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          description: Trading ___
+          type: string
+          in: query
+          required: true
+          enum:
+            - "1"
+            - "2"
+            - "3"
+        - name: tran_indc
+          type: string
+          in: query
+          required: true
+          enum:
+            - P
+            - S
+        - name: brch_code
+          description: Equivalent to office code
+          type: string
+          in: query
+          required: true
+        - name: curr_code
+          description: Currency code
+          type: string
+          in: query
+          required: true
+        - name: ref_nmbr
+          type: string
+          in: query
+          required: true
+        - name: list_type
+          type: string
+          in: query
+          required: true
+          enum:
+            - "4"
+        - name: proctag
+          type: string
+          in: query
+          required: true
+      responses:
+        '200':
+          description: "Print operation result"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/transactionCashAcceptanceSettlementListItems'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/mc-settlement/update:
+    post:
+      description: Final update on MC Settlement
+      produces:
+        - application/json
+      parameters:
+        - name: mcsettlement
+          description: "mc settlement BODY"
+          required: true
+          in: body
+          schema:
+            $ref: '#/definitions/mcSettlementBody'
+      responses:
+        '200':
+          description: "Print operation result"
+          schema:
+            type: object
+            properties:
+              ref_nmbr:
+                type: string
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /transaction/data_entry:
+    post:
+      summary: 'Transaction Data Entry'
+      description: 'Data entry for all transaction indicators and trading modes combination'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: DataEntryBody
+          in: body
+          description: 'The transaction entry for a particular client'
+          schema:
+            $ref: '#/definitions/DataEntryBody'
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/client-account-number/is-php:
+    get:
+      summary: 'Account number is PHP'
+      description: 'Checks if client account number is PHP'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: clnt_acct
+          in: query
+          description: 'Client account number'
+          type: integer
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/client-account-number/validate:
+    get:
+      summary: 'Account number is valid'
+      description: 'Validates account number - Checks if account number is a BPI/BFB client and returns BPI client short details'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: clnt_acct
+          in: query
+          description: 'Client account number'
+          type: integer
+          required: true
+        - name: curr_acct
+          in: query
+          description: 'Client amount currency'
+          type: integer
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/cbgfx-client/search:
+    get:
+      summary: 'Account number is valid'
+      description: 'Returns list of client with at least one processed transaction using the CBGFX system within 21 calendar days and uses the last name, first name, and middle name (though partial) as search queries'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: tran_indc
+          in: query
+          description: 'tranindc'
+          type: string
+          required: true
+        - name: rqst_code
+          in: query
+          description: 'request code'
+          type: string
+          required: true
+        - name: c_lname
+          in: query
+          description: 'customer last name'
+          type: string
+          required: true
+        - name: c_fname
+          in: query
+          description: 'customer first name'
+          type: string
+          required: true
+        - name: c_mname
+          in: query
+          description: 'customer middle name'
+          type: string
+          required: true
+        - name: proctag
+          in: query
+          description: 'proctag'
+          type: string
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/currency-combinations:
+    get:
+      summary: 'Currency Combinations'
+      description: 'Returns list of currency combination'
+      produces:
+        - application/json
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /currency-pair-modes/list:
+    get:
+      summary: 'Currency Pair Modes'
+      description: 'List of currency pair and acceptance/settlement modes and filters valid acceptance/settle mode combination for selected currency pair'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          in: path
+          description: 'tranindc'
+          type: string
+          required: true
+        - name: list_indc
+          in: path
+          description: 'request code'
+          type: integer
+          required: true
+        - name: list_optn
+          in: path
+          description: 'customer last name'
+          type: integer
+          required: true
+        - name: tran_fi
+          in: path
+          description: 'customer first name'
+          type: string
+          required: true
+        - name: curr_from
+          in: path
+          description: 'customer middle name'
+          type: string
+          required: true
+        - name: curr_to
+          in: path
+          description: 'proctag'
+          type: string
+          required: true
+        - name: acpt_mode
+          in: path
+          description: 'customer middle name'
+          type: integer
+          required: true
+        - name: setl_mode
+          in: path
+          description: 'proctag'
+          type: integer
+          required: true
+        - name: proctag
+          in: path
+          description: 'proctag'
+          type: string
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /acceptance-settlement-mode/list:
+    get:
+      summary: 'Acceptance Settlement Modes'
+      description: 'List of acceptance/settlement modes'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: mode_code
+          in: query
+          description: 'Mode code'
+          type: integer
+          required: true
+        - name: proctag
+          in: query
+          description: 'Procedure tag'
+          type: integer
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'  
+  /currency-code/list:
+    get:
+      summary: 'Currency code list'
+      description: 'List of Currency Code'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: curr_code
+          in: query
+          description: 'Currency code'
+          type: string
+          required: true
+        - name: proctag
+          in: query
+          description: 'Procedure tag'
+          type: integer
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'  
+  /mts-code/get:
+    get:
+      summary: 'MTS Code'
+      description: 'Get MTS Code'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          in: path
+          description: 'Currency code'
+          type: string
+          required: true
+        - name: mode_indc
+          in: path
+          description: 'Currency code'
+          type: string
+          required: true
+        - name: mode_code
+          in: path
+          description: 'Currency code'
+          type: integer
+          required: true
+        - name: mts_code
+          in: path
+          description: 'Currency code'
+          type: string
+          required: true
+        - name: proctag
+          in: path
+          description: 'Currency code'
+          type: string
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /mts-code/list:
+    get:
+      summary: 'MTS Code List'
+      description: 'List of MTS Codes'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          in: path
+          description: 'Currency code'
+          type: string
+          required: true
+        - name: mode_indc
+          in: path
+          description: 'Currency code'
+          type: string
+          required: true
+        - name: mode_code
+          in: path
+          description: 'Currency code'
+          type: integer
+          required: true
+        - name: proctag
+          in: path
+          description: 'Currency code'
+          type: string
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/deal-rate:
+    get:
+      summary: 'Transaction Deal Rate'
+      description: 'Returns deal rate'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          in: query
+          description: 'trdr fi'
+          type: string
+          required: true
+        - name: tran_fi
+          in: query
+          description: 'tran fi'
+          type: string
+          required: true
+        - name: cust_indc
+          in: query
+          description: 'cust indc'
+          type: integer
+          required: true
+        - name: tran_indc
+          in: query
+          description: 'tran indc'
+          type: integer
+          required: true
+        - name: curr_fr
+          in: query
+          description: 'curr fr'
+          type: string
+          required: true
+        - name: curr_to
+          in: query
+          description: 'curr to'
+          type: string
+          required: true
+        - name: acpt_mode
+          in: query
+          description: 'acpt_mode'
+          type: integer
+          required: true
+        - name: setl_mode
+          in: query
+          description: 'setl mode'
+          type: integer
+          required: true
+        - name: tran_amnt
+          in: query
+          description: 'tran amt'
+          type: integer
+          required: true
+        - name: fvec_tag
+          in: query
+          description: 'fvec tag'
+          type: integer
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse' 
+  /transaction/computed-amounts:
+    get:
+      summary: 'Transaction Computed Amounts'
+      description: 'Returns the computed amounts based on requested rate: equivalent amounts, docs stamps, commission and net amount'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: chkdtl1
+          in: query
+          description: 'chkdtl1'
+          type: string
+          required: true
+        - name: chkdtl2
+          in: query
+          description: 'chkdtl2'
+          type: string
+          required: true
+        - name: trdr_fi
+          in: query
+          description: 'trdr fi'
+          type: string
+          required: true
+        - name: tran_fi
+          in: query
+          description: 'tran fi'
+          type: string
+          required: true
+        - name: tran_indc
+          in: query
+          description: 'tran indc'
+          type: string
+          required: true
+        - name: cust_indc
+          in: query
+          description: 'cust indc'
+          type: string
+          required: true
+        - name: acpt_amnt
+          in: query
+          description: 'acpt amnt'
+          type: integer
+          required: true
+        - name: curr_fr
+          in: query
+          description: 'curr fr'
+          type: string
+          required: true
+        - name: acpt_mode
+          in: query
+          description: 'acpt_mode'
+          type: integer
+          required: true
+        - name: acpt_chck_indc
+          in: query
+          description: 'acept check indc'
+          type: string
+          required: true
+        - name: achrg_ded
+          in: query
+          description: 'achrg_ded'
+          type: string
+          required: true
+        - name: setl_amnt
+          in: query
+          description: 'setl_amnt'
+          type: integer
+          required: true
+        - name: curr_to
+          in: query
+          description: 'achrg_ded'
+          type: string
+          required: true
+        - name: setl_mode
+          in: query
+          description: 'setl_amnt'
+          type: integer
+          required: true
+        - name: setl_chck_indc
+          in: query
+          description: 'setl_chck_indc'
+          type: string
+          required: true
+        - name: schrg_ded
+          in: query
+          description: 'schrg_ded'
+          type: string
+          required: true
+        - name: rate_indc
+          in: query
+          description: 'rate_indc'
+          type: string
+          required: true
+        - name: deal_rate
+          in: query
+          description: 'deal_rate'
+          type: integer
+          required: true
+        - name: rqst_rate
+          in: query
+          description: 'rate_indc'
+          type: string
+          required: true
+        - name: c_lname
+          in: query
+          description: 'last name'
+          type: string
+          required: true
+        - name: c_fname
+          in: query
+          description: 'first name'
+          type: string
+          required: true
+        - name: c_mname
+          in: query
+          description: 'middle name'
+          type: string
+          required: true
+        - name: docu_tag
+          in: query
+          description: 'docu tag'
+          type: string
+          required: true
+        - name: fvec_tag
+          in: query
+          description: 'fvec_tag'
+          type: integer
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse' 
+  /invisible-code/list:
+    get:
+      summary: 'Trasaction Invisible code list'
+      description: 'List of invisible codes'
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          in: query
+          description: 'trdr_fi'
+          type: string
+          required: true
+        - name: invi_code
+          in: query
+          description: 'invi_code'
+          type: string
+          required: true
+        - name: proctag
+          in: query
+          description: 'proctag'
+          type: string
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/local-override:
+    post:
+      summary: 'Trasaction local override'
+      description: 'Performs transacting local override'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: local_override
+          in: body
+          description: 'Local Override'
+          schema:
+            $ref: '#/definitions/LocalOverrideBody'
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse' 
+  /transaction/check-deposit-account:
+    get:
+      summary: 'Check deposit account'
+      description: 'Check deposit account'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          in: query
+          description: 'trdr_fi'
+          type: string
+          required: true
+        - name: tran_indc
+          in: query
+          description: 'tran_indc'
+          type: string
+          required: true
+        - name: curr_fr
+          in: query
+          description: 'curr_fr'
+          type: string
+          required: true
+        - name: curr_to
+          in: query
+          description: 'trdr_fi'
+          type: string
+          required: true
+        - name: acpt_acct
+          in: query
+          description: 'acpt_acct'
+          type: integer
+          required: true
+        - name: acpt_mode
+          in: query
+          description: 'acpt_mode'
+          type: integer
+          required: true
+        - name: setl_acct
+          in: query
+          description: 'setl_acct'
+          type: integer
+          required: true
+        - name: net_amnt
+          in: query
+          description: 'net_amnt'
+          type: integer
+          required: true
+        - name: setl_mode
+          in: query
+          description: 'setl_mode'
+          type: integer
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse' 
+  /transaction/or/details:
+    get:
+      summary: 'Transaction OR details'
+      description: 'Get OR/Transaction Advice details'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: ref_nmbr
+          in: query
+          description: 'Reference Number'
+          type: string
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/special-request/details:
+    get:
+      summary: 'Transaction Special Request details'
+      description: 'Special Request Transaction Details/Inquiry'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          in: query
+          description: 'trdr_fi'
+          type: string
+          required: true
+        - name: tran_indc
+          in: query
+          description: 'tran_indc'
+          type: string
+          required: true
+        - name: brch_code
+          in: query
+          description: 'brch_code'
+          type: integer
+          required: true
+        - name: curr_code
+          in: query
+          description: 'curr_code'
+          type: string
+          required: true
+        - name: ref_numbr
+          in: query
+          description: 'Reference Number'
+          type: integer
+          required: true
+        - name: inqy_type
+          in: query
+          description: 'inqy_type'
+          type: integer
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/special-request/list:
+    get:
+      summary: 'Transaction Special Request list'
+      description: 'Special Request Transaction List'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          in: query
+          description: 'trdr_fi'
+          type: string
+          required: true
+        - name: tran_indc
+          in: query
+          description: 'tran_indc'
+          type: string
+          required: true
+        - name: brch_code
+          in: query
+          description: 'brch_code'
+          type: integer
+          required: true
+        - name: curr_code
+          in: query
+          description: 'curr_code'
+          type: string
+          required: true
+        - name: ref_numbr
+          in: query
+          description: 'Reference Number'
+          type: integer
+          required: true
+        - name: inqy_type
+          in: query
+          description: 'inqy_type'
+          type: integer
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/special-request/update:
+    post:
+      summary: 'Special request update'
+      description: 'Final update on Special request'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: SpecialRequestUpdateBody
+          in: body
+          description: 'Special Request update'
+          schema:
+            $ref: '#/definitions/SpecialRequestUpdateBody'
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/override/details:
+    get:
+      summary: 'Override details'
+      description: 'Override Transaction Details/Inquiry'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          in: query
+          description: 'trdr_fi'
+          type: string
+          required: true
+        - name: tran_indc
+          in: query
+          description: 'tran_indc'
+          type: string
+          required: true
+        - name: brch_code
+          in: query
+          description: 'brch_code'
+          type: integer
+          required: true
+        - name: curr_code
+          in: query
+          description: 'curr_code'
+          type: string
+          required: true
+        - name: ref_numbr
+          in: query
+          description: 'Reference Number'
+          type: integer
+          required: true
+        - name: list_type
+          in: query
+          description: 'list_type'
+          type: string
+          required: true
+        - name: proctag
+          in: query
+          description: 'proctag'
+          type: string
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/override/list:
+    get:
+      summary: 'Override list'
+      description: 'Override Transaction List'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          in: query
+          description: 'trdr_fi'
+          type: string
+          required: true
+        - name: tran_indc
+          in: query
+          description: 'tran_indc'
+          type: string
+          required: true
+        - name: brch_code
+          in: query
+          description: 'brch_code'
+          type: integer
+          required: true
+        - name: curr_code
+          in: query
+          description: 'curr_code'
+          type: string
+          required: true
+        - name: ref_numbr
+          in: query
+          description: 'Reference Number'
+          type: integer
+          required: true
+        - name: list_type
+          in: query
+          description: 'list_type'
+          type: string
+          required: true
+        - name: proctag
+          in: query
+          description: 'proctag'
+          type: string
+          required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/override/update:
+    post:
+      summary: 'Override update'
+      description: 'Final update on Override'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: ref_nmbr
+          in: body
+          description: 'Reference number'
+          schema:
+            type: string
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/daily/list:
+    get:
+      summary: 'Daily transaction list'
+      description: 'Returns list/summary of daily transactions'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: goffcode
+        in: query
+        escription: 'goffcode'
+        type: string
+        required: true
+      - name: trdr_fi
+        in: query
+        escription: 'trdr_fi'
+        type: string
+        required: true
+      - name: tran_indc
+        in: query
+        escription: 'tran_indc'
+        type: string
+        required: true
+      - name: amnt_sw
+        in: query
+        escription: 'amnt_sw'
+        type: string
+        required: true
+      - name: rqst_type
+        in: query
+        escription: 'rqst_type'
+        type: string
+        required: true
+      - name: ref_number
+        in: query
+        escription: 'ref_number'
+        type: string
+        required: true
+      - name: curr_fr
+        in: query
+        escription: 'curr_fr'
+        type: string
+        required: true
+      - name: curr_to
+        in: query
+        escription: 'curr_to'
+        type: string
+        required: true
+      - name: proctag
+        in: query
+        escription: 'proctag'
+        type: string
+        required: true
+      responses:
+        default:
+          description: 'The response'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+  /transaction/daily/details:
+    post:
+      summary: 'Daily transaction details'
+      description: 'Returns details of a daily transaction'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: DailyDetailsBody
+          in: body
+          description: 'Daily details'
+          schema:
+            $ref: '#/definitions/DailyDetailsBody'
+          required: true
+      responses:
+        default:
+          description: 'Error occured'
+          schema:
+            $ref: '#/definitions/ObjectResponse'
+definitions:
+  DataEntryBody:
+    type: object
+    properties:
+      tran_indc:
+        type: string
+      trdr_fi:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      c_addr1:
+        type: string
+      c_addr2:
+        type: string
+      telno:
+        type: string
+      tin:
+        type: string
+      bday:
+        type: string
+        format: date
+      cust_indc:
+        type: string
+      corp_tag:
+        type: string
+      docu_tag:
+        type: string
+      gOffCode:
+        type: string
+      book_unit:
+        type: string
+      mang_unit:
+        type: string
+      deal_rate:
+        type: integer
+      rqst_rate:
+        type: integer
+      grnt_rate:
+        type: integer
+      net_amnt:
+        type: integer
+      acpt_amnt:
+        type: integer
+      curr_fr:
+        type: string
+      acpt_mode:
+        type: integer
+      acpt_check_indc:
+        type: string
+      chkdtl1:
+        type: boolean
+      acpt_refno:
+        type: string
+      achrg_ded:
+        type: string
+      acpt_docs:
+        type: integer
+      acpt_comm:
+        type: integer
+      acpt_post:
+        type: integer
+      r_lname:
+        type: string
+      r_fname:
+        type: string
+      r_mname:
+        type: string
+      setl_amnt:
+        type: integer
+      curr_to:
+        type: string
+      setl_mode:
+        type: integer
+      setl_chck_indc:
+        type: string
+      chkdtl2:
+        type: boolean
+      setl_refno:
+        type: string
+      schrg_ded:
+        type: string
+      setl_docs:
+        type: integer
+      setl_comm:
+        type: integer
+      setl_post:
+        type: integer
+      b_lname:
+        type: string
+      b_fname:
+        type: string
+      b_mname:
+        type: string
+      b_bday:
+        type: string
+        format: date
+      b_addr1:
+        type: string
+      b_addr2:
+        type: string
+      b_tin:
+        type: string
+      invi_code:
+        type: string
+      guserid:
+        type: string
+      rmrk_brch:
+        type: string
+      overd_id1:
+        type: integer
+      overd_id2:
+        type: integer
+      overd_ptt:
+        type: integer
+      bene_tag:
+        type: integer
+      tran_tag:
+        type: integer
+      fvec_tag:
+        type: integer
+  ObjectResponse:
+    type: object
+    properties:
+      data:
+        type: object
+      meta:
+        $ref: '#/definitions/ResponseMeta'
+  ResponseMeta:
+    type: object
+    properties:
+      code:
+        type: integer
+      errorType:
+        type: string
+      errorMessage:
+        type: string
+  CBGFXClientBody:
+    type: object
+    properties:
+      tran_indc:
+        type: string
+      rqst_code:
+        type: integer
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      proctag:
+        type: string
+  CBGFXClientResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/CBGFXClientResponseData'
+  CBGFXClientResponseData:
+    type: object
+    properties:
+      tran_indc:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      accm_amnt:
+        type: integer
+      accm_amnt2:
+        type: integer
+  CurrencyPairModesBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      list_indc:
+        type: integer
+      list_optn:
+        type: integer
+      tran_fi:
+        type: string
+      curr_from:
+        type: string
+      curr_to:
+        type: string
+      acpt_mode:
+        type: integer
+      setl_mode:
+        type: integer
+      proctag:
+        type: string
+  CurrencyPairModesResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/CurrencyPairModesResponseData'
+  CurrencyPairModesResponseData:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      tran_fi:
+        type: string
+      list_indc:
+        type: integer
+      list_optn:
+        type: integer
+      curr_from:
+        type: string
+      acpt_mode:
+        type: integer
+      achrg_ind:
+        type: string
+      arect_stat:
+        type: string
+      setl_mode:
+        type: integer
+      schrg_ind:
+        type: string
+      srect_stat:
+        type: integer
+      proctag:
+        type: string
+  AcceptanceSettlementModesResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/AcceptanceSettlementModesResponseData'
+  AcceptanceSettlementModesResponseData:
+    type: object
+    properties:
+      mode_code:
+        type: integer
+      mode_desc:
+        type: string
+      mcro_tag:
+        type: integer
+      actv_tag:
+        type: string
+      php_tag:
+        type: string
+  CurrencyCodesResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/CurrencyCodesResponseData'
+  CurrencyCodesResponseData:
+    type: object
+    properties:
+      curr_code:
+        type: string
+      curr_bpi:
+        type: string
+      curr_casa:
+        type: string
+      curr_desc:
+        type: string
+  MTSCodeGetBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      mode_indc:
+        type: string
+      mode_code:
+        type: integer
+      mts_code:
+        type: string
+      proctag:
+        type: string
+  MTSCodeGetResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/MTSCodeGetResponseData'
+  MTSCodeGetResponseData:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      mode_indc:
+        type: string
+      mode_code:
+        type: integer
+      mts_code:
+        type: string
+      mts_desc:
+        type: string
+  MTSCodeListBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      mode_indc:
+        type: string
+      mode_code:
+        type: integer
+      proctag:
+        type: string
+  MTSCodeListResponse:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      mode_indc:
+        type: string
+      mode_code:
+        type: integer
+      proctag:
+        type: string
+  DealRateBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      tran_fi:
+        type: string
+      cust_indc:
+        type: string
+      tran_indc:
+        type: string
+      curr_fr:
+        type: string
+      curr_to:
+        type: string
+      acpt_mode:
+        type: integer
+      setl_mode:
+        type: integer
+      tran_amnt:
+        type: integer
+      fvec_tag:
+        type: integer
+  ComputedAmountsBody:
+    type: object
+    properties:
+      chkdtl1:
+        type: string
+      chkdtl2:
+        type: string
+      trdr_fi:
+        type: string
+      tran_fi:
+        type: string
+      tran_indc:
+        type: string
+      cust_indc:
+        type: string
+      acpt_amnt:
+        type: integer
+      curr_fr:
+        type: string
+      acpt_mode:
+        type: integer
+      acpt_chck_indc:
+        type: string
+      achrg_ded:
+        type: string
+      setl_amnt:
+        type: integer
+      curr_to:
+        type: string
+      setl_mode:
+        type: integer
+      setl_chck_indc:
+        type: string
+      schrg_ded:
+        type: string
+      rate_indc:
+        type: string
+      deal_rate:
+        type: integer
+      rqst_rate:
+        type: integer
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      docu_tag:
+        type: string
+      fvec_tag:
+        type: integer
+  ComputedAmountsResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            $ref: '#/definitions/ComputedAmountsResponseData'
+  ComputedAmountsResponseData:
+    type: object
+    properties:
+      equi_amnt:
+        type: integer
+      acpt_docs:
+        type: integer
+      acpt_comm:
+        type: integer
+      setl_docs:
+        type: integer
+      setl_comm:
+        type: integer
+      acpt_post:
+        type: integer
+      setl_post:
+        type: integer
+      net_amnt:
+        type: integer
+      tran_tag:
+        type: integer
+  InvisibleCodeResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/InvisibleCodeResponseData'
+  mcSettlementBody:
+    type: object
+    properties:
+      referenceNo:
+        type: string
+      mcNumber:
+        type: string
+  InvisibleCodeResponseData:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      invi_code:
+        type: string
+      tran_code:
+        type: string
+      form_nmbr:
+        type: string
+      invi_desc:
+        type: string
+  LocalOverrideBody:
+    type: object
+    properties:
+      userid_o1:
+        type: string
+      pword_o1:
+        type: string
+      userid_o2:
+        type: string  
+      pword_o2:
+        type: string
+      gOffCode:
+        type: string
+      gPassword:
+        type: string
+      procTag:
+        type: string
+  CheckDepositAccountBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      tran_indc:
+        type: string
+      curr_fr:
+        type: string
+      curr_to:
+        type: string
+      acpt_acct:
+        type: integer
+      acpt_mode:
+        type: integer
+      setl_acct:
+        type: integer
+      net_amnt:
+        type: integer
+      setl_mode:
+        type: integer
+  CheckDepositAccountResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/CheckDepositAccountResponseData'
+  CheckDepositAccountResponseData:
+    type: object
+    properties:
+      tran_indc:
+        type: string
+      acpt_stat:
+        type: integer
+      setl_stat:
+        type: integer
+      acpt_name:
+        type: string
+      setl_name:
+        type: string
+      acpt_clen:
+        type: integer
+  TransactionORDetailsResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/TransactionORDetailsResponseData'
+  TransactionORDetailsResponseData:
+    type: object
+    properties:
+      tran_indc:
+        type: string
+      ref_nmbr:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      c_addr1:
+        type: string
+      c_addr2:
+        type: string
+      tel:
+        type: string
+      tin:
+        type: string
+      curr_fr:
+        type: string
+      tran_amnt:
+        type: integer
+      grnt_rate:
+        type: integer
+      curr_to:
+        type: string
+      equi_amnt:
+        type: integer
+      net_amnt:
+        type: integer
+      acpt_mode:
+        type: integer
+      check_indc:
+        type: string
+      acpt_refno:
+        type: string
+      acpt_docs:
+        type: integer
+      acpt_comm:
+        type: integer
+      r_lname:
+        type: string
+      r_fname:
+        type: string
+      r_mname:
+        type: string
+      atelr_vald:
+        type: string
+      serl_nmbr:
+        type: integer
+      chck_amnt:
+        type: integer
+      setl_mode:
+        type: integer
+      setl_refno:
+        type: string
+      setl_docs:
+        type: integer
+      setl_comm:
+        type: integer
+      b_lname:
+        type: string
+      b_fname:
+        type: string
+      b_mname:
+        type: string
+      b_bday:
+        type: string
+        format: date
+      b_addr1:
+        type: string
+      b_addr2:
+        type: string
+      stelr_vald:
+        type: string
+      acpt_post:
+        type: integer
+      setl_post:
+        type: integer
+      b_tin:
+        type: string
+  SpecialRequestDetailsBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      tran_indc:
+        type: string
+      brch_code:
+        type: integer
+      curr_code:
+        type: string
+      ref_number:
+        type: integer
+      inqy_type:
+        type: integer
+  SpecialRequestDetailsResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/SpecialRequestDetailsResponseData'
+  CashAcceptanceOrSettlementBody:
+    type: object
+    properties:
+      ref_nmbr:
+        type: string
+      atel_vald:
+        type: string  
+      stel_vald:
+        type: string
+  SpecialRequestDetailsResponseData:
+    type: object
+    properties:
+      tran_date:
+        type: string
+      tran_unit:
+        type: string
+      tran_indc:
+        type: string
+      ref_nmbr:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      addr1:
+        type: string
+      addr2:
+        type: string
+      telno:
+        type: string
+      tin:
+        type: string
+      bday:
+        type: string
+        format: date
+      clnt_tag:
+        type: string
+      corp_tag:
+        type: string
+      docu_tag:
+        type: string
+      mang_unit:
+        type: string
+      book_unit:
+        type: string
+      curr_fr:
+        type: string
+      tran_amnt:
+        type: integer
+      deal_rate:
+        type: integer
+      rqst_rate:
+        type: integer
+      grnt_rate:
+        type: integer
+      curr_to:
+        type: string
+      equi_amnt:
+        type: integer
+      net_amnt:
+        type: integer
+      acpt_mode:
+        type: integer
+      acpt_refno:
+        type: string
+      achrg_ded:
+        type: string
+      acpt_docs:
+        type: integer
+      acpt_comm:
+        type: integer
+      r_lname:
+        type: string
+      r_fname:
+        type: string
+      r_mname:
+        type: string
+      atel_valid:
+        type: string
+      setl_mode:
+        type: integer
+      setl_refno:
+        type: string
+      schrg_ded:
+        type: string
+      setl_docs:
+        type: integer
+      b_lname:
+        type: string
+      b_fname:
+        type: string
+      b_mname:
+        type: string
+      b_bday:
+        type: string
+        format: date
+      b_addr1:
+        type: string
+      b_addr2:
+        type: string
+      stel_valid:
+        type: string
+      invi_code:
+        type: string
+      userid:
+        type: string
+      termid:
+        type: string
+      stat_rqst:
+        type: string
+      rmrk_brch:
+        type: string
+      rmrk_trdr:
+        type: string
+      acpt_post:
+        type: integer
+      setl_post:
+        type: integer
+      ovrd_ptt:
+        type: integer
+      b_tin:
+        type: string
+  SpecialRequestListResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/SpecialRequestListResponseData'
+  SpecialRequestListResponseData:
+    type: object
+    properties:
+      tran_trdr:
+        type: string
+      tran_indc:
+        type: string
+      ref_nmbr:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      addr1:
+        type: string
+      addr2:
+        type: string
+      acpt_mode:
+        type: integer
+      curr_fr:
+        type: string
+      tran_amnt:
+        type: integer
+      setl_mode:
+        type: integer
+      curr_to:
+        type: string
+      equi_amnt:
+        type: integer
+      grnt_rate:
+        type: integer
+      stat_rqst:
+        type: string
+      brch_code:
+        type: string
+      rqst_rate:
+        type: integer
+  SpecialRequestUpdateBody:
+    type: object
+    properties:
+      ref_nmbr:
+        type: string
+      ovrd_id1:
+        type: integer
+      ovrd_id2:
+        type: integer
+  OverrideBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      tran_indc:
+        type: string
+      brch_code:
+        type: integer
+      curr_code:
+        type: string
+      ref_nmbr:
+        type: string
+      list_type:
+        type: string
+      proctag:
+        type: string
+  OverrideDetailsResponse:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/OverrideDetailsResponseData'
+  OverrideDetailsResponseData:
+    type: object
+    properties:
+      tran_date:
+        type: string
+      tran_unit:
+        type: string
+      tran_indc:
+        type: string
+      ref_nmbr:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      addr1:
+        type: string
+      addr2:
+        type: string
+      telno:
+        type: string
+      tin:
+        type: string
+      bday:
+        type: string
+        format: date
+      clnt_tag:
+        type: string
+      corp_tag:
+        type: string
+      docu_tag:
+        type: string
+      mang_unit:
+        type: string
+      book_unit:
+        type: string
+      curr_fr:
+        type: string
+      tran_amnt:
+        type: integer
+      deal_rate:
+        type: integer
+      rqst_rate:
+        type: integer
+      grnt_rate:
+        type: integer
+      curr_to:
+        type: string
+      equi_amnt:
+        type: integer
+      net_amnt:
+        type: integer
+      acpt_mode:
+        type: integer
+      acpt_refno:
+        type: string
+      achrg_ded:
+        type: string
+      acpt_docs:
+        type: integer
+      acpt_comm:
+        type: integer
+      r_lname:
+        type: string
+      r_fname:
+        type: string
+      r_mname:
+        type: string
+      atel_valid:
+        type: string
+      setl_mode:
+        type: integer
+      setl_refno:
+        type: string
+      schrg_ded:
+        type: string
+      setl_docs:
+        type: integer
+      b_lname:
+        type: string
+      b_fname:
+        type: string
+      b_mname:
+        type: string
+      b_bday:
+        type: string
+        format: date
+      b_addr1:
+        type: string
+      b_addr2:
+        type: string
+      stel_valid:
+        type: string
+      invi_code:
+        type: string
+      userid:
+        type: string
+      termid:
+        type: string
+      stat_rqst:
+        type: string
+      rmrk_brch:
+        type: string
+      rmrk_trdr:
+        type: string
+      acpt_post:
+        type: integer
+      setl_post:
+        type: integer
+      ovrd_ptt:
+        type: integer
+      b_tin:
+        type: string
+  OverrideResponse:
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/OverrideResponseData'
+  OverrideResponseData:
+    type: object
+    properties:
+      tran_trdr:
+        type: string
+      tran_indc:
+        type: string
+      ref_nmbr:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      addr1:
+        type: string
+      addr2:
+        type: string
+      acpt_mode:
+        type: integer
+      curr_fr:
+        type: string
+      tran_amnt:
+        type: integer
+      setl_mode:
+        type: integer
+      curr_to:
+        type: string
+      equi_amnt:
+        type: integer
+      grnt_rate:
+        type: integer
+      stat_rqst:
+        type: string
+      brch_code:
+        type: integer
+      rqst_rate:
+        type: integer
+  DailyListBody:
+    type: object
+    properties:
+      goffcode:
+        type: string
+      trdr_fi:
+        type: string
+      tran_indc:
+        type: string
+      amnt_sw:
+        type: number
+      rqst_type:
+        type: string
+      ref_number:
+        type: string
+      curr_fr:
+        type: string
+      curr_to:
+        type: string
+      proctag:
+        type: string
+  DailyListResponse:
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/DailyListResponseData'
+  DailyListResponseData:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      tran_indc:
+        type: string
+      ref_nmbr:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      acpt_mode:
+        type: integer
+      curr_fr:
+        type: string
+      tran_amnt:
+        type: integer
+      setl_mode:
+        type: integer
+      curr_to:
+        type: string
+      equi_amnt:
+        type: integer
+      net_amnt:
+        type: integer
+      totl_chrg:
+        type: integer
+      trdr_id:
+        type: string
+  DailyDetailsBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      tran_indc:
+        type: string
+      rqst_type:
+        type: string
+      ref_nmbr:
+        type: string
+  DailyDetailsResponse:
+    properties:
+      meta:
+        type: object
+        properties:
+          code:
+            type: string
+          data:
+            type: array
+            items:
+              $ref: '#/definitions/DailyDetailsResponseData'
+  DailyDetailsResponseData:
+    type: object
+    properties:
+      tran_date:
+        type: string
+      tran_unit:
+        type: string
+      trdr_fi:
+        type: string
+      tran_indc:
+        type: string
+      ref_nmbr:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      c_addr1:
+        type: string
+      c_addr2:
+        type: string
+      telno:
+        type: string
+      tin:
+        type: string
+      bday:
+        type: string
+        format: date
+      clnt_tag:
+        type: string
+      corp_tag:
+        type: string
+      docu_tag:
+        type: string
+      mang_unit:
+        type: string
+      book_unit:
+        type: string
+      curr_fr:
+        type: string
+      tran_amnt:
+        type: integer
+      deal_rate:
+        type: integer
+      rqst_rate:
+        type: integer
+      grnt_rate:
+        type: integer
+      curr_to:
+        type: string
+      equi_amnt:
+        type: integer
+      net_amnt:
+        type: integer
+      acpt_mode:
+        type: string
+      acpt_refno:
+        type: string
+      achrg_ded:
+        type: string
+      acpt_docs:
+        type: integer
+      acpt_comm:
+        type: integer
+      r_lname:
+        type: string
+      r_fname:
+        type: string
+      r_mname:
+        type: string
+      atel_valid:
+        type: string
+      setl_mode:
+        type: integer
+      setl_refno:
+        type: string
+      schrg_ded:
+        type: string
+      setl_docs:
+        type: integer
+      setl_comm:
+        type: integer
+      b_lname:
+        type: string
+      b_fname:
+        type: string
+      b_mname:
+        type: string
+      b_bday:
+        type: string
+        format: date
+      b_addr1:
+        type: string
+      b_addr2:
+        type: string
+      stel_vald:
+        type: string
+      invi_code:
+        type: string
+      userid:
+        type: string
+      term_id:
+        type: string
+      stat_rqst:
+        type: string
+      rmrk_brch:
+        type: string
+      rmrk_trdr:
+        type: string
+      acpt_post:
+        type: integer
+      setl_post:
+        type: integer
+      b_tin:
+        type: string
+  loginResult:
+    type: object
+    required:
+      - userId
+      - accountStatus
+    properties:
+      userId:
+        type: string
+      accountStatus:
+        type: string
+        enum:
+          - expired
+          - newaccount
+          - ok
+      officeCode:
+        type: string
+        description: Transacting branch code
+      officeName:
+        type: string
+        description: Transacting branch name
+      terminalCode:
+        type: string
+  cpResponse:
+    description: Change password response
+    type: object
+    required:
+      - userId
+      - success
+    properties:
+      userId:
+        type: string
+      success:
+        type: boolean
+        description: change password operation result
+      errmsg:
+        type: string
+        description: description of error / system message from mainframe
+  appDetails:
+    type: object
+    required:
+      - appVersion
+      - dateCompiled
+    properties:
+      appVersion:
+        type: string
+      dateCompiled:
+        type: string
+  printer:
+    type: object
+    required:
+      - printerName
+      - hardwareId
+      - controlCode
+      - isDefaultPrinter
+    properties:
+      printerId:
+        type: integer
+        format: int32
+      hardwareId:
+        type: string
+      printerName:
+        type: string
+      controlCode:
+        type: string
+      isDefaultPrinter:
+        type: boolean
+  errorModel:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+  referenceTable:
+    type: object
+    required:
+      - tableId
+      - status
+      - dateUpdated
+      - tableDesc
+    properties:
+      tableId:
+        type: integer
+        format: int32
+      status:
+        type: string
+        enum:
+          - updated
+          - not updated
+      dateUpdated:
+        type: string
+      tableDesc:
+        type: string
+  currency:
+    type: object
+    required:
+      - id
+      - currencyCode
+    properties:
+      id:
+        type: integer
+        format: int32
+      currencyCode:
+        type: string
+        description: "Three-letter currency code (example: PHP, USD, AUD)"
+  currencyCombination:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      fromCurrency:
+        $ref: '#/definitions/currency'
+      toCurrency:
+        $ref: '#/definitions/currency'
+  commonDataForm:
+    type: object
+    properties:
+      referenceNo:
+        type: string
+        description: "Transaction Reference Number"
+      transactionType:
+        type: string
+        description: "Transaction Type"
+        enum:
+          - forex_purhcase
+          - forex_sale
+          - btsu_purchase
+          - btsu_sale
+          - tmu_purchase
+          - tmu_sale
+      dataEntryId:
+        type: integer
+        format: int64
+        description: 'Data entry ID'
+      isCorporate:
+        type: boolean
+        description: |
+          True if Corporate, False if Individual
+      managingUnit:
+        type: string
+        description: |
+          Note: Managing Unit and Booking Unit is the same
+      isBpiClient:
+        type: boolean
+        description: |
+          If client is walk-in, this is false. If set true, then bpiClientDetails is required.
+      bpiClientDetails:
+        $ref: '#/definitions/bpiClient'
+      clientInfo:
+        $ref: "#/definitions/personalInfo"
+      clientWithDocuments:
+        type: boolean
+        description: 'Client with documents?'
+      transAmtCurrency:
+        type: string
+        description: "Transaction's initial currency (ex: AUD, USD, PHP). Determined by currency combinations."
+      transactionAmt:
+        type: number
+        format: float
+        description: "fx amount to be purhcased"
+      equivCurrency:
+        type: string
+        description: "Transaction amount converted to other currency (ex: AUD, USD, PHP). Determined by currency combinations."
+      equivAmount:
+        type: number
+        format: float
+        description: "fx amount to be purhcased. System will automatically compute the equivalent amoutn based on the transacation amount and requested rate."
+      acceptanceMode:
+        type: integer
+        format: int32
+        description: 'Lol nakalimutan ko na to (for verification)'
+      acceptanceReference:
+        type: string
+        description: "Acceptance Reference code"
+      acceptanceDocStamp:
+        type: number
+        format: float
+      acceptanceCommission:
+        type: string
+      tcPostage:
+        type: number
+        format: float
+        description: Traveler's Check Postage (?)
+      dealRate:
+        type: number
+        format: float
+        description: 'Deal Rate'
+      requestRate:
+        type: number
+        format: float
+        description: 'Request Rate or Board Rate. Should be equal to Deal Rate'
+      netAmount:
+        type: number
+        format: float
+        description: 'Net Amount'
+      settlementReference:
+        type: string
+        description: 'Settlement reference Code'
+      settlementDocStamp:
+        type: number
+        format: float
+      settlementCommission:
+        type: string
+      isCorporateBeneficiary:
+        type: boolean
+        description: "Value is false if beneficiary is individual"
+      beneficiaryInfo:
+        $ref: "#/definitions/personalInfo"
+      invisibleCode:
+        $ref: "#/definitions/invisibleCode"
+      specialMessage:
+        type: string
+        description: "For Special rate, this is a mandatory field"
+      acceptanceValidation:
+        type: string
+        description: "Teller's acceptance validation"
+      settlementValidation:
+        type: string
+        description: "Teller's settlement validation"
+  acceptanceMode:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      code:
+        type: string
+        description: 'Acceptance Mode code'
+  settlementMode:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      code:
+        type: string
+        description: 'Settlement Mode code'
+  acceptanceSettlementMode:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      acceptanceMode:
+        $ref: '#/definitions/acceptanceMode'
+      settlementMode:
+        $ref: '#/definitions/settlementMode'
+  personalInfo:
+    type: object
+    properties:
+      firstName:
+        type: string
+        description: 'Client First Name. Max 20 alphanumeric characters'
+      middleName:
+        type: string
+        description: 'Client Middle Name. Middle Initials are not allowed. Max 20 alphanumeric characters'
+      lastName:
+        type: string
+        description: 'Client Last Name. Max 10 alphanumeric Characters'
+      addressLine1:
+        type: string
+        description: 'Address Line 1. Max 60 alphanumeric characters.'
+      addressLine2:
+        type: string
+        description: 'Address Line 2. Max 60 alphanumeric characters.'
+      contactNo:
+        type: string
+        description: 'Telephone (7 chars) or mobile number (11 chars)'
+      birthDate:
+        type: string
+        format: date
+        description: 'Client birthdate in MM/DD/YYYY format'
+      tin:
+        type: string
+        description: 'TIN Number in ###-###-### format'
+  tellerValidationBody:
+    type: object
+    properties:
+      referenceNo:
+        type: string
+      acceptanceValidationCode:
+        type: string
+      settlementValidationCode:
+        type: string
+  invisibleCode:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      transactionType:
+        type: string
+        enum:
+          - forex
+          - btsu
+          - tmu
+      code:
+        type: integer
+        format: int32
+      description:
+        type: string
+  mtsCode:
+    type: object
+    description: "MTS/Reference Codes"
+    properties:
+      id:
+        type: integer
+        format: int32
+      code:
+        type: string
+      description:
+        type: string
+  transactionSummary:
+    type: object
+    description: "A summary of transaction details. For complete details, use dataEntry object."
+    properties:
+      referenceNo:
+        type: string
+      transactionDate:
+        type: string
+        format: date
+      transactionUnit:
+        type: string
+        description: 'Unit where transaction was performed'
+      status:
+        type: string
+      currencyFrom:
+        type: string
+      currencyTo:
+        type: string
+      transactionAmount:
+        type: number
+        format: float
+      grantRate:
+        type: number
+        format: float
+      lastName:
+        type: string
+      firstName:
+        type: string
+      middleNAme:
+        type: string
+  referenceNumberSet:
+    type: object
+    description: "Temporary and Permanent Reference number for the transaction"
+    required:
+      - permanentRefNo
+    properties:
+      temporaryRefNo:
+        type: string
+        description: Transaction's old reference code. Empty if not applicable.
+      permanentRefNo:
+        type: string
+  bpiClient:
+    type: object
+    description: Short details of BPI/BFB account
+    properties:
+      accountNumber:
+        type: string
+      currency:
+        type: string
+      shortName:
+        type: string
+  cbgfxClientDetails:
+    type: object
+    description: Short description of a CBG-FX Client
+    properties:
+      lastname:
+        type: string
+      firstname:
+        type: string
+      middleName:
+        type: string
+      accumulatedAmount:
+        type: number
+        format: float
+  dealRate:
+    type: object
+    required:
+      - dealRateAmount
+    properties:
+      dealRateAmount:
+        type: number
+        format: float
+  travelersCheck:
+    type: object
+    required:
+      - id
+      - checkNo
+      - checkAmount
+    properties:
+      id:
+        type: integer
+        format: int32
+      referenceNo:
+        type: string
+        description: 'Transaction reference number (optional)'
+      checkNo:
+        type: string
+      checkAmount:
+        type: number
+        format: float
+      refNo:
+        type: string
+      currency:
+        type: string
+        description: 'Three-letter currency code (ex: PHP, USD)'
+      totalAmount:
+        type: string
+        description: 'Also equal to checkAmount (for verification)'
+  managersCheck:
+    type: object
+    required:
+      - referenceNo
+      - mcSerialNo
+      - phpAmount
+      - lastName
+    properties:
+      referenceNo:
+        type: string
+      mcSerialNo:
+        type: string
+        description: "Manager's Check Serial Number"
+      phpAmount:
+        type: number
+        format: float
+        description: "Amount in Philippine Peso (PHP)"
+      lastName:
+        type: string
+      firstName:
+        type: string
+      middleName:
+        type: string
+  dataEntry:
+    type: object
+    required:
+      - commonData
+    description: "Form for transactions. For BTSU transactions, travelersChecks are required"
+    properties:
+      commonData:
+        $ref: "#/definitions/commonDataForm"
+      travelersChecks:
+        type: array
+        items:
+          $ref: "#/definitions/travelersCheck"
+  equivalentAmtResult:
+    type: object
+    description: "System will automatically provide all the charges applicable based on the amount defined by the Trading Unit."
+    properties:
+      grossEquivalentAmt:
+        type: number
+        format: float
+      tcPostage:
+        type: number
+        format: float
+      docStamp:
+        type: number
+        format: float
+      commission:
+        type: number
+        format: float
+  RatesBody:
+    type: object
+    description: "Reference File in Utility Screen"
+    properties:
+      rateType:
+          type: string
+      transactionUnit:
+          type: string
+      currency:
+          type: string  
+  referenceFile:
+    type: object
+    description: "Reference File in Utility Screen"
+    properties:
+      transactionCode:
+        type: string
+      tag:
+        type: string
+      status:
+        type: string
+      date:
+        type: string
+      time:
+        type: string
+      description:
+        type: string
+  cutOff:
+    type: boolean
+    description: "General Function: check cut off"
+  primaryControl:
+    type: object
+    properties:
+      BPICutOff:
+        type: string
+      BPBCutOff:
+        type: string
+      rate_bprd:
+        type: string
+      povrd_indc:
+        type: string
+      ptrck_indc:
+        type: string
+      ptrck_days:
+        type: string
+      ptrck_amnt:
+        type: string
+      sovrd_indc:
+        type: string
+      strck_indc:
+        type: string
+      strck_days:
+        type: string
+      strck_amnt:
+        type: string
+  transactingUnit:
+    type: object
+    properties:
+      tran_fi:
+        type: string
+      tran_desc:
+        type: string
+      trdr_tag:
+        type: string
+  transactionCashAcceptanceSettlementDetails:
+    type: object
+    properties:
+      tran_date:
+        type: string
+      tran_unit:
+        type: string
+      trdr_fi:
+        type: string
+      tran_indc:
+        type: string
+      ref_nmbr:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      addr1:
+        type: string
+      addr2:
+        type: string
+      telno:
+        type: string
+      tin:
+        type: string
+      bday:
+        type: string
+      clnt_tag:
+        type: string
+      corp_tag:
+        type: string
+      docu_tag:
+        type: string
+      mang_unit:
+        type: string
+      book_unit:
+        type: string
+      curr_fr:
+        type: string
+      tran_amnt:
+        type: string
+      deal_rate:
+        type: string
+      rqst_rate:
+        type: string
+      grnt_rate:
+        type: string
+      curr_to:
+        type: string
+      equi_amnt:
+        type: string
+      net_amnt:
+        type: string
+      acpt_mode:
+        type: string
+      acpt_refno:
+        type: string
+      achrg_ded:
+        type: string
+      acpt_docs:
+        type: string
+      acpt_comm:
+        type: string
+      r_lname:
+        type: string
+      r_fname:
+        type: string
+      r_mname:
+        type: string
+      atel_vald:
+        type: string
+      setl_mode:
+        type: string
+      setl_refno:
+        type: string
+      schrg_ded:
+        type: string
+      setl_docs:
+        type: string
+      setl_comm:
+        type: string
+      b_lname:
+        type: string
+      b_fname:
+        type: string
+      b_mname:
+        type: string
+      b_bday:
+        type: string
+      b_addr1:
+        type: string
+      b_addr2:
+        type: string
+      stel_vald:
+        type: string
+      invi_code:
+        type: string
+      userid:
+        type: string
+      termid:
+        type: string
+      stat_rqst:
+        type: string
+      rmrk_brch:
+        type: string
+      rmrk_trdr:
+        type: string
+      acpt_post:
+        type: string
+      setl_post:
+        type: string
+      ovrd_ptt:
+        type: string
+      b_tin:
+        type: string
+  transactionCashAcceptanceSettlementListItems:
+    type: object
+    properties:
+      tran_trdr:
+        type: string
+      tran_indc:
+        type: string
+      ref_nmbr:
+        type: string
+      c_lname:
+        type: string
+      c_fname:
+        type: string
+      c_mname:
+        type: string
+      addr1:
+        type: string
+      addr2:
+        type: string
+      acpt_mode:
+        type: string
+      curr_fr:
+        type: string
+      tran_amnt:
+        type: string
+      setl_mode:
+        type: string
+      curr_to:
+        type: string
+      equi_amnt:
+        type: string
+      grnt_rate:
+        type: string
+      stat_rqst:
+        type: string
+      brch_code:
+        type: string
+      rqst_rate:
+        type: string
+  failed:
+    type: "object"
+    properties:
+      meta:
+        $ref: "#/definitions/failed_meta"
+  ratelist:
+    type: "object"
+    properties:
+      trdr_fi:
+        type: "string"
+      tran_fi:
+        type: "string"
+      rate_type:
+        type: "integer"
+      rate_desc:
+        type: "string"
+  cashflowdetailsinput:
+    type: object
+    properties:
+      tran_fi:
+        type: string
+      tran_unit:
+        type: "string"
+      flow_indc:
+        type: "string"
+      curr_code:
+        type: "string"
+      seq_no:
+        type: "integer"
+      proctag:
+        type: "string"
+  cashflowsummaryinput:
+    type: object
+    properties:
+      tran_fi:
+        type: "string"
+      tran_unit:
+        type: "string"
+      curr_code:
+        type: "string"
+  cashflowlistsummaryinput:
+    type: object
+    properties:
+      tran_fi:
+        type: "string"
+      tran_unit:
+        type: "string"
+      curr_code:
+        type: "string"
+      proctag:
+        type: string
+  historicalrecordslistinput:
+    type: object
+    properties:
+      tran_indc:
+        type: "string"
+      c_lname:
+        type: "string"
+      c_fname:
+        type: "string"
+      c_mname:
+        type: "string"
+      tran_date:
+        type: "string"
+        format: date
+      tran_time:
+        type: "string"
+      proctag:
+        type: "string"
+  historicalrecordssummaryinput:
+    type: object
+    properties:
+      tran_indc:
+        type: "string"
+      search_tag:
+        type: string
+      c_lname:
+        type: "string"
+      c_fname:
+        type: "string"
+      c_mname:
+        type: "string"
+      tran_date:
+        type: "string"
+        format: date
+      tran_time:
+        type: "string"
+      proctag:
+        type: "string"
+  clienthistoryinput:
+    type: object
+    properties:
+      tran_indc:
+        type: "string"
+      c_lname:
+        type: "string"
+      c_fname:
+        type: "string"
+      c_mname:
+        type: "string"
+  acceptedtclistinput:
+    type: object
+    properties:
+      list_indc:
+        type: "integer"
+      trdr_fi:
+        type: "string"
+      tran_unit:
+        type: "string"
+      ref_nmbr:
+        type: "string"
+      proctag:
+        type: "string"
+  ratesinput:
+    type: object
+    properties:
+      trdr_fi:
+        type: "string"
+      rate_type:
+        type: "integer"
+  otclistinput:
+    type: object
+    properties:
+      trdr_fi:
+        type: "string"
+      tran_fi:
+        type: "integer"
+      curr_code:
+        type: string
+  tierratesinput:
+    type: object
+    properties:
+      trdr_fi:
+        type: "string"
+      tran_fi:
+        type: "integer"
+      curr_code:
+        type: string
+      tier_nmbr:
+        type: integer
+      proctag:
+        type: string
+  tclistprintinput:
+    type: object
+    properties:
+      trdr_fi:
+        type: "string"
+      invi_code:
+        type: "integer"
+      proctag:
+        type: string
+  transactionlistsummaryinput:
+    type: object
+    properties:
+      trdr_fi:
+        type: "string"
+      tran_indc:
+        type: string
+      ref_nmbr:
+        type: "integer"
+      rqst_type:
+        type: integer
+      proctag:
+        type: string
+  issuedmclistinput:
+    type: object
+    properties:
+      tran_unit:
+        type: "string"
+      trdr_fi:
+        type: string
+      mc_serno:
+        type: "string"
+      proctag:
+        type: string
+  rates:
+    type: "object"
+    properties:
+      prch_rate:
+        type: "integer"
+      sale_rate:
+        type: "integer"
+      trdr_fi:
+        type: "string"
+      tran_fi:
+        type: "string"
+      curr_code:
+        type: "string"
+      tier_nmbr:
+        type: "integer"
+      amnt_from:
+        type: "integer"
+      amnt_to:
+        type: "integer"
+      usd_amnt:
+        type: "integer"
+      exch_rate:
+        type: "integer"
+      php_equiv:
+        type: "integer"
+  otclist:
+    type: "object"
+    properties:
+      trdr_fi:
+        type: "string"
+      tran_fi:
+        type: "string"
+      curr_code:
+        type: "string"
+      prch_rate:
+        type: "integer"
+      sale_rate:
+        type: "integer"
+  tierrates:
+    type: "object"
+    properties:
+      trdr_fi:
+        type: "string"
+      tran_fi:
+        type: "string"
+      curr_code:
+        type: "string"
+      tier_nmbr:
+        type: "integer"
+      amnt_from:
+        type: "integer"
+      amnt_to:
+        type: "integer"
+      prch_rate:
+        type: "integer"
+      sale_rate:
+        type: "integer"
+      proctag:
+        type: "string"
+  incomes:
+    type: "object"
+    properties:
+      reg_amnt:
+        type: "integer"
+      fcd_amnt:
+        type: "integer"
+  cashflowsummary:
+    type: "object"
+    properties:
+      tran_fi:
+        type: "string"
+      tran_unit:
+        type: "string"
+      curr_code:
+        type: "string"
+      m_iflow:
+        type: "integer"
+      t_iflow:
+        type: "integer"
+      m_oflow:
+        type: "integer"
+      t_oflow:
+        type: "integer"
+      runn_baln:
+        type: "integer"
+  cashflowdetails:
+    type: "object"
+    properties:
+      tran_fi:
+        type: "string"
+      tran_unit:
+        type: "string"
+      curr_code:
+        type: "string"
+      seq_no:
+        type: "integer"
+      amount:
+        type: "integer"
+      user_id:
+        type: "string"
+      term_id:
+        type: "string"
+      time_stmp:
+        type: "integer"
+  acceptedtclist:
+    type: "object"
+    properties:
+      ref_nmbr:
+        type: "string"
+      totl_amt:
+        type: "integer"
+      tran_unit:
+        type: "string"
+      curr_code:
+        type: "string"
+      tc_serno:
+        type: "integer"
+      tc_amt:
+        type: "integer"
+  tclistprint:
+    type: "object"
+    properties:
+      trdr_fi:
+        type: "string"
+      invi_code:
+        type: "string"
+      tran_code:
+        type: "string"
+      form_nmbr:
+        type: "string"
+      invi_desc:
+        type: "string"
+  historicalrecordssummary:
+    type: "object"
+    properties:
+      tran_indc:
+        type: "string"
+      c_lname:
+        type: "string"
+      c_fname:
+        type: "string"
+      c_mname:
+        type: "string"
+      accm_amnt:
+        type: "integer"
+      accm_amnt2:
+        type: "integer"
+  historicalrecordslist:
+    type: "object"
+    properties:
+      tran_indc:
+        type: "string"
+      c_lname:
+        type: "string"
+      c_fname:
+        type: "string"
+      c_mname:
+        type: "string"
+      bday:
+        type: "string"
+        format: date
+      tin:
+        type: "string"
+      c_addr1:
+        type: "string"
+      c_addr2:
+        type: "string"
+      telno:
+        type: "string"
+      tran_date:
+        type: "string"
+        format: date
+      tran_unit:
+        type: "string"
+      ref_nmbr:
+        type: "string"
+      curr_fr:
+        type: "string"
+      curr_to:
+        type: "string"
+      tran_amnt:
+        type: "integer"
+      usd_amnt:
+        type: "integer"
+      tran_time:
+        type: "string"
+  issuedmclist:
+    type: "object"
+    properties:
+      trdr_fi:
+        type: "string"
+      run_bal:
+        type: "integer"
+      ref_nmbr:
+        type: "string"
+      mc_serno:
+        type: "string"
+      c_lname:
+        type: "string"
+      c_fname:
+        type: "string"
+      c_mname:
+        type: "string"
+      php_amt:
+        type: "integer"
+  specialmsg:
+    type: "object"
+    properties:
+      trdr_fi:
+        type: "string"
+      spcl_msg1:
+        type: "string"
+  transactionlistsummary:
+    type: "object"
+    properties:
+      trdr_fi:
+        type: "string"
+      tran_indc:
+        type: "string"
+      ref_nmbr:
+        type: "string"
+      c_lname:
+        type: "string"
+      c_fname:
+        type: "string"
+      c_mname:
+        type: "string"
+      c_addr1:
+        type: "string"
+      c_addr2:
+        type: "string"
+      acpt_mode:
+        type: "integer"
+      curr_fr:
+        type: "string"
+      tran_amnt:
+        type: "integer"
+      setl_mode:
+        type: "integer"
+      curr_to:
+        type: "string"
+      equi_amnt:
+        type: "integer"
+      grnt_rate:
+        type: "integer"
+      net_amnt:
+        type: "integer"
+      acpt_comm:
+        type: "integer"
+      acpt_docs:
+        type: "integer"
+      acpt_post:
+        type: "integer"
+      setl_comm:
+        type: "integer"
+      setl_docs:
+        type: "integer"
+      setl_post:
+        type: "integer"
+      pref_nmbr:
+        type: "string"
+      trdr_id:
+  OfficerOverrideBody:
+    type: "object"
+    properties:
+      userId:
+        type: string 
+      userPassword:
+        type: string
+  PrinterAddBody:
+    type: "object"
+    properties:
+      hardwareId:
+        type: string
+      controlCode:
+        type: string
+      isDefault:
+        type: boolean
+  loginBody:
+    type: "object"
+    properties:
+      officeCode:
+        type: string
+      userId:
+        type: string
+      userPassword:
+        type: string
+  clienthistory:
+    type: "object"
+    properties:
+      c_lname:
+        type: "string"
+      c_fname:
+        type: "string"
+      c_mname:
+        type: "string"
+      c_addr1:
+        type: "string"
+      c_addr2:
+        type: "string"
+      bday:
+        type: "string"
+        format: date
+      tel:
+        type: "string"
+      tin:
+        type: "string"
+  failed_meta:
+    properties:
+      error_type:
+        type: "string"
+      code:
+        type: "integer"
+      error_message:
+        type: "string"

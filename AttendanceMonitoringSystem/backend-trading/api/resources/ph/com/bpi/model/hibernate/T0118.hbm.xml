@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="ph.com.bpi.model.hibernate.T0118" table="T0118">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="currCode" column="CURR_CODE" type="string"/>
+<property name="currBpi" column="CURR_BPI" type="string"/>
+<property name="currCasa" column="CURR_CASA" type="string"/>
+<property name="currDesc" column="CURR_DESC" type="string"/>
+
+</class></hibernate-mapping>

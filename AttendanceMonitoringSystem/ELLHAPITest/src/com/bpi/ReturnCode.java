@@ -1,0 +1,57 @@
+package com.bpi;
+
+/**
+ * Created by Bear on 16/09/2016.
+ */
+public enum ReturnCode {
+    FAILURE(-1),
+    SUCCESS(0),
+    INCORRECT_HOST_PRESENTATION_SPACE_ID(1),
+    PARAMETER_ERROR(2),
+    TARGET_PRESENTATION_BUSY(4),
+    FUNCTION_EXECUTION_INHIBITED_OTHER(5),
+    DATA_ERROR_INCORRECT_PARAMETER(6),
+    PRESENTATION_SPACE_POSITION_INVALID(7),
+    FUNCTIONAL_PROCEDURE_ERROR(8),
+    SYSTEM_ERROR(9),
+    FUNCTION_UNAVAILABLE(10),
+    RESOURCE_UNAVAILABLE(11),
+    CURRENT_SESSION_STOPPED(12),
+    STRING_NOT_FOUND(24),
+    IQ_KEYSTROKES_UNAVAILABLE(25),
+    HOST_EVENT_OCCURRED(26),
+    FILE_TRANSFER_ENDED(27),
+    ZERO_FIELD_LENGTH(28),
+    KEYSTROKE_QUEUE_OVERFLOW(31),
+    APPLICATION_ALREADY_CONNECTED_ON_SESSION(32),
+    RESERVED(33),
+    MESSAGE_TO_HOST_CANCELLED(34),
+    MESSAGE_FROM_HOST_CANCELLED(35),
+    CONTACT_WITH_HOST_LOST(36),
+    INBOUND_COMMUNICATION_DISABLED(37),
+    FUNCTION_EXECUTION_NOT_COMPLETE(38),
+    DDM_SESSION_EXISTS(39),
+    DISCONNECTION_SUCCESS_WITH_INCOMPLETE_AR(40),
+    REQUESTED_BUFFER_ALREADY_USED(41),
+    NO_MATCHING_REQUESTS(42),
+    API_LOCKED_BY_ANOTHER_ELLHAPI_APP(43);
+
+    private final int status_no;
+
+    private ReturnCode(int num){
+        status_no = num;
+    }
+
+    public int getStatusNo(){
+        return status_no;
+    }
+
+    public static ReturnCode fromNumber(int errCode){
+        for(ReturnCode r : values()){
+            if(errCode == r.getStatusNo()) return r;
+        }
+        return null;
+    }
+
+
+}

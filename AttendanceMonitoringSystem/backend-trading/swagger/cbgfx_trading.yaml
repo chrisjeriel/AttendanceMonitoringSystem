@@ -1,0 +1,2769 @@
+swagger: "2.0"
+
+###########################################################################
+#                                                                         #
+#                             API Information                             #
+#                                                                         #
+###########################################################################
+info:
+  title: CBGFX TRading API
+  version: "0.0.1"
+
+
+###########################################################################
+#                                                                         #
+#                Host, Base Path, Schemes and Content Types               #
+#                                                                         #
+###########################################################################
+host: localhost:8888
+basePath: /
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+
+
+###########################################################################
+#                                                                         #
+#                                  Tags                                   #
+#                                                                         #
+###########################################################################
+tags:
+  # [Authentication]
+  - name: Authentication
+  # [Maintenance]
+  - name: Maintenance
+  # [Maintenance] - Define System Control
+  - name: Define System Control
+  # [Maintenance] - Define System Control: Overall Administrator Screens
+  - name: Overall Administrator Screens
+  # [Maintenance] - Define System Control: System Administrator Screens
+  - name: System Administrator Screens
+  # [Maintenance] - Define System Control: Officer/Trader Screens
+  - name: Officer/Trader Screens
+  # [Maintenance] - User File Maintenance
+  - name: User File Maintenance
+  # [Maintenance] - User Access Maintenance
+  - name: User Access Maintenance
+  # [Maintenance] - User Access Maintenance
+  - name: Define Exchange Rates
+  # [Maintenance] - Define Exchange Rates: Third
+  - name: Third
+  # [Maintenance] - Define Exchange Rates: USD/PHP
+  - name: USD/PHP
+  # [Maintenance] - Define Exchange Rates: Lock and Unlock Rates
+  - name: Lock and Unlock Rates
+  # [Maintenance] - Define Exchange Rates: Add/Delete Spreads
+  - name: Add/Delete Spreads
+  # [Maintenance] - Define Exchange Rates: Print Rates for the Day
+  - name: Print Rates for the Day
+  # [Maintenance] - Refresh Reference Tables
+  - name: Refresh Reference Tables
+  # [Inquiry]
+  - name: Inquiry
+  # [Authorization]
+  - name: Authorization
+  # [Reports]
+  - name: Reports
+  # [FX Position]
+  - name: FX Position
+  # [Special Squaring]
+  - name: Special Squaring
+  # [Interbank]
+  - name: Interbank
+
+  # For Editing purposes only.
+  - name: current
+
+
+###########################################################################
+#                                                                         #
+#                                  Paths                                  #
+#                                                                         #
+###########################################################################
+paths:
+  /authentication/login:
+    post:
+      description: User login.
+      tags:
+        - Authentication
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/LoginBody"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/UserAccess"
+
+
+  /authentication/password:
+    patch:
+      description: Change user password.
+      tags:
+        - Authentication
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/PasswordBody"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/UserAccess"
+
+
+  /authentication/cics-parameters:
+    patch:
+      description: Update CICS Parameters.
+      tags:
+        - Authentication
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/CICSBody"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/UserAccess"
+
+
+  /maintenance/dsc/oas/transaction-monitoring:
+    put:
+      description: |
+        Define monitoring settings for purchase and sale transactions.
+      tags:
+        - Maintenance
+        - Define System Control
+        - Overall Administrator Screens
+      parameters:
+        - name: type
+          description: Purchase or Sale.
+          in: query
+          required: true
+          type: integer
+          format: int32
+        - name: numCalendarDays
+          description: Number of calendar days.
+          in: query
+          required: true
+          type: integer
+          format: int32
+        - name: amountLimit
+          description: Amount limit per client in USD.
+          in: query
+          required: true
+          type: number
+          format: double
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/dsc/oas/valid-currencies:
+    get:
+      description: |
+        View list of currencies.
+      tags:
+        - Maintenance
+        - Define System Control
+        - Overall Administrator Screens
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/CurrencyList"
+
+    post:
+      description: |
+        Add new currency code.
+      tags:
+        - Maintenance
+        - Define System Control
+        - Overall Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/Currency"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+    patch:
+      description: |
+        Modify existing currency code.
+      tags:
+        - Maintenance
+        - Define System Control
+        - Overall Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/Currency"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+    delete:
+      description: |
+        Remove existing currency code.
+      tags:
+        - Maintenance
+        - Define System Control
+        - Overall Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/Currency"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/dsc/oas/trading-unit-maintenance:
+    get:
+      description: |
+        Trading Unit file maintenance.
+      tags:
+        - Maintenance
+        - Define System Control
+        - Overall Administrator Screens
+      parameters:
+        - name: tradingUnitCode
+          description: Trading Unit Code.
+          in: query
+          required: false
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/TradingUnitList"
+
+    post:
+      description:  |
+        Define a new Trading Unit.
+      tags:
+        - Maintenance
+        - Define System Control
+        - Overall Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/TradingUnit"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+    delete:
+      description:  |
+        Delete an existing Trading Unit.
+      tags:
+        - Maintenance
+        - Define System Control
+        - Overall Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/TradingUnit"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/dsc/oas/transacting-unit-maintenance:
+    get:
+      description: |
+        Transacting Unit file maintenance.
+      tags:
+        - Maintenance
+        - Define System Control
+        - Overall Administrator Screens
+      parameters:
+        - name: transactingUnitCode
+          description: Transacting Unit Code.
+          in: query
+          required: false
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/TransactingUnitList"
+    post:
+      description: |
+        Define a new Transacting Unit.
+      tags:
+        - Maintenance
+        - Define System Control
+        - Overall Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/TransactingUnit"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+    delete:
+      description: |
+        Delete an existing Transacting Unit.
+      tags:
+        - Maintenance
+        - Define System Control
+        - Overall Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/TransactingUnit"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/dsc/oas/acceptance-settlement-mode:
+    get:
+      description: |
+        View list of Acceptance/Settlement Modes.
+      tags:
+        - Maintenance
+        - Define System Control
+        - Overall Administrator Screens
+      parameters:
+        - name: transactingUnitCode
+          description: Transacting Unit Code.
+          in: query
+          required: false
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/AcceptanceSettlementModeList"
+
+    post:
+      description: |
+        Define new Acceptance/Settlement Mode.
+      tags:
+        - Maintenance
+        - Define System Control
+        - Overall Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/AcceptanceSettlementMode"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+    patch:
+      description: |
+        Modify existing Acceptance/Settlement Mode.
+      tags:
+        - Maintenance
+        - Define System Control
+        - Overall Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/AcceptanceSettlementMode"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/dsc/oas/application-codes:
+    put:
+      description: |
+        Application Code Update.
+      tags:
+        - Maintenance
+        - Define System Control
+        - Overall Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/ApplicationCodes"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/dsc/oas/approving-authority-limit:
+    put:
+      description: |
+        Set max limit amount in PHP and in USD and set minimum approving
+        authority user type for each amount.
+      tags:
+        - Maintenance
+        - Define System Control
+        - Overall Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/ApprovingAuthorityLimits"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/dsc/sas/cutoff-trader-override:
+    put:
+      description: |
+        Cut-off Time and Trader Override Check
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/CutoffTraderOverride"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+  /maintenance/dsc/sas/cutoff-regular-squaring:
+    get:
+      description: |
+        View Cut-off Time per Trading Unit for Regular Squaring.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/CutoffRegularSquaringList"
+
+    patch:
+      description: |
+        Update Trading Unit Cutoff Time Information.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/CutoffRegularSquaring"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/CutoffRegularSquaringList"
+
+
+  /maintenance/dsc/sas/stamps-postage-commissions:
+    get:
+      description: |
+        Get doc stamps, postage and commissions charges by mode.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - name: mode
+          description: Acceptance/Settlement Mode.
+          in: query
+          required: true
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/StampsPostageCommissionResponse"
+
+    patch:
+      description: |
+        Update doc stamps, postage and commissions charges by mode.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/StampsPostageCommission"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/dsc/sas/intraday-position-limits:
+    get:
+      description: |
+        View List of Intraday Limit per Trading Unit.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/IntradayPositionLimitList"
+
+    post:
+      description: |
+        Define new Intraday Limit per Trading Unit.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/IntradayPositionLimit"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+    patch:
+      description: |
+        Modify existing Intraday Limit per Trading Unit.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/IntradayPositionLimit"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+    delete:
+      description: |
+        Delete existing Intraday Limit per Trading Unit.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/IntradayPositionLimit"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/dsc/sas/transaction-amount-settings:
+    get:
+      description: |
+        View List of Transaction Amount Settings for Defined Currencies.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: false
+          schema:
+            $ref: "#/definitions/Currency"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/TransactionAmountSettingList"
+
+    patch:
+      description: |
+        Update Transaction Amount Settings for selected currency.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/TransactionAmountSetting"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/dsc/sas/settlement-accounts:
+    get:
+      description: |
+        View list of Currencies and Settlement Account.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: false
+          schema:
+            $ref: "#/definitions/Currency"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/SettlementAccountPerCurrencyList"
+
+    post:
+      description: |
+        Add new Settlement Account per Currency.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/SettlementAccountPerCurrency"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+    patch:
+      description: |
+        Modify existing Settlement Account per Currency.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/SettlementAccountPerCurrency"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+    delete:
+      description: |
+        Delete existing Settlement Account per Currency.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/SettlementAccountPerCurrency"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/dsc/sas/currency-pair-modes:
+    get:
+      description: |
+        View Overall Listing of Currency Pair and Acceptance/Settlement Modes.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: false
+          schema:
+            $ref: "#/definitions/CurrencyPairModesCriteria"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/CurrencyPairModeList"
+
+    post:
+      description: |
+        Add new Currency Pair and Acceptance/Settlement Mode.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/CurrencyPairMode"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+    delete:
+      description: |
+        Delete existing Currency Pair and Acceptance/Settlement Mode.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/CurrencyPairMode"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/dsc/sas/invisible-codes:
+    get:
+      description: |
+        View current list of Invisible Codes.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: false
+          schema:
+            $ref: "#/definitions/InvisibleCode"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/InvisibleCodeList"
+
+    post:
+      description: |
+        Add new Invisible Code.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/InvisibleCode"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+    delete:
+      description: |
+        Delete existing Invisible Code.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/InvisibleCode"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/dsc/sas/mts-codes:
+    get:
+      description: |
+        MTS Code File Maintenance.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/MTSCode"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/MTSCodeList"
+
+    post:
+      description: |
+        Add new MTS Code.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/MTSCode"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+    delete:
+      description: |
+        Delete existing MTS Code.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/MTSCode"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+  /maintenance/dsc/sas/loa-signatories:
+    put:
+      description: |
+        MTS Code File Maintenance.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/Officers"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/dsc/ots/bulletin-board:
+    get:
+      description: |
+        Get Bulletin Board Messages.
+      tags:
+        - Maintenance
+        - Define System Control
+        - Officer/Trader Screens
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/BulletinBoardList"
+
+    put:
+      description: |
+        MTS Code File Maintenance.
+      tags:
+        - Maintenance
+        - Define System Control
+        - Officer/Trader Screens
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/BulletinBoard"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+  /maintenance/dsc/ots/cutoff-regular-squaring:
+    get:
+      description: |
+        View Cut-off Time per Trading Unit for Regular Squaring.
+      tags:
+        - Maintenance
+        - Define System Control
+        - Officer/Trader Screens
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/CutoffRegularSquaringList"
+
+  /maintenance/dsc/ots/intraday-position-limits:
+    get:
+      description: |
+        View List of Intraday Limit per Trading Unit.
+      tags:
+        - Maintenance
+        - Define System Control
+        - System Administrator Screens
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/IntradayPositionLimitList"
+
+  /maintenance/user-file-maintenance:
+    get:
+      description: |
+        User file maintenance.
+      tags:
+        - Maintenance
+        - User File Maintenance
+      parameters:
+        - in: query
+          name: financialInstitution
+          description: Financial Institution.
+          required: true
+          type: string
+        - in: query
+          name: officeCode
+          description: Office Code.
+          required: true
+          type: string
+        - in: query
+          name: userId
+          description: User ID.
+          required: true
+          type: string
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/UserFileList"
+
+    post:
+      description: |
+        Create new User file.
+      tags:
+        - Maintenance
+        - User File Maintenance
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/UserFile"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+    patch:
+      description: |
+        Modify existing new User file.
+      tags:
+        - Maintenance
+        - User File Maintenance
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/UserFile"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+    delete:
+      description: |
+        Delete existing new User file.
+      tags:
+        - Maintenance
+        - User File Maintenance
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/UserFile"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/user-access-file-maintenance:
+    get:
+      description: |
+        User access file maintenance.
+      tags:
+        - Maintenance
+        - User Access Maintenance
+      parameters:
+        - in: query
+          name: financialInstitution
+          description: Financial Institution.
+          required: true
+          type: string
+        - in: query
+          name: userLevel
+          description: User Level.
+          required: true
+          type: string
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/UserAccessFileResponse"
+
+    post:
+      description: |
+        Add new User access file.
+      tags:
+        - Maintenance
+        - User Access Maintenance
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/UserAccessFileData"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+    patch:
+      description: |
+        Modify existing User access file.
+      tags:
+        - Maintenance
+        - User Access Maintenance
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/UserAccessFileData"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+    delete:
+      description: |
+        Delete existing User access file.
+      tags:
+        - Maintenance
+        - User Access Maintenance
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/UserAccessFileData"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/der/thirds/bid-and-offer:
+    get:
+      description: |
+        View current USD Bid and Offer for Thirds.
+      tags:
+        - Maintenance
+        - Define Exchange Rates
+        - Third
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/BidsAndOfferList"
+
+    put:
+      description: |
+        Modify current USD Bid and Offer for Thirds.
+      tags:
+        - Maintenance
+        - Define Exchange Rates
+        - Third
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/BidsAndOfferData"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/der/thirds/spreads-and-rates:
+    get:
+      description: |
+        View Buying and Selling Rates for Thirds.
+      tags:
+        - Maintenance
+        - Define Exchange Rates
+        - Third
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/SpreadsAndRateList"
+
+    post:
+      description: |
+        Define new Buying and Selling Rates for Thirds.
+      tags:
+        - Maintenance
+        - Define Exchange Rates
+        - Third
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/SpreadsAndRate"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/der/thirds/php-reference-rates:
+    get:
+      description: |
+        Reference Rates vs PHP.
+      tags:
+        - Maintenance
+        - Define Exchange Rates
+        - Third
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/ReferenceRateList"
+
+
+  /maintenance/der/thirds/usd-reference-rates:
+    get:
+      description: |
+        Reference Rates vs USD.
+      tags:
+        - Maintenance
+        - Define Exchange Rates
+        - Third
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/ReferenceRateList"
+
+
+  /maintenance/der/usd-php/best-buying-selling:
+    get:
+      description: |
+        View current bid and offer rates for USD.
+      tags:
+        - Maintenance
+        - Define Exchange Rates
+        - USD/PHP
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/BidsAndOfferResponse"
+
+    put:
+      description: |
+        Enter new bid and offer rates for USD.
+      tags:
+        - Maintenance
+        - Define Exchange Rates
+        - USD/PHP
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/BidsAndOffer"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/der/usd-php/reference-rate:
+    get:
+      description: |
+        View current USD/PHP reference rate.
+      tags:
+        - Maintenance
+        - Define Exchange Rates
+        - USD/PHP
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/ReferenceRateResponse"
+
+    put:
+      description: |
+        Enter new USD/PHP reference rate.
+      tags:
+        - Maintenance
+        - Define Exchange Rates
+        - USD/PHP
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/ReferenceRate"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/der/usd-php/board-rates:
+    get:
+      description: |
+        View current USD/PHP reference(board) rate.
+      tags:
+        - Maintenance
+        - Define Exchange Rates
+        - USD/PHP
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/BoardRateResponse"
+
+    put:
+      description: |
+        Enter new USD/PHP reference(board) rate.
+      tags:
+        - Maintenance
+        - Define Exchange Rates
+        - USD/PHP
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/BoardRate"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/der/usd-php/otc-rates:
+    get:
+      description: |
+        View OTC Rates per Transacting Unit.
+      tags:
+        - Maintenance
+        - Define Exchange Rates
+        - USD/PHP
+      parameters:
+        - in: query
+          name: transactingUnit
+          description: Transacting unit.
+          required: true
+          type: string
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/OTCRateResponse"
+
+    put:
+      description: |
+        Enter new OTC rate.
+      tags:
+        - Maintenance
+        - Define Exchange Rates
+        - USD/PHP
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/OTCRate"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/der/usd-php/tiered-rates:
+    get:
+      description: |
+        View current amount from, amount to and buying and selling spreads.
+      tags:
+        - Maintenance
+        - Define Exchange Rates
+        - USD/PHP
+      parameters:
+        - in: query
+          name: transactingUnit
+          description: Transacting unit.
+          required: true
+          type: string
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/TieredRateList"
+
+    post:
+      description: |
+        Add new tier.
+      tags:
+        - Maintenance
+        - Define Exchange Rates
+        - USD/PHP
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/TieredRate"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/der/usd-php/preferred-client-rates:
+    get:
+      description: |
+        View current rates for preferred clients.
+      tags:
+        - Maintenance
+        - Define Exchange Rates
+        - USD/PHP
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/PreferredClientsRateResponse"
+
+
+  /maintenance/der/usd-php/us-visa-fee:
+    get:
+      description: |
+        View US Visa Fee.
+      tags:
+        - Maintenance
+        - Define Exchange Rates
+        - USD/PHP
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/USVisaFeeResponse"
+
+    put:
+      description: |
+        Change US Visa Fee.
+      tags:
+        - Maintenance
+        - Define Exchange Rates
+        - USD/PHP
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/USVisaFee"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+  /maintenance/der/un-lock-rates:
+    get:
+      description: |
+        Lock/Unlock Rates.
+      tags:
+        - Maintenance
+        - Lock and Unlock Rates
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/der/add-delete-spreads:
+    get:
+      description: |
+        Add/Delete Spreads.
+      tags:
+        - Maintenance
+        - Add/Delete Spreads
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/AddDeleteSpreadList"
+
+    post:
+      description: |
+        Add new Spreads.
+      tags:
+        - Maintenance
+        - Add/Delete Spreads
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/AddDeleteSpread"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+    delete:
+      description: |
+        Delete existing Spreads.
+      tags:
+        - Maintenance
+        - Add/Delete Spreads
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/AddDeleteSpread"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+  /maintenance/der/print-rates:
+    get:
+      description: |
+        Add/Delete Spreads.
+      tags:
+        - Maintenance
+        - Print Rates for the Day
+      produces:
+        - application/pdf
+      parameters:
+        - in: query
+          name: tradingUnit
+          description: Trading Unit.
+          type: string
+          required: true
+        - in: query
+          name: mode
+          description: Is reprint?
+          type: boolean
+          required: true
+      responses:
+        200:
+          description: Response.
+          schema:
+            type: file
+        500:
+          description: Error.
+          schema:
+            type: string
+
+
+  /maintenance/der/refresh-reference-tables:
+    get:
+      description: |
+        View the list of reference tables.
+      tags:
+        - Maintenance
+        - Refresh Reference Tables
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/ReferenceTableList"
+
+    post:
+      description: |
+        View the list of reference tables.
+      tags:
+        - Maintenance
+        - Refresh Reference Tables
+      parameters:
+        - in: body
+          name: data
+          required: true
+          schema:
+            $ref: "#/definitions/ReferenceTableListData"
+      responses:
+        200:
+          description: Response.
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+
+
+
+###########################################################################
+#                                                                         #
+#                               Definitions                               #
+#                                                                         #
+###########################################################################
+definitions:
+
+  DefaultResponse:
+    type: object
+    description: Default response.
+    properties:
+      data:
+        type: string
+        description: Response.
+      error:
+        type: string
+        description: Error message.
+
+  LoginBody:
+    type: object
+    properties:
+      transactionDate:
+        type: string
+        format: date
+        description: Transaction date.
+      officeCode:
+        type: string
+        description: Office code.
+      transactionUnit:
+        type: string
+        description: Transaction unit.
+      password:
+        type: string
+        format: password
+        description: User password.
+
+  PasswordBody:
+    type: object
+    properties:
+      transactionDate:
+        type: string
+        format: date
+        description: Transaction date.
+      officeCode:
+        type: string
+        description: Office code.
+      transactionUnit:
+        type: string
+        description: Transaction unit.
+      password:
+        type: string
+        format: password
+        description: User password.
+      confirmPassword:
+        type: string
+        format: password
+        description: Confirm password.
+
+  CICSBody:
+    type: object
+    properties:
+      transactionDate:
+        type: string
+        format: date
+        description: Transaction date.
+      officeCode:
+        type: string
+        description: Office code.
+      transactionUnit:
+        type: string
+        description: Transaction unit.
+      password:
+        type: string
+        format: password
+        description: User password.
+      region:
+        type: string
+        description: Region.
+      session:
+        type: string
+        description: Session.
+
+  UserAccess:
+    type: object
+    properties:
+      data:
+        type: object
+        description: User access.
+        properties:
+          accessLevel:
+            type: string
+            description: User access level.
+      error:
+        type: string
+        description: Error message.
+
+  AcceptanceSettlementMode:
+    type: object
+    description: Acceptance and Settlement Mode.
+    properties:
+      code:
+        type: string
+        description: Acceptance/Settlement Mode Code.
+      description:
+        type: string
+        description: Description.
+      type:
+        type: string
+        description: Acceptance/Settlement Mode Type.
+      activeTag:
+        type: boolean
+        description: Active Tag.
+      phpTag:
+        type: boolean
+        description: PHP Tag.
+
+  AcceptanceSettlementModeList:
+    type: object
+    properties:
+      data:
+        type: array
+        description: List of Acceptance and Settlement Mode.
+        items:
+          $ref: "#/definitions/AcceptanceSettlementMode"
+      error:
+        type: string
+        description: Error message.
+
+  AddDeleteSpread:
+    type: object
+    description: Add and Delete Spreads
+    properties:
+      spread:
+        type: number
+        format: double
+        description: Spreads in percentage.
+
+  AddDeleteSpreadList:
+    type: object
+    properties:
+      data:
+        type: array
+        description: List of AddDeleteSpread.
+        items:
+          $ref: "#/definitions/AddDeleteSpread"
+      error:
+        type: string
+        description: Error message.
+
+  ApplicationCode:
+    type: object
+    description: Application Code.
+    properties:
+      code:
+        type: string
+        description: Application Code.
+      description:
+        type: string
+        description: Description.
+
+  ApplicationCodes:
+    type: object
+    properties:
+      codes:
+        type: array
+        description: List of Application Code.
+        items:
+          $ref: "#/definitions/ApplicationCode"
+
+  ApprovingAuthorityLimit:
+    type: object
+    description: Approving Authority Limit.
+    properties:
+      phpAmount:
+        type: number
+        format: double
+        description: Amount in PHP.
+      usdAmount:
+        type: number
+        format: double
+        description: Amount in USD.
+      officers:
+        type: array
+        description: List of Officers.
+        items:
+          type: object
+          description: Officers.
+          properties:
+            type:
+              type: string
+              description: Officer Type
+            overridePoints:
+              type: number
+              description: Override Points.
+      totalOverridePoints:
+        type: number
+        description: Total override points.
+
+  ApprovingAuthorityLimits:
+    type: object
+    properties:
+      limits:
+        type: array
+        description: List of Approving Authority Limit.
+        items:
+          $ref: "#/definitions/ApprovingAuthorityLimit"
+
+  BidsAndOffer:
+    type: object
+    description: Bids and Offer
+    properties:
+      currency:
+        $ref: "#/definitions/Currency"
+      bid:
+        type: number
+        description: Current bid for currency.
+        format: double
+      offer:
+        type: number
+        description: Current offer for currency.
+        format: double
+
+  BidsAndOfferData:
+    type: object
+    description: List of bids and offers.
+    properties:
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/BidsAndOffer"
+
+  BidsAndOfferList:
+    type: object
+    properties:
+      data:
+        type: array
+        description: List of bids and offers.
+        items:
+          $ref: "#/definitions/BidsAndOffer"
+      error:
+        type: string
+        description: Error message.
+
+  BidsAndOfferResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/BidsAndOffer"
+      error:
+        type: string
+        description: Error message.
+
+  BoardRate:
+    type: object
+    description: Board Rate.
+    properties:
+      currency:
+        $ref: "#/definitions/Currency"
+      buying:
+        type: number
+        format: double
+        description: Buying Rate.
+      selling:
+        type: number
+        format: double
+        description: Selling Rate.
+
+  BoardRateResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/BoardRate"
+      error:
+        type: string
+        description: Error message.
+
+  BulletinBoard:
+    type: object
+    description: Bulletin board message.
+    properties:
+      message:
+        type: string
+        description: Message.
+
+  BulletinBoardList:
+    type: object
+    properties:
+      data:
+        type: array
+        description: List of bulletin board message.
+        items:
+          $ref: "#/definitions/BulletinBoard"
+      error:
+        type: string
+        description: Error message.
+
+  Currency:
+    type: object
+    description: Currency
+    properties:
+      code:
+        type: string
+        description: Currency Code.
+      description:
+        type: string
+        description: Description.
+      bpiCode:
+        type: string
+        description: BPI Code.
+      casaCode:
+        type: string
+        description: CASA Code.
+
+  CurrencyList:
+    type: object
+    properties:
+      data:
+        type: array
+        description: List of currencies.
+        items:
+          $ref: "#/definitions/Currency"
+      error:
+        type: string
+        description: Error message.
+
+  CurrencyPairMode:
+    type: object
+    description: Detailed Currency Pair and Acceptance/Settlement Modes.
+    properties:
+      recordCTR:
+        type: integer
+        description: Record CTR
+        format: int32
+      tradingUnit:
+        $ref: "#/definitions/TradingUnit"
+      transactingUnit:
+        $ref: "#/definitions/TransactingUnit"
+      transactionType:
+        $ref: "#/definitions/TransactionType"
+      fromCurrency:
+        $ref: "#/definitions/Currency"
+      toCurrency:
+        $ref: "#/definitions/Currency"
+      acceptanceMode:
+        $ref: "#/definitions/AcceptanceSettlementMode"
+      acceptanceChargesIndicator:
+        type: boolean
+        description: Acceptance Charges Indicator.
+      acceptanceRecordingStatus:
+        type: string
+        description: Acceptance Recording Status.
+      settlementMode:
+        $ref: "#/definitions/AcceptanceSettlementMode"
+      settlementChargesIndicator:
+        type: boolean
+        description: Settlement Charges Indicator.
+      settlementRecordingStatus:
+        type: string
+        description: Settlement Recording Status.
+
+  CurrencyPairModesCriteria:
+    type: object
+    description: View Currency Pair and Acceptance/Settlement Modes Criteria.
+    properties:
+      view:
+        type: string
+        description: Overall or Detailed.
+      tradingUnit:
+        $ref: "#/definitions/TradingUnit"
+      transactingUnit:
+        $ref: "#/definitions/TransactingUnit"
+      transactionType:
+        $ref: "#/definitions/TransactionType"
+      fromCurrency:
+        $ref: "#/definitions/Currency"
+      toCurrency:
+        $ref: "#/definitions/Currency"
+      acceptanceMode:
+        $ref: "#/definitions/AcceptanceSettlementMode"
+      settlementMode:
+        $ref: "#/definitions/AcceptanceSettlementMode"
+
+  CurrencyPairModeList:
+    type: object
+    properties:
+      data:
+        type: array
+        description: List of Currency Pair And Acceptance/Settlement Modes.
+        items:
+          $ref: "#/definitions/CurrencyPairMode"
+      error:
+        type: string
+        description: Error message.
+
+  CutoffTraderOverride:
+    type: object
+    description: Cut-off Time and Trader Override Check.
+    properties:
+      cutoff:
+        type: object
+        description: Cut-off Time.
+        properties:
+          bpiCutoff:
+            type: string
+            description: BPI Cut-off Time.
+          bfbCutoff:
+            type: string
+            description: BFB Cut-off Time.
+          rate:
+            type: integer
+            format: int32
+            description: Special Rate Validity in Minutes.
+      purchase:
+        type: object
+        properties:
+          override:
+            type: boolean
+            description: Override indicator
+          numCalendarDays:
+            type: integer
+            description: Number of calendar days.
+            format: int32
+          amountLimit:
+            type: number
+            description: Amount Limit per Client (in USD).
+            format: double
+      sale:
+        type: object
+        properties:
+          override:
+            type: boolean
+            description: Override indicator
+          numCalendarDays:
+            type: integer
+            description: Number of calendar days.
+            format: int32
+          amountLimit:
+            type: number
+            description: Amount Limit per Client (in USD).
+            format: double
+
+  CutoffRegularSquaring:
+    type: object
+    description: Cut-off Time per Trading Unit for Regular Squaring.
+    properties:
+      tradingUnit:
+        $ref: "#/definitions/TradingUnit"
+      squaringCutoff:
+        type: string
+        description: Trading Unit Cut-off Time.
+      bpiCutoff:
+        type: string
+        description: BPI Trading Unit Cut-off Time.
+      bfbCutoff:
+        type: string
+        description: BFB Trading Unit Cut-off Time.
+
+  CutoffRegularSquaringList:
+    type: object
+    properties:
+      data:
+        type: array
+        description: Cut-off Time per Trading Unit for Regular Squaring.
+        items:
+          $ref: "#/definitions/CutoffRegularSquaring"
+      error:
+        type: string
+        description: Error message.
+
+  IntradayPositionLimit:
+    type: object
+    description: Intraday Limit per Trading Unit.
+    properties:
+      tradingUnit:
+        $ref: "#/definitions/TradingUnit"
+      limit:
+        type: number
+        description: Intraday Limit.
+        format: double
+
+  IntradayPositionLimitList:
+    type: object
+    properties:
+      data:
+        type: array
+        description: List of Intraday Limits per Trading unit.
+        items:
+          $ref: "#/definitions/IntradayPositionLimit"
+      error:
+        type: string
+        description: Error message.
+
+  InvisibleCode:
+    type: object
+    description: Invisible Code.
+    properties:
+      code:
+        type: string
+        description: Invisible Code.
+      description:
+        type: string
+        description: Description.
+      transactionCode:
+        type: string
+        description: Transaction Code.
+      formNumber:
+        type: string
+        description: Form Number.
+
+  InvisibleCodeList:
+    type: object
+    properties:
+      data:
+        type: array
+        description: List of Invisible Code.
+        items:
+          $ref: "#/definitions/InvisibleCode"
+      error:
+        type: string
+        description: Error message.
+
+  MTSCode:
+    type: object
+    description: MTS Code.
+    properties:
+      mode:
+        type: string
+        description: Mode Type (Acceptance/Settlement).
+      modeCode:
+        $ref: "#/definitions/AcceptanceSettlementMode"
+      mtsCode:
+        type: string
+        description: MTS Code.
+      description:
+        type: string
+        description: Description.
+
+  MTSCodeList:
+    type: object
+    properties:
+      data:
+        type: array
+        description: List of MTS Codes.
+        items:
+          $ref: "#/definitions/MTSCode"
+      error:
+        type: string
+        description: Error message.
+
+  Officer:
+    type: object
+    description: Officer Name.
+    properties:
+      firstName:
+        type: string
+        description: First Name.
+      middleName:
+        type: string
+        description: Middle Name.
+      lastName:
+        type: string
+        description: Last Name.
+
+  Officers:
+    type: array
+    description: List of Officers
+    items:
+      $ref: "#/definitions/Officer"
+
+  OTCRate:
+    type: object
+    description: OTC Rate.
+    properties:
+      transactingUnit:
+        $ref: "#/definitions/TransactingUnit"
+      buying:
+        type: number
+        format: double
+        description: Buying Rate.
+      selling:
+        type: number
+        format: double
+        description: Selling Rate.
+
+  OTCRateResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/OTCRate"
+      error:
+        type: string
+        description: Error message.
+
+  PreferredClientsRate:
+    type: object
+    description: Preferred Clients Rate.
+    properties:
+      selling:
+        type: number
+        format: double
+        description: Selling rate.
+      buying:
+        type: number
+        format: double
+        description: Selling rate.
+
+  PreferredClientsRateResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/PreferredClientsRate"
+      error:
+        type: string
+        description: Error message.
+
+  RateForThird:
+    type: object
+    description: Buying and Selling rate for Thirds.
+    properties:
+      type:
+        type: string
+        description: Direct/Indirect
+      notesBuying:
+        type: number
+        format: double
+        description: Currency Spread vs PHP.
+      fcduBuying:
+        type: number
+        format: double
+        description: Currency Buying Spread vs USD.
+      fcduSelling:
+        type: number
+        format: double
+        description: Currency Selling Spread vs USD.
+
+  ReferenceRate:
+    type: object
+    description: Reference Rate.
+    properties:
+      currency:
+        $ref: "#/definitions/Currency"
+      current:
+        type: number
+        format: double
+        description: Current.
+      new:
+        type: number
+        format: double
+        description: New.
+
+  ReferenceRateList:
+    type: object
+    properties:
+      data:
+        type: array
+        description: List of Reference Rates.
+        items:
+          $ref: "#/definitions/ReferenceRate"
+      error:
+        type: string
+        description: Error message.
+
+  ReferenceRateResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/ReferenceRate"
+      error:
+        type: string
+        description: Error message.
+
+  ReferenceTable:
+    type: object
+    description: Reference Table.
+    properties:
+      name:
+        type: string
+        description: Table name.
+      updateStatus:
+        type: boolean
+        description: Update Status.
+      lastUpdate:
+        type: string
+        description: Last update date.
+        format: date
+      lastUpdateTime:
+        type: string
+        description: Last update time.
+      reason:
+        type: string
+        description: Reason.
+
+  ReferenceTableList:
+    type: object
+    properties:
+      data:
+        type: array
+        description: List of Reference Tables.
+        items:
+          $ref: "#/definitions/ReferenceTable"
+      error:
+        type: string
+        description: Error message.
+
+  ReferenceTableListData:
+    type: object
+    properties:
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/ReferenceTableList"
+
+  SettlementAccount:
+    type: object
+    description: BPI/BFB Settlement Account.
+    properties:
+      account:
+        type: string
+        description: Settlement Account.
+
+  SettlementAccountPerCurrency:
+    type: object
+    description: Settlement Account per Currency
+    properties:
+      currency:
+        $ref: "#/definitions/Currency"
+      bpiSettlementAccount:
+        $ref: "#/definitions/SettlementAccount"
+      bfbSettlementAccount:
+        $ref: "#/definitions/SettlementAccount"
+
+  SettlementAccountPerCurrencyList:
+    type: object
+    properties:
+      data:
+        type: array
+        description: List of Settlement Account per Currencies.
+        items:
+          $ref: "#/definitions/SettlementAccountPerCurrency"
+      error:
+        type: string
+        description: Error message.
+
+  SpreadsAndRate:
+    type: object
+    description: Buying and Selling Rate for Thirds.
+    properties:
+      currency:
+        $ref: "#/definitions/Currency"
+      current:
+        $ref: "#/definitions/RateForThird"
+      new:
+        $ref: "#/definitions/RateForThird"
+
+  SpreadsAndRateList:
+    type: object
+    properties:
+      data:
+        type: array
+        description: List of Selling/Buying Rate for Thirds.
+        items:
+          $ref: "#/definitions/SpreadsAndRate"
+      error:
+        type: string
+        description: Error message.
+
+  StampsPostageCommission:
+    type: object
+    description: Doc stamps, postage, and commissions.
+    properties:
+      mode:
+        $ref: "#/definitions/AcceptanceSettlementMode"
+      tcPostage:
+        type: object
+        description: TC Postage.
+        properties:
+          charge:
+            type: string
+            description: Charge mode (Per Transaction/Per Check).
+          amount:
+            type: number
+            description: Amount.
+            format: double
+      acceptance:
+        type: object
+        description: Acceptance Details
+        properties:
+          docStamps:
+            type: object
+            description: Document Stamps
+            properties:
+              charge:
+                type: string
+                description: Charge mode (Per Transaction/Per Check).
+              amount:
+                type: number
+                description: Amount.
+                format: double
+              percentage:
+                type: number
+                description: Percentage.
+                format: double
+          commission:
+            type: object
+            description: Document Stamps
+            properties:
+              charge:
+                type: string
+                description: Charge mode (Per Transaction/Per Check).
+              amount:
+                type: number
+                description: Amount.
+                format: double
+              percentage:
+                type: number
+                description: Percentage.
+                format: double
+      settlement:
+        type: object
+        description: Settlement Details
+        properties:
+          docStamps:
+            type: object
+            description: Document Stamps
+            properties:
+              charge:
+                type: string
+                description: Charge mode (Per Transaction/Per Check).
+              amount:
+                type: number
+                description: Amount.
+                format: double
+              percentage:
+                type: number
+                description: Percentage.
+                format: double
+          commission:
+            type: object
+            description: Document Stamps
+            properties:
+              charge:
+                type: string
+                description: Charge mode (Per Transaction/Per Check).
+              amount:
+                type: number
+                description: Amount.
+                format: double
+              percentage:
+                type: number
+                description: Percentage.
+                format: double
+
+  StampsPostageCommissionResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/StampsPostageCommission"
+      error:
+        type: string
+        description: Error message.
+
+  TieredRate:
+    type: object
+    description: Tiered Rate.
+    properties:
+      transactingUnit:
+        $ref: "#/definitions/TransactingUnit"
+      tierNo:
+        type: integer
+        format: int32
+        description: Tier.
+      amountFrom:
+        type: number
+        format: double
+        description: Amount from.
+      amountTo:
+        type: number
+        format: double
+        description: Amount To.
+      buying:
+        type: number
+        format: double
+        description: Buying Spread.
+      selling:
+        type: number
+        format: double
+        description: Selling Spread.
+      lastBuyingTier:
+        type: boolean
+        description: Is last buying tier?
+      lastSellingTier:
+        type: boolean
+        description: Is last selling tier?
+
+  TieredRateList:
+    type: object
+    properties:
+      data:
+        type: array
+        description: List of Tiered Rate.
+        items:
+          $ref: "#/definitions/TieredRate"
+      error:
+        type: string
+        description: Error message.
+
+  TradingUnit:
+    type: object
+    description: Trading unit.
+    properties:
+      tradingUnitCode:
+        type: string
+        description: Trading unit code.
+      transactingUnitCode:
+        type: string
+        description: Transacting Unit Code.
+      description:
+        type: string
+        description: Description.
+      officeCode:
+        type: string
+        description: Office Code
+      forceUnload:
+        type: boolean
+        description: Force Unload.
+
+  TradingUnitList:
+    type: object
+    properties:
+      data:
+        type: array
+        description: List of Trading Units.
+        items:
+          $ref: "#/definitions/TradingUnit"
+      error:
+        type: string
+        description: Error message.
+
+  TransactingUnit:
+    type: object
+    description: Transacting unit.
+    properties:
+      transactingUnitCode:
+        type: string
+        description: Transacting Unit Code.
+      description:
+        type: string
+        description: Description.
+      tradingUnitTag:
+        type: boolean
+        description: Trading unit tag.
+
+  TransactingUnitList:
+    type: object
+    properties:
+      data:
+        type: array
+        description: List of Trading Units.
+        items:
+          $ref: "#/definitions/TransactingUnit"
+      error:
+        type: string
+        description: Error message.
+
+  TransactionAmountSetting:
+    type: object
+    description: Transaction Amount Setting for a defined Currency.
+    properties:
+      currency:
+        $ref: "#/definitions/Currency"
+      minimumAmount:
+        type: number
+        description: Minimum Amount.
+        format: double
+      firstOverride:
+        type: number
+        description: First Override.
+        format: double
+      secondOverride:
+        type: number
+        description: Second Override.
+        format: double
+      aboveLimit:
+        type: number
+        description: Purchase Above Limit.
+        format: double
+      saleLimit:
+        type: number
+        description: Sale Above Limit.
+        format: double
+
+  TransactionAmountSettingList:
+    type: object
+    properties:
+      data:
+        type: array
+        description: List of Transaction Amount Settings.
+        items:
+          $ref: "#/definitions/TransactionAmountSetting"
+      error:
+        type: string
+        description: Error message.
+
+  TransactionType:
+    type: object
+    description: Purchase or Sale
+    properties:
+      type:
+        type: string
+
+  UserAccessFile:
+    type: object
+    description: User Access File
+    properties:
+      menuItems:
+        type: array
+        description: Menu items.
+        items:
+          $ref: "#/definitions/UserAccessItem"
+
+  UserAccessFileData:
+    type: object
+    description: User Access File Data
+    properties:
+      financialInstitution:
+        type: string
+        description: Financial Institution.
+      userLevel:
+        type: string
+        description: User Level.
+      module:
+        type: string
+        description: Module (Trading/Transacting).
+      data:
+        $ref: "#/definitions/UserAccessFile"
+
+
+  UserAccessFileResponse:
+    type: object
+    description: User Access File Get Response.
+    properties:
+      data:
+        $ref: "#/definitions/UserAccessFile"
+      error:
+        type: string
+        description: Error message.
+
+  UserAccessItem:
+    type: object
+    description: User access item.
+    properties:
+      menuItem:
+        type: string
+        description: Menu Item.
+      tag:
+        type: boolean
+        description: Tag
+      module:
+        type: string
+        description: Module (Trading/Transacting).
+
+  UserFile:
+    type: object
+    description: User File.
+    properties:
+      financialInstitution:
+        type: string
+        description: Financial Institution.
+      officeCode:
+        type: string
+        description: Office Code.
+      branchName:
+        type: string
+        description: Branch Name.
+      userId:
+        type: string
+        description: User ID.
+      officer:
+        $ref: "#/definitions/Officer"
+      userLevel:
+        type: string
+        description: User Level.
+
+  UserFileList:
+    type: object
+    properties:
+      data:
+        type: array
+        description: List of User.
+        items:
+          $ref: "#/definitions/UserFile"
+      error:
+        type: string
+        description: Error message.
+
+  USVisaFee:
+    type: object
+    description: Us Visa Fee.
+    properties:
+      usdAmount:
+        type: number
+        format: double
+        description: USD Amount.
+      phpAmount:
+        type: number
+        format: double
+        description: PHP Amount.
+      exchangeRate:
+        type: number
+        format: double
+        description: Exchange Rate.
+
+  USVisaFeeResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/USVisaFee"
+      error:
+        type: string
+        description: Error message.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

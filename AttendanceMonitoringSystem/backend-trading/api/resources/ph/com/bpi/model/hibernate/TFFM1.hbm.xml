@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="ph.com.bpi.model.hibernate.TFFM1" table="TFFM1">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="tranType" column="TRAN_TYPE" type="string"/>
+<property name="rqstType" column="RQST_TYPE" type="string"/>
+<property name="tranUnit" column="TRAN_UNIT" type="string"/>
+<property name="refNmbr" column="REF_NMBR" type="string"/>
+<property name="tranTime" column="TRAN_TIME" type="string"/>
+<property name="currFrom" column="CURR_FROM" type="string"/>
+<property name="currTo" column="CURR_TO" type="string"/>
+<property name="tranAmnt" column="TRAN_AMNT" type="big_decimal"/>
+<property name="eqvlAmnt" column="EQVL_AMNT" type="big_decimal"/>
+<property name="dealRate" column="DEAL_RATE" type="big_decimal"/>
+<property name="rqstRate" column="RQST_RATE" type="big_decimal"/>
+
+</class></hibernate-mapping>

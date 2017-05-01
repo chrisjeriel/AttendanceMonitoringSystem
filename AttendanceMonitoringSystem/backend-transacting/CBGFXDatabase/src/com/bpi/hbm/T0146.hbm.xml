@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="com.bpi.model.T0146" table="T0146">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="phpLmit1" column="PHP_LMIT1" type="big_decimal"/>
+<property name="usdLmit1" column="USD_LMIT1" type="big_decimal"/>
+<property name="ovrdPtt1" column="OVRD_PTT1" type="big_decimal"/>
+<property name="ofcr1Typ1" column="OFCR1_TYP1" type="big_decimal"/>
+<property name="ofcr2Typ1" column="OFCR2_TYP1" type="big_decimal"/>
+<property name="phpLmit2" column="PHP_LMIT2" type="big_decimal"/>
+<property name="usdLmit2" column="USD_LMIT2" type="big_decimal"/>
+<property name="ovrdPtt2" column="OVRD_PTT2" type="big_decimal"/>
+<property name="ofcr1Typ2" column="OFCR1_TYP2" type="big_decimal"/>
+<property name="ofcr2Typ2" column="OFCR2_TYP2" type="big_decimal"/>
+<property name="phpLmit3" column="PHP_LMIT3" type="big_decimal"/>
+<property name="usdLmit3" column="USD_LMIT3" type="big_decimal"/>
+<property name="ovrdPtt3" column="OVRD_PTT3" type="big_decimal"/>
+<property name="ofcr1Typ3" column="OFCR1_TYP3" type="big_decimal"/>
+<property name="ofcr2Typ3" column="OFCR2_TYP3" type="big_decimal"/>
+<property name="phpLmit4" column="PHP_LMIT4" type="big_decimal"/>
+<property name="usdLmit4" column="USD_LMIT4" type="big_decimal"/>
+<property name="ovrdPtt4" column="OVRD_PTT4" type="big_decimal"/>
+<property name="ofcr1Typ4" column="OFCR1_TYP4" type="big_decimal"/>
+<property name="ofcr2Typ4" column="OFCR2_TYP4" type="big_decimal"/>
+
+</class></hibernate-mapping>

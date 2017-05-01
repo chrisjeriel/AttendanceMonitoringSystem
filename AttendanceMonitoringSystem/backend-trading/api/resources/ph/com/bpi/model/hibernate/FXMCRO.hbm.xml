@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="ph.com.bpi.model.hibernate.FXMCRO" table="FXMCRO">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="mcroTag" column="MCRO_TAG" type="big_decimal"/>
+<property name="mcroName" column="MCRO_NAME" type="string"/>
+</class></hibernate-mapping>

@@ -1,0 +1,2543 @@
+swagger: '2.0'
+info:
+  version: '0.0.1'
+  title: TRADING API
+  description: API to be used for TRADING module
+schemes:
+  - http
+paths:
+  /inquiry/purchase/{transactionType}:
+    post:
+      description: 
+        Inquiry - Purchase by Transaction Type
+      produces:
+        - application/json
+      parameters:
+        - name: transactionType
+          in: path
+          description: transaction type
+          required: true
+          type: string
+        - name: trdr_fi
+          in: query
+          description: trdr_fi
+          required: true
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /inquiry/purchase/{transactionType}/{refNo}:
+    post:
+      description: 
+        Inquiry - Purchase by Transaction Type & Reference Number
+      produces:
+        - application/json
+      parameters:
+        - name: transactionType
+          in: path
+          description: transaction type
+          required: true
+          type: string
+        - name: refNo
+          in: path
+          description: reference number
+          required: true
+          type: string
+        - name: trdr_fi
+          in: query
+          description: trdr_fi
+          required: true
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /inquiry/sale/{transactionType}:
+    post:
+      description: 
+        Inquiry - Sale by Transaction Type
+      produces:
+        - application/json
+      parameters:
+        - name: transactionType
+          in: path
+          description: transaction type
+          required: true
+          type: string
+        - name: trdr_fi
+          in: query
+          description: trdr_fi
+          required: true
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'      
+  /inquiry/sale/{transactionType}/{refNo}:
+    post:
+      description: 
+        Inquiry - Sale by Transaction Type & Reference Number
+      produces:
+        - application/json
+      parameters:
+        - name: transactionType
+          in: path
+          description: transaction type
+          required: true
+          type: string
+        - name: refNo
+          in: path
+          description: reference number
+          required: true
+          type: string
+        - name: trdr_fi
+          in: query
+          description: trdr_fi
+          required: true
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+            
+  /cash-flow/list:
+    post:
+      description: 
+        Cash Flow - List
+      produces:
+        - application/json
+      parameters:
+        - name: brch_code
+          in: query
+          description: branch code
+          required: true
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /cash-flow/detail:
+    post:
+      description: 
+        Cash Flow - Detail
+      produces:
+        - application/json
+      parameters:
+        - name: cashFlowDetail
+          required: true
+          in: body
+          description: cash flow parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/cashFlowBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+            
+  /trans-tc/list:
+    post:
+      description: 
+        Transaction with TCs - List
+      produces:
+        - application/json
+      parameters:
+        - name: transactionTCList
+          required: true
+          in: body
+          description: transacrion w/ TCs parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/transactionTCBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /trans-tc/{refNo}:
+    post:
+      description: 
+        Transaction with TCs by Reference Number
+      produces:
+        - application/json
+      parameters:
+        - name: refNo
+          in: path
+          description: reference number
+          required: true
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+
+  /authorization/purchase/{transactionType}:
+    post:
+      description: 
+        Authorization - Purchase by Transaction Type
+      produces:
+        - application/json
+      parameters:
+        - name: transactionType
+          in: path
+          description: transaction type
+          required: true
+          type: string
+        - name: trdr_fi
+          in: query
+          description: trdr_fi
+          required: true
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /authorization/purchase/{transactionType}/{refNo}:
+    post:
+      description: 
+        Authorization - Purchase by Transaction Type & Reference Number
+      produces:
+        - application/json
+      parameters:
+        - name: transactionType
+          in: path
+          description: transaction type
+          required: true
+          type: string
+        - name: refNo
+          in: path
+          description: reference number
+          required: true
+          type: string
+        - name: authorizationPurchase
+          required: true
+          in: body
+          description: authorization parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/authorizationBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+
+  /authorization/sale/{transactionType}:
+    post:
+      description: 
+        Authorization - Sale by Transaction Type
+      produces:
+        - application/json
+      parameters:
+        - name: transactionType
+          in: path
+          description: transaction type
+          required: true
+          type: string
+        - name: trdr_fi
+          in: query
+          description: trdr_fi
+          required: true
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'      
+  /authorization/sale/{transactionType}/{refNo}:
+    post:
+      description: 
+        Authorization - Sale by Transaction Type & Reference Number
+      produces:
+        - application/json
+      parameters:
+        - name: transactionType
+          in: path
+          description: transaction type
+          required: true
+          type: string
+        - name: refNo
+          in: path
+          description: reference number
+          required: true
+          type: string
+        - name: authorizationSale
+          required: true
+          in: body
+          description: authorization parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/authorizationBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+
+  /authorization/special-rate:
+    post:
+      description: 
+        Authorization - Special Rate
+      produces:
+        - application/json
+      parameters:
+        - name: authorizationSpecialRate
+          required: true
+          in: body
+          description: authorization special rate parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/authorizationSpecialRateBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /authorization/trader-override:
+    post:
+      description: 
+        Authorization - Trader Override
+      produces:
+        - application/json
+      parameters:
+        - name: authorizationTraderOverride
+          required: true
+          in: body
+          description: authorization trader override parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/authorizationTraderOverrideBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'    
+
+  /authorization/sale/cancel-trans:
+    post:
+      description: 
+        Authorization - Sale - Cancel Transaction
+      produces:
+        - application/json
+      parameters:
+        - name: ref_nmbr
+          in: query
+          description: reference number
+          required: true
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'      
+
+  /special-squaring/compute:
+    post:
+      description: 
+        Special Squaring - Data Entry - Compute
+      produces:
+        - application/json
+      parameters:
+        - name: specialSquaringCompute
+          required: true
+          in: body
+          description: special squaring compuete parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/specialSquaringComputeBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'    
+  /special-squaring/new-trans/process:
+    post:
+      description: 
+        Special Squaring - Data Entry - New Transaction
+      produces:
+        - application/json
+      parameters:
+        - name: specialSquaringNew
+          required: true
+          in: body
+          description: special squaring new transaction parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/specialSquaringNewBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'       
+ 
+  /special-squaring/list:
+    post:
+      description: 
+        Special Squaring - List
+      produces:
+        - application/json
+      parameters:
+        - name: specialSquaringNew
+          required: true
+          in: body
+          description: special squaring list parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/specialSquaringListBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'                  
+  /special-squaring/approve:
+    post:
+      description: 
+        Special Squaring - Treasury Approval
+      produces:
+        - application/json
+      parameters:
+        - name: specialSquaringApprove
+          required: true
+          in: body
+          description: special squaring approve parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/specialSquaringApproveBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'  
+  /special-squaring/final-update:
+    post:
+      description: 
+        Special Squaring - Final Update
+      produces:
+        - application/json
+      parameters:
+        - name: specialSquaringFinal
+          required: true
+          in: body
+          description: special squaring approve parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/specialSquaringFinalBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'  
+
+  /interbank/define-file/list:
+    post:
+      description: 
+        Interbank – Define File - List
+      produces:
+        - application/json
+      parameters:
+        - name: bankCode
+          in: query
+          description: bank code
+          required: true
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'    
+  /interbank/define-file/process:
+    post:
+      description: 
+        Interbank – Define File - Process
+      produces:
+        - application/json
+      parameters:
+        - name: interbankDefineFileProcess
+          required: true
+          in: body
+          description: interbank define file process parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/interbankDefineFileProcessBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'  
+            
+  /interbank/data-entry:
+    post:
+      description: 
+        Interbank – Define Entry
+      produces:
+        - application/json
+      parameters:
+        - name: interbankDataEntry
+          required: true
+          in: body
+          description: interbank data entry parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/interbankDataEntryBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'  
+            
+  /interbank/inquiry/list:
+    post:
+      description: 
+        Interbank – Inquiry - List
+      produces:
+        - application/json
+      parameters:
+        - name: tranIndtr
+          in: query
+          description: transaction indicator
+          required: true
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'   
+  /interbank/inquiry/list/next:
+    post:
+      description: 
+        Interbank – Inquiry - List
+      produces:
+        - application/json
+      parameters:
+        - name: tranIndtr
+          in: query
+          description: transaction indicator
+          required: true
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'   
+  /interbank/inquiry/{refNo}:
+    post:
+      description: 
+        Interbank – Inquiry by Reference Number
+      produces:
+        - application/json
+      parameters:
+        - name: refNo
+          in: path
+          description: reference number
+          required: true
+          type: string
+        - name: tranIndtr
+          in: query
+          description: transaction indicator
+          required: true
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse' 
+  /interbank/error-correct:
+    post:
+      description: 
+        Interbank – Error Correct
+      produces:
+        - application/json
+      parameters:
+        - name: interbankErrorCorrect
+          required: true
+          in: body
+          description: interbank error correct parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/interbankErrorCorrectBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'   
+
+  /interbank/report:
+    post:
+      description: 
+        Interbank – Report
+      produces:
+        - application/json
+      parameters:
+        - name: interbankReport
+          required: true
+          in: body
+          description: interbank report parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/interbankReportBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'   
+  /interbank/loa/purchase/print:
+    post:
+      description: 
+        Interbank – LOA - Purchase - Print
+      produces:
+        - application/json
+      parameters:
+        - name: gLogDate
+          in: query
+          description: gLogDate
+          required: true
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'  
+  /interbank/loa/sale/print:
+    post:
+      description: 
+        Interbank – LOA - Sale - Print
+      produces:
+        - application/json
+      parameters:
+        - name: gLogDate
+          in: query
+          description: gLogDate
+          required: true
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'   
+  /interbank/loa/list:
+    post:
+      description: 
+        Interbank – LOA - List
+      produces:
+        - application/json
+      parameters:
+        - name: tranIndtr
+          in: query
+          description: tranIndtr
+          required: true
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'   
+  /interbank/loa/list/next:
+    post:
+      description: 
+        Interbank – LOA - List - Next
+      produces:
+        - application/json
+      parameters:
+        - name: tranIndtr
+          in: query
+          description: tranIndtr
+          required: true
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'    
+  /sysad/cutoff-time/override-check:
+    post:
+      description: 
+        Cut-off Time and Override Check - SPP
+      produces:
+        - application/json
+      parameters:
+        - name: cutoffTimeErrorCheck
+          required: true
+          in: body
+          description: parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/cutoffTimeErrorCheckBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'   
+  /sysad/cutoff-time/regular-squaring:
+    get:
+      description: 
+        Cut-off Time for Regular Squaring - View
+      produces:
+        - application/json
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+    patch:
+      description: 
+        Cut-off Time for Regular Squaring - View
+      produces:
+        - application/json
+      parameters:
+        - name: cutoffTimeRegularSquaring
+          required: true
+          in: body
+          description: parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/cutoffTimeRegularSquaringBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'   
+    post:
+      description: 
+        Cut-off Time for Regular Squaring - View
+      produces:
+        - application/json
+      parameters:
+        - name: cutoffTimeRegularSquaring
+          required: true
+          in: body
+          description: parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/cutoffTimeRegularSquaringBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'   
+
+  /sysad/doc-stamp-postage-commission:
+    post:
+      description: 
+        Doc Stamps, Postage and Commissions - SPP
+      produces:
+        - application/json
+      parameters:
+        - name: sysadDocStamps
+          required: true
+          in: body
+          description: parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/sysadDocStampsBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'   
+
+  /sysad/intraday-position-limits:
+    post:
+      description: 
+        Intraday Position Limits - Update
+      produces:
+        - application/json
+      parameters:
+        - name: sysadInterdayPositionLimits
+          required: true
+          in: body
+          description: parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/sysadInterdayPositionLimitsBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'   
+    patch:
+      description: 
+        Intraday Position Limits - Update
+      produces:
+        - application/json
+      parameters:
+        - name: sysadInterdayPositionLimits
+          required: true
+          in: body
+          description: parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/sysadInterdayPositionLimitsBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'  
+    delete:
+      description: 
+        Intraday Position Limits - Update
+      produces:
+        - application/json
+      parameters:
+        - name: sysadInterdayPositionLimits
+          required: true
+          in: body
+          description: parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/sysadInterdayPositionLimitsBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'    
+            
+  /sysad/transaction-amount-settings:
+    get:
+      description: 
+        Transaction Amount Setting - SPP
+      produces:
+        - application/json
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'  
+    patch:
+      description: 
+        Transaction Amount Setting - SPP
+      produces:
+        - application/json
+      parameters:
+        - name: sysadTransactionAmountSetting
+          required: true
+          in: body
+          description: parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/sysadTransactionAmountSettingBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'    
+  /sysad/transaction-amount-settings/all:
+    get:
+      description: 
+        Transaction Amount Setting - SPP
+      produces:
+        - application/json
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'              
+
+  /sysad/bpi-bfb-settlement:
+    post:
+      description: 
+        BPI/BFB Settlement Accounts 
+      produces:
+        - application/json
+      parameters:
+        - name: sysadInterdayPositionLimits
+          required: true
+          in: body
+          description: parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/sysadBPIBFPSettlementBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse' 
+    delete:
+      description: 
+        BPI/BFB Settlement Accounts 
+      produces:
+        - application/json
+      parameters:
+        - name: sysadInterdayPositionLimits
+          required: true
+          in: body
+          description: parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/sysadBPIBFPSettlementBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse' 
+    patch:
+      description: 
+        BPI/BFB Settlement Accounts 
+      produces:
+        - application/json
+      parameters:
+        - name: sysadInterdayPositionLimits
+          required: true
+          in: body
+          description: parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/sysadBPIBFPSettlementBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse' 
+  /login:
+    post:
+      description: Login user with credentials provided
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: userDetails
+          required: true
+          in: body
+          description: Transacting Unit
+          schema:
+            $ref: '#/definitions/loginDetails'
+      responses:
+        default:
+          description: response that may contain user info or status of logon
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /sendhost:
+    post:
+      description: send host api
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: sendHostBody
+          required: true
+          in: body
+          description: send host body
+          schema:
+            $ref: '#/definitions/sendHostBody'
+      responses:
+        default:
+          description: response
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /logoff:
+    get:
+      description: send host api
+      produces:
+        - application/json
+      responses:
+        default:
+          description: response
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /deletelog:
+    delete:
+      description: Get list of BP Accounts - BC10
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: f_transdate
+          in: body
+          description: f trandate
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/transaction-monitoring:
+    get:
+      description: transaction monitoring get
+      produces:
+        - application/json
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/transaction-monitoring/process:
+    post:
+      description: Get transaction history of BP Accounts - BC13
+      produces:
+        - application/json
+      parameters:
+        - name: transactionBody
+          required: true
+          in: body
+          description: send transaction body
+          schema:
+            $ref: '#/definitions/transactionMonitoringBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/valid-currencies/list:
+    get:
+      produces:
+        - application/json
+      description: get valid currency list
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/valid-currencies/encode:
+    post:
+      description: encode 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: validCurrencyEncode
+          required: true
+          in: body
+          description: valid currecy encode body
+          schema:
+            $ref: '#/definitions/validCurrecyEncodeBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+    put:
+      description: encode 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: validCurrencyEncode
+          required: true
+          in: body
+          description: valid currecy encode body
+          schema:
+            $ref: '#/definitions/validCurrecyEncodeBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+    delete:
+      description: encode 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: validCurrencyEncode
+          required: true
+          in: body
+          description: valid currecy encode body
+          schema:
+            $ref: '#/definitions/validCurrecyEncodeBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/trading-unit: 
+    get:
+      description: get trading unit 
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          required: true
+          in: path
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'   
+  /maintenance/trading-unit: 
+    get:
+      description: get trading unit 
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          required: true
+          in: path
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'  
+  /maintenance/trading-unit/list:
+    get:
+      description: get trading unit list
+      produces:
+        - application/json
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse' 
+  /maintenance/trading-unit/encode:
+    post:
+      description: encode 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: tradingUnitBody
+          required: true
+          in: body
+          description: trading unit body
+          schema:
+            $ref: '#/definitions/tradingUnitEncode'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+    put:
+      description: encode 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: tradingUnitBody
+          required: true
+          in: body
+          description: trading unit body
+          schema:
+            $ref: '#/definitions/tradingUnitEncode'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+    delete:
+      description: encode 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: tradingUnitBody
+          required: true
+          in: body
+          description: trading unit body
+          schema:
+            $ref: '#/definitions/tradingUnitEncode'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/transacting-unit/list:
+    get:
+      description: get transacting unit list
+      produces:
+        - application/json
+      responses:
+        default:approving-authority-limit/encode
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse' 
+  /maintenance/transacting-unit:
+    get:
+      description: get transacting unit 
+      produces:
+        - application/json
+      parameters:
+        - name: tran_fi
+          required: true
+          in: path
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'  
+  /maintenance/transacting-unit/encode:
+    post:
+      description: encode 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: transactingUnitBody
+          required: true
+          in: body
+          description: transacting unit body
+          schema:
+            $ref: '#/definitions/transactingUnitEncode'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+    delete:
+      description: encode 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: transactingUnitBody
+          required: true
+          in: body
+          description: transacting unit body
+          schema:
+            $ref: '#/definitions/transactingUnitEncode'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/acceptance-settlement/list:
+    get:
+      description: get acceptance settlement list 
+      produces:
+        - application/json
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'  
+  /maintenance/acceptance-settlement/encode:
+    post:
+      description: encode 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: acceptanceSettlementBody
+          required: true
+          in: body
+          description: transacting unit body
+          schema:
+            $ref: '#/definitions/acceptanceSettlementBody'
+    put:
+      description: encode 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: acceptanceSettlementBody
+          required: true
+          in: body
+          description: transacting unit body
+          schema:
+            $ref: '#/definitions/acceptanceSettlementBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse' 
+  /maintenance/application-code/list:
+    get:
+      produces:
+        - application/json
+      description: get application list
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/application-code/encode:
+    post:
+      description: encode 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: applicationCodeBody
+          required: true
+          in: body
+          description: transacting unit body
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/applicationCodeBody'
+  /maintenance/approving-authority-limit/list:
+    get:
+      produces:
+        - application/json
+      description: get approving authority list
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/bulletin-board:
+    post:
+      description: post bulletin board 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: spcl_msg
+          required: true
+          in: body
+          description: transacting unit body
+          schema:
+            type: string
+    get:
+      produces:
+        - application/json
+      description: get bulletin board 
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/approving-authority-limit/encode:
+    post:
+      description: encode 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: approvingAuthorityBody
+          required: true
+          in: body
+          description: transacting unit body
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/approvingAuthorityBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/user-file/encode:
+    post:
+      description: encode 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: approvingAuthorityBody
+          required: true
+          in: body
+          description: transacting unit body
+          schema:
+            $ref: '#/definitions/userFileEncode'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+    put:
+      description: encode 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: approvingAuthorityBody
+          required: true
+          in: body
+          description: transacting unit body
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/userFileEncode'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+    delete:
+      description: encode 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: approvingAuthorityBody
+          required: true
+          in: body
+          description: transacting unit body
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/userFileEncode'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/user-file:
+    get:
+      description: get userfile 
+      produces:
+        - application/json
+      parameters:
+        - name: user_id
+          required: true
+          in: path
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse' 
+  /maintenance/user-file/list:
+    get:
+      description: get userfile 
+      produces:
+        - application/json
+      parameters:
+        - name: tran_fi
+          required: true
+          in: query
+          type: string
+        - name: brch_code
+          required: true
+          in: query
+          type: string
+        - name: user_id
+          required: true
+          in: query
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse' 
+  /maintenance/user-list/print:
+    get:
+      description: get userfile 
+      produces:
+        - application/json
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse' 
+  /maintenance/user-access/load:
+    get:
+      description: get userfile 
+      produces:
+        - application/json
+      parameters:
+        - name: tran_fi
+          required: true
+          in: query
+          type: string
+        - name: brch_code
+          required: true
+          in: query
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse' 
+  /maintenance/user-access/encode:
+    post:
+      description: encode 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: userAccessBody
+          required: true
+          in: body
+          description: user access body
+          schema:
+            $ref: '#/definitions/userAccessBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+    put:
+      description: encode 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: userAccessBody
+          required: true
+          in: body
+          description: user access body
+          schema:
+            $ref: '#/definitions/userAccessBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+    delete:
+      description: encode 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: userAccessBody
+          required: true
+          in: body
+          description: user access body
+          schema:
+            $ref: '#/definitions/userAccessBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/btsu/accept:
+    post:
+      description: btsu accept 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: btsuAcceptBody
+          required: true
+          in: body
+          description: btsu body
+          schema:
+            $ref: '#/definitions/btsuAcceptBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/btsu/process:
+    post:
+      description: btsu process 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: btsuProcessBody
+          required: true
+          in: body
+          description: btsu body
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/btsuProcessBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/btsu/list:
+    get:
+      description: btsu list 
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          required: true
+          in: query
+          type: string
+        - name: curr_code
+          required: true
+          in: query
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/buy-sell-st/list:
+    get:
+      description: buy sell list 
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          required: true
+          in: query
+          type: string
+        - name: curr_code
+          required: true
+          in: query
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/buy-sell-st/update:
+    post:
+      description: btsu process 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: buysellBody
+          required: true
+          in: body
+          description: btsu body
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/T0208'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/ref-rate-usd/list:
+    get:
+      description: ref rate usd list 
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          required: true
+          in: query
+          type: string
+        - name: curr_code
+          required: true
+          in: query
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  maintenance/ref-rate-usd/process:
+    post:
+      description: ref rate usd process 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: refRateUsdProcessBody
+          required: true
+          in: body
+          description: btsu body
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/T0211'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/ref-rate-php/list:
+    get:
+      description: ref rate usd list 
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          required: true
+          in: query
+          type: string
+        - name: curr_code
+          required: true
+          in: query
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  ／maintenance/ref-rate-php/process:
+    post:
+      description: ref rate usd process 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: refRateUsdProcessBody
+          required: true
+          in: body
+          description: btsu body
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/T0214'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/best-buy-sell:
+    get:
+      description: best buy sell get 
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          required: true
+          in: query
+          type: string
+        - name: curr_code
+          required: true
+          in: query
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/best-buy-sell/process:
+    post:
+      description: buy and sell process 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: buyAndSellBody
+          required: true
+          in: body
+          description: btsu body
+          schema:
+            $ref: '#/definitions/buyAndSellBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/ref-rate:
+    get:
+      description: maintenance ref rate get
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          required: true
+          in: query
+          type: string
+        - name: curr_code
+          required: true
+          in: query
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/ref-rate/process:
+    post:
+      description: buy  process 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: refRateProcessBody
+          required: true
+          in: body
+          description: ref rate process body
+          schema:
+            $ref: '#/definitions/refRateProcessBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/board-rate:
+    get:
+      description: maintenance board rate get
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          required: true
+          in: query
+          type: string
+        - name: tran_id
+          required: true
+          in: query
+          type: string
+        - name: curr_code
+          required: true
+          in: query
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/board-rate/process:
+    post:
+      description: board rate  process 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: boardRateProcess
+          required: true
+          in: body
+          description: board rate process body
+          schema:
+            $ref: '#/definitions/boardRateProcess'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/otc-rate/rate:
+    get:
+      description: maintenance otc rate get
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          required: true
+          in: query
+          type: string
+        - name: tran_id
+          required: true
+          in: query
+          type: string
+        - name: curr_code
+          required: true
+          in: query
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/otc-rate/rate/process:
+    post:
+      description: otc rate  process 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: otcRateBody
+          required: true
+          in: body
+          description: otc rate process body
+          schema:
+            $ref: '#/definitions/otcRateBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/otc-rate/spread:
+    get:
+      description: otc rate spread
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          required: true
+          in: query
+          type: string
+        - name: tran_id
+          required: true
+          in: query
+          type: string
+        - name: curr_code
+          required: true
+          in: query
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/otc-rate/spread/process:
+    post:
+      description: otc rate spread process 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: otcRateSpreadBody
+          required: true
+          in: body
+          description: otc rate spread process body
+          schema:
+            $ref: '#/definitions/otcRateSpreadBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/tiered-rate/rate:
+    get:
+      description: tiered rate spread
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          required: true
+          in: query
+          type: string
+        - name: tran_id
+          required: true
+          in: query
+          type: string
+        - name: curr_code
+          required: true
+          in: query
+          type: string
+        - name: tier_nmbr
+          required: true
+          in: query
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/tiered-rate/sprd:
+    get:
+      description: tiered rate spread
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          required: true
+          in: query
+          type: string
+        - name: tran_id
+          required: true
+          in: query
+          type: string
+        - name: curr_code
+          required: true
+          in: query
+          type: string
+        - name: tier_nmbr
+          required: true
+          in: query
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/preferred-client-rate:
+    get:
+      description: preferred-client-rate
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          required: true
+          in: query
+          type: string
+        - name: curr_code
+          required: true
+          in: query
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/us-visa-fee:
+    get:
+      description: us-visa-fee
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          required: true
+          in: query
+          type: string
+        - name: curr_code
+          required: true
+          in: query
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/us-visa-fee/process:
+    post:
+      description: us visa fee process 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: usVisaFeeProcessBody
+          required: true
+          in: body
+          description: usVisaFeeProcessBody
+          schema:
+            $ref: '#/definitions/usVisaFeeProcessBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/spread:
+    get:
+      description: us-visa-fee
+      produces:
+        - application/json
+      parameters:
+        - name: trdr_fi
+          required: true
+          in: query
+          type: string
+        - name: spreads
+          required: true
+          in: query
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /maintenance/spread/process:
+    post:
+      description: spreadProcessBody
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: spreadProcessBody
+          required: true
+          in: body
+          description: spreadProcessBody
+          schema:
+            type: array
+            items: 
+              $ref: '#/definitions/spreadProcessBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+ 
+  /maintenance/tiered-rate/sprd/process:
+    post:
+      description: otc rate spread process 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: tieredRateSprdBody
+          required: true
+          in: body
+          description: otc rate spread process body
+          schema:
+            $ref: '#/definitions/tieredRateSprdBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /sysad/doc-stamp-postage-commission:
+    get:
+      description: 
+        Get doc stamp postage commission
+      produces:
+        - application/json
+      parameters:
+        - name: mode_code
+          in: query
+          description: MODE CODE
+          required: true
+          type: string
+        - name: trdr_fi
+          in: query
+          description: trdr_fi
+          required: true
+          type: string
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+    put:
+      description: 
+        Get doc stamp postage commission
+      produces:
+        - application/json
+      parameters:
+        - name: docStampPostageCommissionBody
+          in: body
+          description: MODE CODE
+          required: true
+          schema:
+            $ref: '#/definitions/docStampPostageCommissionBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /sysad/bpi-bfb-settlement:
+    get:
+      description: 
+        BPI BFB SETTLEMENT
+      produces:
+        - application/json
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+    put:
+      description: 
+        BPI BFB SETTLEMENT
+      produces:
+        - application/json
+      parameters:
+        - name: bpiBfbSettlementBody
+          in: body
+          description: MODE CODE
+          required: true
+          schema:
+            $ref: '#/definitions/bpiBfbSettlementBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+    post:
+      description: 
+        BPI BFB SETTLEMENT
+      produces:
+        - application/json
+      parameters:
+        - name: bpiBfbSettlementBody
+          in: body
+          description: MODE CODE
+          required: true
+          schema:
+            $ref: '#/definitions/bpiBfbSettlementBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+    delete:
+      description: 
+        BPI BFB SETTLEMENT
+      produces:
+        - application/json
+      parameters:
+        - name: bpiBfbSettlementBody
+          in: body
+          description: MODE CODE
+          required: true
+          schema:
+            $ref: '#/definitions/bpiBfbSettlementBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse'
+  /interbank/define-file/process:
+    put:
+      description: 
+        Interbank – Define File - Process
+      produces:
+        - application/json
+      parameters:
+        - name: interbankDefineFileProcess
+          required: true
+          in: body
+          description: interbank define file process parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/interbankDefineFileProcessBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse' 
+    delete:
+      description: 
+        Interbank – Define File - Process
+      produces:
+        - application/json
+      parameters:
+        - name: interbankDefineFileProcess
+          required: true
+          in: body
+          description: interbank define file process parameter object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/interbankDefineFileProcessBody'
+      responses:
+        default:
+          description: meta
+          schema:
+            $ref: '#/definitions/objectResponse' 
+
+
+
+###############################
+#                             #
+#         definitions         #
+#                             #
+###############################
+definitions:
+  spreadProcessBody:
+    type: object
+    properties:
+      seqn_no:
+        type: string
+      spreads:
+        type: string
+  usVisaFeeProcessBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      curr_code:
+        type: string
+      exch_rate:
+        type: string
+      usd_amnt:
+        type: string
+      php_equiv:
+        type: string
+      nexch_rate:
+        type: string 
+      nusd_amnt:
+        type: string
+  otcRateSpreadBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      tran_fi:
+        type: string
+      curr_code:
+        type: string
+      prch_sprd:
+        type: string
+      sale_sprd:
+        type: string
+      nprch_sprd:
+        type: string 
+      nsale_sprd:
+        type: string
+  tieredRateSprdBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      curr_code:
+        type: string
+      T0227s:
+        type: array
+        items:
+          $ref: '#/definitions/T0227'
+
+  otcRateBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      curr_code:
+        type: string
+      prch_rate:
+        type: string
+      sale_rate:
+        type: string
+      nprch_rate:
+        type: string 
+      nsale_rate:
+        type: string
+  boardRateProcess:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      curr_code:
+        type: string
+      prch_rate:
+        type: string
+      sale_rate:
+        type: string
+      nprch_rate:
+        type: string 
+      nsale_rate:
+        type: string
+  loginDetails:
+    type: object
+    properties:
+      gmfapplid:
+        type: string
+      guserid:
+        type: string
+      guserpass:
+        type: string
+      xnewpass:
+        type: string
+      gmfregion:
+        type: string
+  refRateProcessBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      curr_code:
+        type: string
+      refr_rate:
+        type: string
+      nefr_rate:
+        type: string
+  buyAndSellBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      curr_code:
+        type: string
+      php_bid:
+        type: string
+      php_offr:
+        type: string
+      new_bid:
+        type: string
+      new_offr:
+        type: string
+  T0208:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      curr_code:
+        type: string
+      drec_tag:
+        type: string
+      fcdu_prch:
+        type: string
+      fcdu_sale:
+        type: string
+      note_prch:
+        type: string
+  sendHostBody:
+    type: object
+    properties:
+      message1:
+        type: string
+      fr_mon:
+        type: string
+  T0211:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      curr_code:
+        type: string
+      refr_rate:
+        type: string
+  transactionMonitoringBody:
+    type: object
+    properties:
+      ptrck_indc:
+        type: boolean
+      ptrck_days:
+        type: string
+      ptrck_amnt:
+        type: string
+      strck_indc:
+        type: boolean
+      strck_days:
+        type: string
+      strck_amnt:
+        type: string
+  objectResponse:
+    type: object
+    properties:
+      data:
+        type: object
+      meta:
+        $ref: '#/definitions/metaResponse'
+  validCurrecyEncodeBody:
+    type: object
+    properties:
+      curr_code:
+        type: string
+      curr_bpi:
+        type: string
+      curr_casa:
+        type: string
+      curr_desc:
+        type: string   
+  tradingUnitEncode:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      trdr_desc:
+        type: string
+      trdr_pcc:
+        type: string
+      forc_unld:
+        type: string 
+      tran_fi:
+        type: string 
+  T0227:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      tran_fi:
+        type: string
+      curr_code:
+        type: string
+      tier_nmbr:
+        type: string
+      amnt_from:
+        type: string
+      amnt_to:
+        type: string
+      prch_sprd:
+        type: string
+      sale_sprd:
+        type: string
+  T0214:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      curr_code:
+        type: string
+      refr_rate:
+        type: string
+  userAccessBody:
+    type: object
+    properties:
+      user_type:
+        type: string
+      tran_fi:
+        type: string
+      user_accs:
+        type: string
+  acceptanceSettlementBody:
+    type: object
+    properties:
+      mode_code:
+        type: string
+      mode_desc:
+        type: string
+      mcro_tag:
+        type: string
+      actv_tag:
+        type: boolean 
+      php_tag:
+        type: boolean 
+  approvingAuthorityBody:
+    type: object
+    properties:
+      php_lmt:
+        type: string
+      ovrd_ptt:
+        type: string
+      ofcr1_typ:
+        type: string
+      ofcr2_typ:
+        type: string 
+    docStampPostageCommissionBody:
+    type: object
+    properties:
+      mode_code:
+        type: string
+      tranc_code:
+        type: string
+      adoc_perc:
+        type: string
+      adoc_amnt:
+        type: string
+      acom_perc:
+        type: string
+      acom_amnt:
+        type: string
+      sdoc_perc:
+        type: string
+      sdoc_amnt:
+        type: string
+      acom_indc:
+        type: string
+      adom_indc:
+        type: string
+      scom_indc:
+        type: string
+      sdom_indc:
+        type: string
+  bpiBfbSettlementBody:
+    type: object
+    properties:
+      trdr_fi:
+        type: string
+      curr_code:
+        type: string
+      bpi_acct:
+        type: string
+      bfb_acct:
+        type: string 
+

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="com.bpi.model.T0319" table="T0319">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="tranDate" column="TRAN_DATE" type="string"/>
+<property name="brchCode" column="BRCH_CODE" type="string"/>
+<property name="trdrFi" column="TRDR_FI" type="string"/>
+<property name="tranIndc" column="TRAN_INDC" type="string"/>
+<property name="refNmbr" column="REF_NMBR" type="string"/>
+<property name="cLName" column="C_LNAME" type="string"/>
+<property name="cFName" column="C_FNAME" type="string"/>
+<property name="cMName" column="C_MNAME" type="string"/>
+<property name="cAddr1" column="C_ADDR1" type="string"/>
+<property name="cAddr2" column="C_ADDR2" type="string"/>
+<property name="telNo" column="TELNO" type="string"/>
+<property name="tin" column="TIN" type="string"/>
+<property name="bday" column="BDAY" type="string"/>
+<property name="clntTag" column="CLNT_TAG" type="string"/>
+<property name="corpTag" column="CORP_TAG" type="string"/>
+<property name="docuTag" column="DOCU_TAG" type="string"/>
+<property name="mangUnit" column="MANG_UNIT" type="string"/>
+<property name="bookUnit" column="BOOK_UNIT" type="string"/>
+<property name="currFr" column="CURR_FR" type="string"/>
+<property name="tranAmnt" column="TRAN_AMNT" type="big_decimal"/>
+<property name="dealRate" column="DEAL_RATE" type="big_decimal"/>
+<property name="rqstRate" column="RQST_RATE" type="big_decimal"/>
+<property name="grntRate" column="GRNT_RATE" type="big_decimal"/>
+<property name="currTo" column="CURR_TO" type="string"/>
+<property name="equiAmnt" column="EQUI_AMNT" type="big_decimal"/>
+<property name="netAmnt" column="NET_AMNT" type="big_decimal"/>
+<property name="acptMode" column="ACPT_MODE" type="big_decimal"/>
+<property name="acptRefNo" column="ACPT_REFNO" type="string"/>
+<property name="achrgDed" column="ACHRG_DED" type="string"/>
+<property name="acptDocs" column="ACPT_DOCS" type="big_decimal"/>
+<property name="acptComm" column="ACPT_COMM" type="big_decimal"/>
+<property name="rLName" column="R_LNAME" type="string"/>
+<property name="rFName" column="R_FNAME" type="string"/>
+<property name="rMName" column="R_MNAME" type="string"/>
+<property name="atelVald" column="ATEL_VALD" type="string"/>
+<property name="setlMode" column="SETL_MODE" type="big_decimal"/>
+<property name="setlRefNo" column="SETL_REFNO" type="string"/>
+<property name="schrgDed" column="SCHRG_DED" type="string"/>
+<property name="setlDocs" column="SETL_DOCS" type="big_decimal"/>
+<property name="setlComm" column="SETL_COMM" type="big_decimal"/>
+<property name="bLName" column="B_LNAME" type="string"/>
+<property name="bFName" column="B_FNAME" type="string"/>
+<property name="bMName" column="B_MNAME" type="string"/>
+<property name="bBday" column="B_BDAY" type="string"/>
+<property name="bAddr1" column="B_ADDR1" type="string"/>
+<property name="bAddr2" column="B_ADDR2" type="string"/>
+<property name="stelVald" column="STEL_VALD" type="string"/>
+<property name="inviCode" column="INVI_CODE" type="string"/>
+<property name="userId" column="USERID" type="string"/>
+<property name="termId" column="TERMID" type="string"/>
+<property name="statRqst" column="STAT_RQST" type="string"/>
+<property name="rmrkBrch" column="RMRK_BRCH" type="string"/>
+<property name="rmrkTrdr" column="RMRK_TRDR" type="string"/>
+<property name="acptPost" column="ACPT_POST" type="big_decimal"/>
+<property name="setlPost" column="SETL_POST" type="big_decimal"/>
+<property name="ovrdPtt" column="OVRD_PTT" type="big_decimal"/>
+<property name="bTin" column="B_TIN" type="string"/>
+
+</class></hibernate-mapping>

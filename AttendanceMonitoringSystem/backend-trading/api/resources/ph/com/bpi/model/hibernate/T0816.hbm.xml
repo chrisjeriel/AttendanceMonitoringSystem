@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="ph.com.bpi.model.hibernate.T0816" table="T0816">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="acctNmbr" column="ACCT_NMBR" type="string"/>
+<property name="loaNmbr" column="LOA_NMBR" type="string"/>
+<property name="cntrPrty" column="CNTR_PRTY" type="string"/>
+<property name="address1" column="ADDRESS1" type="string"/>
+<property name="address2" column="ADDRESS2" type="string"/>
+<property name="tranAmnt" column="TRAN_AMNT" type="big_decimal"/>
+<property name="recvAcct" column="RECV_ACCT" type="string"/>
+<property name="bankName" column="BANK_NAME" type="string"/>
+<property name="valDate" column="VAL_DATE" type="string"/>
+<property name="othrInst" column="OTHR_INST" type="string"/>
+
+</class></hibernate-mapping>

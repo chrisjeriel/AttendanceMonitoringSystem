@@ -1,0 +1,6 @@
+ELLHAPITest/out/
+frontend-transacting/views/scripts/build/build.js
+frontend-transacting/views/node_modules/*
+frontend-transacting/views/npm-debug.log
+/**/.DS_Store
+bin/

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="ph.com.bpi.model.hibernate.T0123" table="T0123">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="trdrFi" column="TRDR_FI" type="string"/>
+<property name="modeCode" column="MODE_CODE" type="big_decimal"/>
+<property name="adocPerc" column="ADOC_PERC" type="big_decimal"/>
+<property name="adocAmnt" column="ADOC_AMNT" type="big_decimal"/>
+<property name="adocIndc" column="ADOC_INDC" type="big_decimal"/>
+<property name="acomPerc" column="ACOM_PERC" type="big_decimal"/>
+<property name="acomAmnt" column="ACOM_AMNT" type="big_decimal"/>
+<property name="acomIndc" column="ACOM_INDC" type="big_decimal"/>
+<property name="sdocPerc" column="SDOC_PERC" type="big_decimal"/>
+<property name="sdocAmnt" column="SDOC_AMNT" type="big_decimal"/>
+<property name="sdocIndc" column="SDOC_INDC" type="big_decimal"/>
+<property name="scomPerc" column="SCOM_PERC" type="big_decimal"/>
+<property name="scomAmnt" column="SCOM_AMNT" type="big_decimal"/>
+<property name="scomIndc" column="SCOM_INDC" type="big_decimal"/>
+<property name="tcPost" column="TC_POST" type="big_decimal"/>
+
+</class></hibernate-mapping>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="ph.com.bpi.model.hibernate.Sessions" table="Sessions">
+
+<id name="sessionId" type="int" column="SESSION_ID">
+<generator class="increment"/>
+</id>
+<property name="sessionType" column="SESSION_TYPE" type="string"/>
+<property name="title" column="TITLE" type="string"/>
+<property name="start" column="START" type="string"/>
+<property name="end" column="END" type="string"/>
+<property name="viewType" column="VIEW_TYPE" type="string"/>
+</class></hibernate-mapping>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="ph.com.bpi.model.hibernate.TMEMBERS" table="TMEMBERS">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="idNumber" column="ID_NUMBER" type="string"/>
+<property name="lastName" column="LAST_NAME" type="string"/>
+<property name="firstName" column="FIRST_NAME" type="string"/>
+<property name="middleName" column="MIDDLE_NAME" type="string"/>
+<property name="sex" column="SEX" type="string"/>
+<property name="civilStatus" column="CIVIL_STATUS" type="string"/>
+<property name="bloodType" column="BLOOD_TYPE" type="string"/>
+
+</class></hibernate-mapping>

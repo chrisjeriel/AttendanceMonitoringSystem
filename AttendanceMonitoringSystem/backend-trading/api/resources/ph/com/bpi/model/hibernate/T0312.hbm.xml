@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="ph.com.bpi.model.hibernate.T0312" table="T0312">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="tranTrdr" column="TRAN_TRDR" type="string"/>
+<property name="tranIndc" column="TRAN_INDC" type="string"/>
+<property name="refNmbr" column="REF_NMBR" type="string"/>
+<property name="cLName" column="C_LNAME" type="string"/>
+<property name="cFName" column="C_FNAME" type="string"/>
+<property name="cMName" column="C_MNAME" type="string"/>
+<property name="addr1" column="ADDR1" type="string"/>
+<property name="addr2" column="ADDR2" type="string"/>
+<property name="acptMode" column="ACPT_MODE" type="big_decimal"/>
+<property name="acptCurr" column="ACPT_CURR" type="string"/>
+<property name="tranAmnt" column="TRAN_AMNT" type="big_decimal"/>
+<property name="setlMode" column="SETL_MODE" type="big_decimal"/>
+<property name="setlCurr" column="SETL_CURR" type="string"/>
+<property name="equiAmnt" column="EQUI_AMNT" type="big_decimal"/>
+<property name="grntRate" column="GRNT_RATE" type="big_decimal"/>
+<property name="grntStat" column="GRNT_STAT" type="string"/>
+<property name="brchCode" column="BRCH_CODE" type="string"/>
+<property name="rqstRate" column="RQST_RATE" type="big_decimal"/>
+
+</class></hibernate-mapping>

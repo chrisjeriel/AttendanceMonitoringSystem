@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="ph.com.bpi.model.hibernate.T0307" table="T0307">
+
+		<id name="id" type="int" column="ID">
+			<generator class="increment" />
+		</id>
+		<property name="vTranIndc" column="VTRAN_INDC" type="string" />
+		<property name="vcLName" column="VC_LNAME" type="string" />
+		<property name="vcFName" column="VC_FNAME" type="string" />
+		<property name="vcMName" column="VC_MNAME" type="string" />
+		<property name="vBday" column="VBDAY" type="big_decimal" />
+		<property name="vTin" column="VTIN" type="string" />
+		<property name="vcAddr1" column="VC_ADDR1" type="string" />
+		<property name="vcAddr2" column="VC_ADDR2" type="string" />
+		<property name="vtel" column="VTEL" type="string" />
+		<property name="vTranDate" column="VTRAN_DATE" type="string" />
+		<property name="vTranTime" column="VTRAN_TIME" type="string" />
+		<property name="vTranUnit" column="VTRAN_UNIT" type="string" />
+		<property name="vRefNo" column="VREFNO" type="string" />
+		<property name="vcurrFrom" column="VCURR_FROM" type="string" />
+		<property name="vcurrTo" column="VCURR_TO" type="string" />
+		<property name="vTranAmnt" column="VTRAN_AMNT" type="big_decimal" />
+		<property name="vusdAmnt" column="VUSD_AMNT" type="big_decimal" />
+
+	</class>
+</hibernate-mapping>

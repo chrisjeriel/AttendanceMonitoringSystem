@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="com.bpi.model.T0502" table="T0502">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="tranFi" column="TRAN_FI" type="string"/>
+<property name="tranUnit" column="TRAN_UNIT" type="string"/>
+<property name="currCode" column="CURR_CODE" type="string"/>
+<property name="seqNo" column="SEQ_NO" type="big_decimal"/>
+<property name="amount" column="AMOUNT" type="big_decimal"/>
+<property name="userId" column="USER_ID" type="string"/>
+<property name="termId" column="TERM_ID" type="string"/>
+<property name="timeStmp" column="TIME_STMP" type="big_decimal"/>
+
+</class></hibernate-mapping>

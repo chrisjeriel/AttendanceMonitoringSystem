@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="fptr-lib">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/fptr-lib" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/fptr-lib" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/fptr-lib" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/fptr-lib" recursive="false" type="SOURCES" />
+  </library>
+</component>

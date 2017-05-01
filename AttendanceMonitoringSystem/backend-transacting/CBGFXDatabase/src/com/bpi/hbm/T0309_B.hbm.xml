@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="com.bpi.model.T0309_B" table="T0309_B">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="refNmbr" column="REF_NMBR" type="string"/>
+<property name="acctNmbr" column="ACCT_NMBR" type="big_decimal"/>
+<property name="tranAmnt" column="TRAN_AMNT" type="big_decimal"/>
+<property name="eqvlAmnt" column="EQVL_AMNT" type="big_decimal"/>
+
+</class></hibernate-mapping>

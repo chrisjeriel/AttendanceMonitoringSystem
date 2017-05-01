@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="ph.com.bpi.model.hibernate.T0909" table="T0909">
+
+		<id name="id" type="int" column="ID">
+			<generator class="increment" />
+		</id>
+		<property name="bank" column="BANK" type="string" />
+		<property name="book" column="BOOK" type="big_decimal" />
+		<property name="cntrCurr" column="CNTR_CURR" type="string" />
+		<property name="origCurr" column="ORIG_CURR" type="string" />
+		<property name="prchAmnt" column="PRCH_AMNT" type="big_decimal" />
+		<property name="prchCost" column="PRCH_COST" type="big_decimal" />
+		<property name="saleAmnt" column="SALE_AMNT" type="big_decimal" />
+		<property name="saleCost" column="SALE_COST" type="big_decimal" />
+		<property name="netAmnt" column="NET_AMNT" type="big_decimal" />
+
+	</class>
+</hibernate-mapping>

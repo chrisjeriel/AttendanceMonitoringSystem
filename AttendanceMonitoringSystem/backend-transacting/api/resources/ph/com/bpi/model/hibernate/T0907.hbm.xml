@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="ph.com.bpi.model.hibernate.T0907" table="T0907">
+
+		<id name="id" type="int" column="ID">
+			<generator class="increment" />
+		</id>
+		<property name="trdrFi" column="TRDR_FI" type="string" />
+		<property name="tranIndc" column="TRAN_INDC" type="string" />
+		<property name="refNmbr" column="REF_NMBR" type="string" />
+		<property name="cLName" column="C_LNAME" type="string" />
+		<property name="cFName" column="C_FNAME" type="string" />
+		<property name="cMName" column="C_MNAME" type="string" />
+		<property name="acptMode" column="ACPT_MODE" type="big_decimal" />
+		<property name="currFr" column="CURR_FR" type="string" />
+		<property name="tranAmt" column="TRAN_AMT" type="big_decimal" />
+		<property name="setlMode" column="SETL_MODE" type="big_decimal" />
+		<property name="currTo" column="CURR_TO" type="string" />
+		<property name="equiAmt" column="EQUI_AMT" type="big_decimal" />
+		<property name="grntRate" column="GRNT_RATE" type="big_decimal" />
+		<property name="netAmnt" column="NET_AMNT" type="big_decimal" />
+		<property name="acptComm" column="ACPT_COMM" type="big_decimal" />
+		<property name="acptDocs" column="ACPT_DOCS" type="big_decimal" />
+		<property name="acptPost" column="ACPT_POST" type="big_decimal" />
+		<property name="setlComm" column="SETL_COMM" type="big_decimal" />
+		<property name="setlDocs" column="SETL_DOCS" type="big_decimal" />
+		<property name="setlPost" column="SETL_POST" type="big_decimal" />
+		<property name="pRefNmbr" column="PREF_NMBR" type="string" />
+		<property name="trdrId" column="TRDR_ID" type="string" />
+
+	</class>
+</hibernate-mapping>

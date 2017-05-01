@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="ph.com.bpi.model.hibernate.FXMENU" table="FXMENU">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="itemName" column="ITEM_NAME" type="string"/>
+<property name="caption" column="CAPTION" type="string"/>
+<property name="action" column="ACTION" type="string"/>
+<property name="level" column="LEVEL" type="big_decimal"/>
+<property name="status" column="STATUS" type="big_decimal"/>
+<property name="accssLoc" column="ACCSS_LOC" type="big_decimal"/>
+<property name="tag" column="TAG" type="string"/>
+</class></hibernate-mapping>

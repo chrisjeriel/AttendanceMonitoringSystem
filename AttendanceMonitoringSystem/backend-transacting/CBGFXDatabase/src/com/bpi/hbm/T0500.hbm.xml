@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="com.bpi.model.T0500" table="T0500">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="tranFi" column="TRAN_FI" type="string"/>
+<property name="tranUnit" column="TRAN_UNIT" type="string"/>
+<property name="currCode" column="CURR_CODE" type="string"/>
+<property name="mIflow" column="M_IFLOW" type="big_decimal"/>
+<property name="tIflow" column="T_IFLOW" type="big_decimal"/>
+<property name="mOflow" column="M_OFLOW" type="big_decimal"/>
+<property name="tOflow" column="T_OFLOW" type="big_decimal"/>
+<property name="runnBaln" column="RUNN_BALN" type="big_decimal"/>
+
+</class></hibernate-mapping>

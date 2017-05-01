@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="ph.com.bpi.model.hibernate.T0303" table="T0303">
+
+		<id name="id" type="int" column="ID">
+			<generator class="increment" />
+		</id>
+		<property name="equiAmnt" column="EQUI_AMNT" type="big_decimal" />
+		<property name="acptDocs" column="ACPT_DOCS" type="big_decimal" />
+		<property name="acptComm" column="ACPT_COMM" type="big_decimal" />
+		<property name="setlDocs" column="SETL_DOCS" type="big_decimal" />
+		<property name="setlComm" column="SETL_COMM" type="big_decimal" />
+		<property name="acptPost" column="ACPT_POST" type="big_decimal" />
+		<property name="setlPost" column="SETL_POST" type="big_decimal" />
+		<property name="netAmnt" column="NET_AMNT" type="big_decimal" />
+		<property name="ovrdPt" column="OVRD_PT" type="big_decimal" />
+		<property name="tranTag" column="TRAN_TAG" type="big_decimal" />
+
+	</class>
+</hibernate-mapping>

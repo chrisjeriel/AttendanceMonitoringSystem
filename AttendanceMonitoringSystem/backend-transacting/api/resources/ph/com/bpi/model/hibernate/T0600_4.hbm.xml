@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="ph.com.bpi.model.hibernate.T0600_4" table="T0600_4">
+
+		<id name="id" type="int" column="ID">
+			<generator class="increment" />
+		</id>
+		<property name="trdrFi" column="TRDR_FI" type="string" />
+		<property name="bank" column="BANK" type="string" />
+		<property name="book" column="BOOK" type="big_decimal" />
+		<property name="appl" column="APPL" type="string" />
+		<property name="tranFi" column="TRAN_FI" type="string" />
+		<property name="tranUnit" column="TRAN_UNIT" type="string" />
+		<property name="curr" column="CURR" type="string" />
+		<property name="prch" column="PRCH" type="big_decimal" />
+		<property name="sale" column="SALE" type="big_decimal" />
+		<property name="unco" column="UNCO" type="big_decimal" />
+		<property name="cons" column="CONS" type="big_decimal" />
+		<property name="unld" column="UNLD" type="big_decimal" />
+		<property name="totl" column="TOTL" type="big_decimal" />
+
+	</class>
+</hibernate-mapping>

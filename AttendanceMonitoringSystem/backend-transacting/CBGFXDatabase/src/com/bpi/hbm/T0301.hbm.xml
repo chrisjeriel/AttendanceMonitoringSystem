@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="com.bpi.model.T0301" table="T0301">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="dealRate" column="DEAL_RATE" type="big_decimal"/>
+
+</class></hibernate-mapping>

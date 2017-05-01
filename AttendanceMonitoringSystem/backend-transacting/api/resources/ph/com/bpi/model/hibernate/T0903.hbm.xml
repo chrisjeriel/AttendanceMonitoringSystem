@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="ph.com.bpi.model.hibernate.T0903" table="T0903">
+
+		<id name="id" type="int" column="ID">
+			<generator class="increment" />
+		</id>
+		<property name="tranIndc" column="TRAN_INDC" type="string" />
+		<property name="cLName" column="C_LNAME" type="string" />
+		<property name="cFName" column="C_FNAME" type="string" />
+		<property name="cMName" column="C_MNAME" type="string" />
+		<property name="accuAmnt" column="ACCU_AMNT" type="big_decimal" />
+		<property name="accuAmnt2" column="ACCU_AMNT2" type="big_decimal" />
+
+	</class>
+</hibernate-mapping>

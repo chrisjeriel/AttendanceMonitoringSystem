@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="ph.com.bpi.model.hibernate.T0133" table="T0133">
+
+<id name="id" type="int" column="ID">
+<generator class="increment"/>
+</id>
+<property name="tranFi" column="TRAN_FI" type="string"/>
+<property name="tranDesc" column="TRAN_DESC" type="string"/>
+<property name="trdrTag" column="TRDR_TAG" type="string"/>
+
+</class></hibernate-mapping>
