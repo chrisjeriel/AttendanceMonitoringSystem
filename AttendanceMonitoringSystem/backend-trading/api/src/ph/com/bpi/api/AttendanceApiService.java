@@ -13,5 +13,5 @@ public abstract class AttendanceApiService {
 	public abstract Response getAttendanceList(String sessionId,SecurityContext securityContext) throws NotFoundException;
 
 	//POST Methods
-	public abstract Response saveAttendanceTimeInPost(HashMap<String, String> paramData,SecurityContext securityContext) throws NotFoundException;
+	public abstract Response saveAttendanceTimePost(HashMap<String, String> paramData,SecurityContext securityContext) throws NotFoundException;
 }

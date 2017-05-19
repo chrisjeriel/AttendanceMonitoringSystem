@@ -39,7 +39,8 @@ public class Main{
 		tomcat.setPort(Integer.valueOf(webPort));
 
 		// Define a web application context.
-		Context context = tomcat.addWebapp("/cbgfx-trading", new File(webappDirLocation).getAbsolutePath());
+//		Context context = tomcat.addWebapp("/cbgfx-trading", new File(webappDirLocation).getAbsolutePath());
+		Context context = tomcat.addWebapp("/amsys", new File(webappDirLocation).getAbsolutePath());
 
 		// File configFile = new File(webappDirLocation + "/WEB-INF/web.xml");
 		// context.setConfigFile(configFile.toURI().toURL());

@@ -1,4 +1,5 @@
-var React = require('react');
+var React = require('react');	
+var dateFormat = require('dateformat');
 
 var TimeComponent = React.createClass({
 	getInitialState: function() {
@@ -10,8 +11,10 @@ var TimeComponent = React.createClass({
 
 		var suffix = (date.getHours() >= 12) ? 'PM' : 'AM';
 		var currentTime = h + ':' + m + ':' + s + ' ' + suffix;
-
-		return ({currentTime: currentTime});
+		var date = new Date();
+		var date2 = dateFormat(new Date(), "mmmm dd, yyyy");
+		var day = dateFormat(new Date(), "dddd");
+		return ({currentTime: currentTime, currentDate: date2, day: day});
 	},
 	setCurrentTime: function(){
 		var date = new Date();
@@ -36,7 +39,7 @@ var TimeComponent = React.createClass({
 	},
 	render: function() {
 		return (
-			<div>{this.state.currentTime}</div>
+			<span>{this.state.currentDate + " " + this.state.currentTime + " [" + this.state.day + "]"}</span>
 		);
 	}
 });

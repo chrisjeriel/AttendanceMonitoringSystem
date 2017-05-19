@@ -20,7 +20,7 @@ var DateComponent = React.createClass({
 	},
 	render: function() {
 		return (
-			<div>{this.state.currentDate}</div>
+			<span>{this.state.currentDate}</span>
 		);
 	}
 });

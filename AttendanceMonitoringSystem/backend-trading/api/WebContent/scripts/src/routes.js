@@ -77,7 +77,6 @@ var AuthPS = require('./views/Authorization/PurchaseSale');
 // Fx Position
 var FxPositionSquaring = require('./views/FxPosition/FxPositionSquaring');
 var FxPositionWithAverageCost = require('./views/FxPosition/FxPositionWithAverageCost');
-var ViewSquaringTransactionsWithTreasury = require('./views/FxPosition/ViewSquaringTransactionsWithTreasury');
 var EndOfDaySquaringRate = require('./views/FxPosition/EndOfDaySquaringRates');
 
 
@@ -107,7 +106,9 @@ var Details = require('./views/Interbank/SharedFile/Details');
 var AttendanceList = require('./views/Attendance/List');
 var AttendanceKiosk = require('./views/Attendance/Kiosk');
 
-var InquiryMembers = require('./views/Inquiry/List');
+var InquiryMembers = require('./views/Inquiry/MembersList');
+var InquirySchedules = require('./views/Inquiry/SchedulesList');
+var InquiryAttendances = require('./views/Inquiry/AttendancesList');
 
 
 exports.makeMainRoutes = function(auth) {
@@ -122,6 +123,8 @@ exports.makeMainRoutes = function(auth) {
 				</Route>
 				<Route path='inquiry'>
 					<Route path='members' component={InquiryMembers} />
+					<Route path='schedules' component={InquirySchedules} />
+					<Route path='attendances' component={InquiryAttendances} />
 				</Route>
 			</Route>
 			<Route path='/login' component={Login} onEnter={auth} />

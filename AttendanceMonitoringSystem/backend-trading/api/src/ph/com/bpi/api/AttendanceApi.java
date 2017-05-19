@@ -49,13 +49,13 @@ public class AttendanceApi  {
    
    //POST Methods
    @POST
-   @Path("/saveTimeInPost")
+   @Path("/saveTimePost")
    @Produces({ "application/json" })
    @io.swagger.annotations.ApiOperation(value = "", notes = "get list of attendances by session Id", response = ObjectResponse.class, tags={  })
    @io.swagger.annotations.ApiResponses(value = { 
        @io.swagger.annotations.ApiResponse(code = 200, message = "meta", response = ObjectResponse.class) })
-   public Response saveAttendanceTimeInPost(@ApiParam(value = "transacting unit body" ,required=true) HashMap<String, String> paramData, @Context SecurityContext securityContext)
+   public Response saveAttendanceTimePost(@ApiParam(value = "transacting unit body" ,required=true) HashMap<String, String> paramData, @Context SecurityContext securityContext)
    throws NotFoundException {
-       return delegate.saveAttendanceTimeInPost(paramData, securityContext);
+       return delegate.saveAttendanceTimePost(paramData, securityContext);
    }
 }
